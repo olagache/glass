@@ -1,0 +1,4 @@
+
+h1. Glass, a ui for quartz
+
+Quartz is the standard scheduler for java but it lacks of a pleasant web ui.
