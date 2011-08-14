@@ -398,12 +398,6 @@
             <version>1.8.0.7</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.3.0</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- Quartz -->
         <dependency>
