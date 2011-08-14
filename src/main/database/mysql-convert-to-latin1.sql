@@ -1,0 +1,1 @@
+alter database glass default character set latin1 collate latin1_swedish_ci;

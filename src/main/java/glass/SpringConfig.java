@@ -18,6 +18,7 @@ package glass;
 
 import glass.history.QuartzListener;
 import org.quartz.Scheduler;
+import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.util.Locale;
 import java.util.Properties;
@@ -45,11 +47,14 @@ public class SpringConfig {
     @Inject
     private QuartzListener quartzListener;
 
+    @Inject
+    private ServletContext servletContext;
+
     @Bean
     public DataSource dataSource() throws Exception {
         JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
 
-        factoryBean.setJndiName("java:comp/env/jdbc/webportalsds");
+        factoryBean.setJndiName("java:comp/env/jdbc/glass");
 
         factoryBean.afterPropertiesSet();
 
@@ -74,7 +79,14 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
         properties.setProperty("org.quartz.jobStore.tablePrefix", "glass_");
         properties.setProperty("org.quartz.jobStore.isClustered", "false");
-        properties.setProperty("org.quartz.jobStore.driverDelegateClass", OracleDelegate.class.getName());
+
+        String database = servletContext.getInitParameter("jdbc/database");
+
+        if ("oracle".equals(database)) {
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", OracleDelegate.class.getName());
+        } else {
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", StdJDBCDelegate.class.getName());
+        }
 
         factory.setQuartzProperties(properties);
 

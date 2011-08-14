@@ -17,16 +17,15 @@
 
 <Context swallowOutput="true" useHttpOnly="true">
 
+    <Parameter name="jdbc/database" value="oracle"/>
+
     <!-- Database -->
-    <Resource name="jdbc/webportalsds" auth="Container" type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver"
+    <Resource name="jdbc/glass" auth="Container" type="javax.sql.DataSource" driverClassName="oracle.jdbc.driver.OracleDriver"
         url="jdbc:oracle:thin:@oracle-dev.srv.groupertl.net:1521/BAYDB" username="WEBPORTALS_UAT" password="sGE3f8UfqpB3"
         initialSize="1" minIdle="1" maxIdle="1" maxActive="10"
         testWhileIdle="true" testOnBorrow="true" testOnReturn="false"
         validationQuery="SELECT 1 FROM DUAL" validationInterval="30000"
         removeAbandonedTimeout="60" removeAbandoned="true" logAbandoned="true"
         timeBetweenEvictionRunsMillis="5000" maxWait="10000" minEvictableIdleTimeMillis="30000" />
-
-    <!-- JavaMelody monitoring -->
-    <Parameter name='javamelody.disabled' value='false' override='false' />
 
 </Context>

@@ -1,21 +1,22 @@
+v 0.1
+x DEV@cloudbees
+x mysql sql init file
+- run@cloudbees
+- add javamelody (+ configuration) + hyperlink in menu
+- add link "defined triggers" in menu to a list of all triggers with links to jobs
+- add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
+- caps in table headers
+- restart icon
+- groovy jobs (saved in db ? mongo ? memory ?)
+- add link from cron expression to anchor for doc in same page
 
-mysql sql init file
-dev@cloudbees
-run@cloudbees
-add javamelody + hyperlink in menu
+v 0.2
+- filter history by job group / name and provide links form job page
+- better logging options
+- date fields with jquery + link "now +5 seconds"
+- add flashscope for info messages after a redirect (job created, interrupted...)
 
-add link "defined triggers" in menu to a list of all triggers with links to jobs
-add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
-caps in table headers
-restart icon
-filter history by job group / name and provide links form job page
-groovy jobs (saved in oracle ? mongo ? memory ?)
-better logging options
-date fields with jquery + link "now +5 seconds"
+v 0.3
+- view job class source ?
 
-add flashscope for info messages after a redirect (job created, interrupted...)
-configure javamelody
-view job class source ?
-push to github
-update copyright and file headers
 

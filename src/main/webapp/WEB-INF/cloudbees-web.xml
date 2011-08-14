@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2011 Damien Bourdette
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<cloudbees-web-app xmlns="http://www.cloudbees.com/xml/webapp/1">
+
+    <appid>dbourdette/glass</appid>
+
+    <context-param>
+        <param-name>jdbc/database</param-name>
+        <param-value>mysql</param-value>
+    </context-param>
+
+    <resource name="jdbc/glass" auth="Container" type="javax.sql.DataSource">
+        <param name="username" value="glass" />
+        <param name="password" value="icoulddrinksome" />
+        <param name="url" value="jdbc:cloudbees://glass" />
+        <param name="maxActive" value="5" />
+        <param name="maxIdle" value="2" />
+        <param name="maxWait" value="10000" />
+        <param name="removeAbandoned" value="true" />
+        <param name="removeAbandonedTimeout" value="60" />
+        <param name="logAbandoned" value="true" />
+    </resource>
+
+</cloudbees-web-app>
