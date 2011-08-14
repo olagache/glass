@@ -24,15 +24,6 @@
         <param-value>classpath:log4j.properties</param-value>
     </context-param>
 
-    <!-- Automatically load Spring web application context -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:net/bull/javamelody/monitoring-spring.xml</param-value>
-    </context-param>
-
     <!-- utf-8 filter -->
     <filter>
         <filter-name>charsetFilter</filter-name>

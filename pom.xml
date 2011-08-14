@@ -419,18 +419,5 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- javamelody -->
-        <dependency>
-            <groupId>net.bull</groupId>
-            <artifactId>javamelody</artifactId>
-            <version>1.28.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jrobin</groupId>
-            <artifactId>jrobin</artifactId>
-            <version>1.5.9.1</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
