@@ -33,7 +33,7 @@ import org.quartz.UnableToInterruptJobException;
 @DisallowConcurrentExecution
 public class DummyJob implements InterruptableJob {
 
-    @JobArgument(name = "duration", required = true, description = "Duration of the job, in seconds", sampleValues = "10, 60")
+    @JobArgument(name = "duration", required = true, description = "Duration of the job, in seconds. Default is 10 seconds", sampleValues = "10, 60")
     private Long duration = 10l;
 
     private Thread runningThread;

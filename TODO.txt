@@ -1,7 +1,8 @@
 v 0.1
 x DEV@cloudbees
 x mysql sql init file
-- run@cloudbees
+x run@cloudbees
+- set link on github homepage
 - add javamelody (+ configuration) + hyperlink in menu
 - add link "defined triggers" in menu to a list of all triggers with links to jobs
 - add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
