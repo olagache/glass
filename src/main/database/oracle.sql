@@ -8,32 +8,32 @@
 -- runing in dedicated mode, so only consider the above as a hint ;-)
 --
 
-delete from chronos_fired_triggers;
-delete from chronos_simple_triggers;
-delete from chronos_simprop_triggers;
-delete from chronos_cron_triggers;
-delete from chronos_blob_triggers;
-delete from chronos_triggers;
-delete from chronos_job_details;
-delete from chronos_calendars;
-delete from chronos_paused_trigger_grps;
-delete from chronos_locks;
-delete from chronos_scheduler_state;
+delete from glass_fired_triggers;
+delete from glass_simple_triggers;
+delete from glass_simprop_triggers;
+delete from glass_cron_triggers;
+delete from glass_blob_triggers;
+delete from glass_triggers;
+delete from glass_job_details;
+delete from glass_calendars;
+delete from glass_paused_trigger_grps;
+delete from glass_locks;
+delete from glass_scheduler_state;
 
-drop table chronos_calendars;
-drop table chronos_fired_triggers;
-drop table chronos_blob_triggers;
-drop table chronos_cron_triggers;
-drop table chronos_simple_triggers;
-drop table chronos_simprop_triggers;
-drop table chronos_triggers;
-drop table chronos_job_details;
-drop table chronos_paused_trigger_grps;
-drop table chronos_locks;
-drop table chronos_scheduler_state;
+drop table glass_calendars;
+drop table glass_fired_triggers;
+drop table glass_blob_triggers;
+drop table glass_cron_triggers;
+drop table glass_simple_triggers;
+drop table glass_simprop_triggers;
+drop table glass_triggers;
+drop table glass_job_details;
+drop table glass_paused_trigger_grps;
+drop table glass_locks;
+drop table glass_scheduler_state;
 
 
-CREATE TABLE chronos_job_details
+CREATE TABLE glass_job_details
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     JOB_NAME  VARCHAR2(200) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE chronos_job_details
     JOB_DATA BLOB NULL,
     PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
-CREATE TABLE chronos_triggers
+CREATE TABLE glass_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -67,9 +67,9 @@ CREATE TABLE chronos_triggers
     JOB_DATA BLOB NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP) 
-	REFERENCES chronos_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP) 
+	REFERENCES glass_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP) 
 );
-CREATE TABLE chronos_simple_triggers
+CREATE TABLE glass_simple_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -79,9 +79,9 @@ CREATE TABLE chronos_simple_triggers
     TIMES_TRIGGERED NUMBER(10) NOT NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-	REFERENCES chronos_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+	REFERENCES glass_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE chronos_cron_triggers
+CREATE TABLE glass_cron_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -90,9 +90,9 @@ CREATE TABLE chronos_cron_triggers
     TIME_ZONE_ID VARCHAR2(80),
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-	REFERENCES chronos_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+	REFERENCES glass_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE chronos_simprop_triggers
+CREATE TABLE glass_simprop_triggers
   (          
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -110,9 +110,9 @@ CREATE TABLE chronos_simprop_triggers
     BOOL_PROP_2 VARCHAR(1) NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-    REFERENCES chronos_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+    REFERENCES glass_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE chronos_blob_triggers
+CREATE TABLE glass_blob_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -120,22 +120,22 @@ CREATE TABLE chronos_blob_triggers
     BLOB_DATA BLOB NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-        REFERENCES chronos_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES glass_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE chronos_calendars
+CREATE TABLE glass_calendars
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     CALENDAR_NAME  VARCHAR2(200) NOT NULL, 
     CALENDAR BLOB NOT NULL,
     PRIMARY KEY (SCHED_NAME,CALENDAR_NAME)
 );
-CREATE TABLE chronos_paused_trigger_grps
+CREATE TABLE glass_paused_trigger_grps
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_GROUP  VARCHAR2(200) NOT NULL, 
     PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE chronos_fired_triggers 
+CREATE TABLE glass_fired_triggers 
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     ENTRY_ID VARCHAR2(95) NOT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE chronos_fired_triggers
     REQUESTS_RECOVERY VARCHAR2(1) NULL,
     PRIMARY KEY (SCHED_NAME,ENTRY_ID)
 );
-CREATE TABLE chronos_scheduler_state 
+CREATE TABLE glass_scheduler_state 
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     INSTANCE_NAME VARCHAR2(200) NOT NULL,
@@ -159,33 +159,33 @@ CREATE TABLE chronos_scheduler_state
     CHECKIN_INTERVAL NUMBER(13) NOT NULL,
     PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
 );
-CREATE TABLE chronos_locks
+CREATE TABLE glass_locks
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     LOCK_NAME  VARCHAR2(40) NOT NULL, 
     PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
-create index idx_chrn_j_req_recovery on chronos_job_details(SCHED_NAME,REQUESTS_RECOVERY);
-create index idx_chrn_j_grp on chronos_job_details(SCHED_NAME,JOB_GROUP);
+create index idx_chrn_j_req_recovery on glass_job_details(SCHED_NAME,REQUESTS_RECOVERY);
+create index idx_chrn_j_grp on glass_job_details(SCHED_NAME,JOB_GROUP);
 
-create index idx_chrn_t_j on chronos_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_chrn_t_jg on chronos_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_chrn_t_c on chronos_triggers(SCHED_NAME,CALENDAR_NAME);
-create index idx_chrn_t_g on chronos_triggers(SCHED_NAME,TRIGGER_GROUP);
-create index idx_chrn_t_state on chronos_triggers(SCHED_NAME,TRIGGER_STATE);
-create index idx_chrn_t_n_state on chronos_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_chrn_t_n_g_state on chronos_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_chrn_t_next_fire_time on chronos_triggers(SCHED_NAME,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_st on chronos_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_misfire on chronos_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_st_misfire on chronos_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
-create index idx_chrn_t_nft_st_misfire_grp on chronos_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_chrn_t_j on glass_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_chrn_t_jg on glass_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_chrn_t_c on glass_triggers(SCHED_NAME,CALENDAR_NAME);
+create index idx_chrn_t_g on glass_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_chrn_t_state on glass_triggers(SCHED_NAME,TRIGGER_STATE);
+create index idx_chrn_t_n_state on glass_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_chrn_t_n_g_state on glass_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_chrn_t_next_fire_time on glass_triggers(SCHED_NAME,NEXT_FIRE_TIME);
+create index idx_chrn_t_nft_st on glass_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+create index idx_chrn_t_nft_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+create index idx_chrn_t_nft_st_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+create index idx_chrn_t_nft_st_misfire_grp on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
 
-create index idx_chrn_ft_trig_inst_name on chronos_fired_triggers(SCHED_NAME,INSTANCE_NAME);
-create index idx_chrn_ft_inst_job_req_rcvry on chronos_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
-create index idx_chrn_ft_j_g on chronos_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_chrn_ft_jg on chronos_fired_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_chrn_ft_t_g on chronos_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
-create index idx_chrn_ft_tg on chronos_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_chrn_ft_trig_inst_name on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME);
+create index idx_chrn_ft_inst_job_req_rcvry on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+create index idx_chrn_ft_j_g on glass_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_chrn_ft_jg on glass_fired_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_chrn_ft_t_g on glass_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+create index idx_chrn_ft_tg on glass_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
 

@@ -1,8 +1,19 @@
-/**
- * $URL: https://scm.eng.rtl.fr/svn/dev/rtlnet/webportals/glass.rtl.fr/engine/trunk/src/test/java/fr/rtlgroup/rtlnet/webportals/rtl/glass/web/util/JobPathScannerTest.java $
+/*
+ * Copyright 2011 Damien Bourdette
  *
- * $LastChangedBy: olivier.lagache $ - $LastChangedDate: 2011-07-12 11:04:19 +0200 (mar., 12 juil. 2011) $
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package glass.web.util;
 
 import glass.job.DummyJob;
@@ -15,10 +26,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.inject.Inject;
 import java.util.List;
 
-/**
- * @author RTL Group DTIT software development team (last changed by $LastChangedBy: olivier.lagache $)
- * @version $Revision: 66819 $
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/glass/spring-context.xml" })
 public class JobPathScannerTest {
