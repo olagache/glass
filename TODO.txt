@@ -7,6 +7,7 @@ x add link from cron expression to anchor for doc in same page
 x caps in table headers
 x restart icon
 x in memory job store for local tests
+x removed favico
 - add link "defined triggers" in menu to a list of all triggers with links to jobs
 - add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 - groovy jobs (saved in db ? mongo ? memory ?)
