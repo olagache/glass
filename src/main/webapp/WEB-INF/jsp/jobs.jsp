@@ -35,8 +35,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>group / name</th>
-                        <th>class</th>
+                        <th>Group / name</th>
+                        <th>Class</th>
                         <th>Delete</th>
                     </tr>
                 </thead>

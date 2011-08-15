@@ -4,8 +4,8 @@ x mysql sql init file
 x run@cloudbees
 x set link on github homepage
 x add link from cron expression to anchor for doc in same page
-- caps in table headers
-- restart icon
+x caps in table headers
+x restart icon
 - in memory job store for local tests
 - add link "defined triggers" in menu to a list of all triggers with links to jobs
 - add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
