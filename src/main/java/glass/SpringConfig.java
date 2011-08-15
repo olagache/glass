@@ -16,10 +16,9 @@
 
 package glass;
 
-import glass.history.QuartzListener;
+import glass.history.QuartzListenerForHistory;
+import glass.log.QuartzListenerForLogs;
 import org.quartz.Scheduler;
-import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
-import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.context.ApplicationContext;
@@ -45,7 +44,10 @@ public class SpringConfig {
     public static final String APPLICATION_CONTEXT_KEY = "applicationContext";
 
     @Inject
-    private QuartzListener quartzListener;
+    private QuartzListenerForHistory quartzListenerForHistory;
+
+    @Inject
+    private QuartzListenerForLogs quartzListenerForLogs;
 
     @Inject
     private Parameters parameters;
@@ -97,7 +99,8 @@ public class SpringConfig {
 
         Scheduler scheduler = factory.getObject();
 
-        scheduler.getListenerManager().addJobListener(quartzListener);
+        scheduler.getListenerManager().addJobListener(quartzListenerForHistory);
+        scheduler.getListenerManager().addSchedulerListener(quartzListenerForLogs);
 
         scheduler.start();
 

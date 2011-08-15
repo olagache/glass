@@ -45,6 +45,13 @@
                             <td><fmt:formatDate value="${log.date}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                             <td>${fn:escapeXml(log.message)}</td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <c:if test="${not empty log.stackTrace}">
+                                     <pre>${fn:escapeXml(log.stackTrace)}</pre>
+                                </c:if>
+                            </td>
+                        </tr>
                     </c:forEach>
                 </tbody>
             </table>

@@ -16,6 +16,8 @@
 
 package glass.log;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import java.util.Date;
 
 /**
@@ -26,6 +28,8 @@ public class Log {
     private Date date;
 
     private String message;
+
+    private String stackTrace;
 
     private Log() {
 
@@ -40,11 +44,25 @@ public class Log {
         return log;
     }
 
+    public static Log exception(String message, Exception e) {
+        Log log = new Log();
+
+        log.date = new Date();
+        log.message = message;
+        log.stackTrace = ExceptionUtils.getFullStackTrace(e);
+
+        return log;
+    }
+
     public Date getDate() {
         return date;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
     }
 }

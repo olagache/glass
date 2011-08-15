@@ -8,10 +8,11 @@ x caps in table headers
 x restart icon
 x in memory job store for local tests
 x removed favico
+x add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 - add link "defined triggers" in menu to a list of all triggers with links to jobs
-- add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 - groovy jobs (saved in db ? mongo ? memory ?)
 - add javamelody (+ configuration) + hyperlink in menu
+- 500 when creating a job : java.lang.IllegalArgumentException: Job class must implement the Job interface -> better message on screen
 
 v 0.2
 - when using in memory store, try to serialize and load jobs / trigges from tmp dir ?

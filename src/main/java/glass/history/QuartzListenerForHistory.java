@@ -28,13 +28,13 @@ import javax.inject.Inject;
  * @version \$Revision$
  */
 @Component
-public class QuartzListener extends JobListenerSupport {
+public class QuartzListenerForHistory extends JobListenerSupport {
     @Inject
     private History history;
 
     @Override
     public String getName() {
-        return QuartzListener.class.getName();
+        return QuartzListenerForHistory.class.getName();
     }
 
     @Override
