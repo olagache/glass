@@ -3,13 +3,14 @@ x DEV@cloudbees
 x mysql sql init file
 x run@cloudbees
 x set link on github homepage
-- add javamelody (+ configuration) + hyperlink in menu
-- add link "defined triggers" in menu to a list of all triggers with links to jobs
-- add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
+- add link from cron expression to anchor for doc in same page
 - caps in table headers
 - restart icon
+- in memory job store for local tests
+- add link "defined triggers" in menu to a list of all triggers with links to jobs
+- add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 - groovy jobs (saved in db ? mongo ? memory ?)
-- add link from cron expression to anchor for doc in same page
+- add javamelody (+ configuration) + hyperlink in menu
 
 v 0.2
 - filter history by job group / name and provide links form job page
