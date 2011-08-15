@@ -6,13 +6,14 @@ x set link on github homepage
 x add link from cron expression to anchor for doc in same page
 x caps in table headers
 x restart icon
-- in memory job store for local tests
+x in memory job store for local tests
 - add link "defined triggers" in menu to a list of all triggers with links to jobs
 - add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 - groovy jobs (saved in db ? mongo ? memory ?)
 - add javamelody (+ configuration) + hyperlink in menu
 
 v 0.2
+- when using in memory store, try to serialize and load jobs / trigges from tmp dir ?
 - filter history by job group / name and provide links form job page
 - better logging options
 - date fields with jquery + link "now +5 seconds"

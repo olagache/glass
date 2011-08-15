@@ -20,7 +20,7 @@
     <appid>dbourdette/glass</appid>
 
     <context-param>
-        <param-name>jdbc/database</param-name>
+        <param-name>store</param-name>
         <param-value>mysql</param-value>
     </context-param>
 

@@ -20,6 +20,7 @@ import glass.history.QuartzListener;
 import org.quartz.Scheduler;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
+import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,6 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.util.Locale;
 import java.util.Properties;
@@ -48,10 +48,14 @@ public class SpringConfig {
     private QuartzListener quartzListener;
 
     @Inject
-    private ServletContext servletContext;
+    private Parameters parameters;
 
     @Bean
     public DataSource dataSource() throws Exception {
+        if (parameters.isInMemory()) {
+            return null;
+        }
+
         JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
 
         factoryBean.setJndiName("java:comp/env/jdbc/glass");
@@ -66,7 +70,6 @@ public class SpringConfig {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
 
         factory.setApplicationContext(context);
-        factory.setDataSource(dataSource());
         factory.setExposeSchedulerInRepository(true);
         factory.setApplicationContextSchedulerContextKey(APPLICATION_CONTEXT_KEY);
 
@@ -77,15 +80,15 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.class", SimpleThreadPool.class.getName());
         properties.setProperty("org.quartz.threadPool.threadCount", "15");
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
-        properties.setProperty("org.quartz.jobStore.tablePrefix", "glass_");
-        properties.setProperty("org.quartz.jobStore.isClustered", "false");
 
-        String database = servletContext.getInitParameter("jdbc/database");
-
-        if ("oracle".equals(database)) {
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", OracleDelegate.class.getName());
+        if (parameters.isInMemory()) {
+            properties.setProperty("org.quartz.jobStore.class", RAMJobStore.class.getName());
         } else {
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", StdJDBCDelegate.class.getName());
+            factory.setDataSource(dataSource());
+
+            properties.setProperty("org.quartz.jobStore.tablePrefix", "glass_");
+            properties.setProperty("org.quartz.jobStore.isClustered", "false");
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", parameters.getDriverDelegateClass());
         }
 
         factory.setQuartzProperties(properties);
