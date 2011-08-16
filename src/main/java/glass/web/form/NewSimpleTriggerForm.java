@@ -79,11 +79,19 @@ public class NewSimpleTriggerForm {
             intervalInMilliseconds = 0;
         }
 
-        return TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
-                .withSchedule(SimpleScheduleBuilder.repeatHourlyForTotalCount(repeatCount).withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires())
+        TriggerBuilder builder = TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.buildDataMap(properties))
-                .build();
+                .usingJobData(JobUtils.buildDataMap(properties));
+
+        if (repeatCount == -1) {
+            builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever()
+                    .withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires());
+        } else {
+            builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().withRepeatCount(repeatCount)
+                    .withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires());
+        }
+
+        return builder.build();
     }
 
     public String getGroup() {

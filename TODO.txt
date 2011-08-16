@@ -10,7 +10,8 @@ x in memory job store for local tests
 x removed favico
 x add handler for "org.quartz.SchedulerException: Job instantiation failed" -> logs
 x add link "defined triggers" in menu to a list of all triggers with links to jobs
-- support -1 as no limit for simple trigger repeat attribute
+x support -1 as no limit for simple trigger repeat attribute
+- delete trigger
 - in TriggerWrapperForJsp add planification attribute for cron and simple triggers and display this in jsp instead of cron expression
 - groovy jobs (saved in db ? mongo ? memory ?)
 - add javamelody (+ configuration) + hyperlink in menu
