@@ -21,7 +21,16 @@ import glass.web.form.CronTriggerForm;
 import glass.web.form.NewCronTriggerForm;
 import glass.web.form.NewSimpleTriggerForm;
 import glass.web.form.SimpleTriggerForm;
-import org.quartz.*;
+import glass.web.util.JobAndTriggers;
+import glass.web.util.TriggerWrapperForJsp;
+import org.quartz.CronTrigger;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +42,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * @author damien bourdette
@@ -42,6 +56,35 @@ import java.text.ParseException;
 public class TriggersController {
     @Inject
     protected Scheduler quartzScheduler;
+
+    @RequestMapping("/triggers")
+    public String all(Model model) throws SchedulerException {
+        List<JobAndTriggers> jobsAndTriggers = new ArrayList<JobAndTriggers>();
+
+        List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
+        List<String> groups = quartzScheduler.getJobGroupNames();
+
+        for (String group : groups) {
+            List<JobKey> jobKeys = new ArrayList<JobKey>();
+            jobKeys.addAll(quartzScheduler.getJobKeys(groupEquals(group)));
+
+            Collections.sort(jobKeys);
+
+            for (JobKey jobKey : jobKeys) {
+                JobDetail jobDetail = quartzScheduler.getJobDetail(jobKey);
+
+                JobAndTriggers jobAndTrigger = new JobAndTriggers();
+                jobAndTrigger.setJobDetail(jobDetail);
+                jobAndTrigger.setTriggers(TriggerWrapperForJsp.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
+
+                jobsAndTriggers.add(jobAndTrigger);
+            }
+        }
+
+        model.addAttribute("jobsAndTriggers", jobsAndTriggers);
+
+        return "triggers";
+    }
 
     @RequestMapping("/jobs/{group}/{name}/triggers/new-cron")
     public String createCronTrigger(@PathVariable String group, @PathVariable String name, Model model) throws SchedulerException {

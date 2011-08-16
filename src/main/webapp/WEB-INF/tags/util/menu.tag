@@ -24,6 +24,7 @@
         <li><a href="/">dashboard</a></li>
         <li><a href="/jobs">defined jobs</a></li>
         <li><a href="/jobs/new">add job</a></li>
+        <li><a href="/triggers">defined triggers</a></li>
     </ul>
     <ul class="jobs">
         <li><a href="/history">run history</a></li>
