@@ -242,7 +242,7 @@ public class TriggersController {
             return "redirect:/jobs";
         }
 
-        quartzScheduler.unscheduleJob(new TriggerKey(triggerGroup, triggerName));
+        quartzScheduler.unscheduleJob(new TriggerKey(triggerName, triggerGroup));
 
         return "redirect:/jobs/{group}/{name}";
     }
