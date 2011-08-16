@@ -83,7 +83,7 @@
                         <th>End time</th>
                         <th>Last fire time</th>
                         <th>Next fire time</th>
-                        <th>cron expression</th>
+                        <th>planification</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -99,7 +99,7 @@
                             <td style="text-align: center;"><fmt:formatDate value="${trigger.endTime}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                             <td style="text-align: center;"><fmt:formatDate value="${trigger.previousFireTime}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                             <td style="text-align: center;"><fmt:formatDate value="${trigger.nextFireTime}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
-                            <td style="text-align: center;">${trigger.cronExpression}</td>
+                            <td style="text-align: center;">${trigger.planification}</td>
                             <td style="text-align: center;">
                                 <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/${fn:escapeXml(job.group)}/${fn:escapeXml(job.name)}/triggers/${fn:escapeXml(trigger.group)}/${fn:escapeXml(trigger.name)}/delete">
                                     <img alt="delete" src="/static/image/delete.png" />

@@ -19,6 +19,7 @@ package glass.web.util;
 import glass.job.JobUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobExecutionContext;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
 import java.util.ArrayList;
@@ -85,6 +86,26 @@ public class TriggerWrapperForJsp {
 
     public String getType() {
         return (trigger instanceof CronTrigger) ? "cron" : "simple";
+    }
+
+    public String getPlanification() {
+        if (trigger instanceof CronTrigger) {
+            return cronExpression;
+        }
+
+        SimpleTrigger simpleTrigger = (SimpleTrigger) trigger;
+
+        String planification = "";
+
+        if (simpleTrigger.getRepeatCount() == -1) {
+            planification += "forever every ";
+        } else {
+            planification += simpleTrigger.getRepeatCount() + " times every ";
+        }
+
+        planification += simpleTrigger.getRepeatInterval() + "ms";
+
+        return planification;
     }
 
     public String getGroup() {

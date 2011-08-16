@@ -17,7 +17,6 @@
 package glass.web.form;
 
 import glass.job.JobUtils;
-import glass.job.JobUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
