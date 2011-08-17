@@ -41,7 +41,7 @@ public class TriggerWrapperForJsp {
 
     private String cronExpression;
 
-    private String properties;
+    private String dataMap;
 
     private Trigger trigger;
 
@@ -65,7 +65,7 @@ public class TriggerWrapperForJsp {
         wrapper.name = trigger.getKey().getName();
         wrapper.startTime = trigger.getStartTime();
         wrapper.endTime = trigger.getEndTime();
-        wrapper.properties = JobUtils.buildProperties(trigger.getJobDataMap(), "\n");
+        wrapper.dataMap = JobUtils.toProperties(trigger.getJobDataMap(), "\n");
 
         if (trigger instanceof CronTrigger) {
             CronTrigger cronTrigger = (CronTrigger) trigger;
@@ -128,8 +128,8 @@ public class TriggerWrapperForJsp {
         return cronExpression;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
     public Date getPreviousFireTime() {

@@ -83,7 +83,7 @@ public class JobsController {
 
         model.addAttribute("job", job);
         model.addAttribute("jobDescription", JobUtils.getJobDescription(job.getJobClass()));
-        model.addAttribute("properties", JobUtils.buildProperties(job.getJobDataMap(), "\n"));
+        model.addAttribute("properties", JobUtils.toProperties(job.getJobDataMap(), "\n"));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();

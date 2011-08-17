@@ -70,7 +70,7 @@
                             </tr>
                             <tr>
                                 <td colspan="9">
-                                    <pre>${fn:escapeXml(trigger.properties)}</pre>
+                                    <pre>${fn:escapeXml(trigger.dataMap)}</pre>
                                 </td>
                             </tr>
                         </c:forEach>

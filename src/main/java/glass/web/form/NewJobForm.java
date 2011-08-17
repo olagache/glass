@@ -38,7 +38,7 @@ public class NewJobForm {
     @NotNull
     private Class<? extends Job> clazz;
 
-    private String properties;
+    private String dataMap;
 
     public NewJobForm() {
     }
@@ -48,7 +48,7 @@ public class NewJobForm {
         this.group = jobDetail.getKey().getGroup();
         this.name = jobDetail.getKey().getName();
         this.clazz = jobDetail.getJobClass();
-        this.properties = JobUtils.buildProperties(jobDetail.getJobDataMap(), "\n");
+        this.dataMap = JobUtils.toProperties(jobDetail.getJobDataMap(), "\n");
     }
 
     /**
@@ -59,7 +59,7 @@ public class NewJobForm {
     public JobDetail getJobDetails() {
         return JobBuilder.newJob(clazz)
                          .withIdentity(name.trim(), group.trim())
-                         .usingJobData(JobUtils.buildDataMap(properties))
+                         .usingJobData(JobUtils.fromProperties(dataMap))
                          .storeDurably()
                          .build();
     }
@@ -88,12 +88,12 @@ public class NewJobForm {
         this.clazz = clazz;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 
 }

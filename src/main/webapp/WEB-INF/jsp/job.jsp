@@ -57,9 +57,9 @@
                         <td>${fn:escapeXml(jobDescription)}</td>
                     </tr>
                     <tr>
-                        <td>Properties</td>
+                        <td>Data map</td>
                         <td>
-                            <pre>${fn:escapeXml(properties)}</pre>
+                            <pre>${fn:escapeXml(dataMap)}</pre>
                         </td>
                     </tr>
                 </tbody>
@@ -108,7 +108,7 @@
                         </tr>
                         <tr>
                             <td colspan="8">
-                                <pre>${fn:escapeXml(trigger.properties)}</pre>
+                                <pre>${fn:escapeXml(trigger.dataMap)}</pre>
                             </td>
                         </tr>
                     </c:forEach>

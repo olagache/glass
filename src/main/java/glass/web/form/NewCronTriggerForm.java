@@ -56,7 +56,7 @@ public class NewCronTriggerForm {
     @NotEmpty
     private String cronExpression;
 
-    private String properties;
+    private String dataMap;
 
     public NewCronTriggerForm() {
     }
@@ -73,7 +73,7 @@ public class NewCronTriggerForm {
         return TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.buildDataMap(properties))
+                .usingJobData(JobUtils.fromProperties(dataMap))
                 .build();
     }
 
@@ -133,11 +133,11 @@ public class NewCronTriggerForm {
         this.cronExpression = cronExpression;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 }

@@ -54,8 +54,8 @@
                         <td>${fn:escapeXml(name)}</td>
                     </tr>
                     <tr>
-                        <td valign="top">properties</td>
-                        <td><form:textarea path="properties" rows="20" cols="100" /></td>
+                        <td valign="top">data map</td>
+                        <td><form:textarea path="dataMap" rows="20" cols="100" /></td>
                     </tr>
                 </table>
                 <input type="submit" value="update job"/>

@@ -25,27 +25,27 @@ import org.quartz.JobDetail;
  * @version \$Revision$
  */
 public class JobForm {
-    private String properties;
+    private String dataMap;
 
     public JobForm() {}
 
     public JobForm(JobDetail jobDetail) {
-        this.properties = JobUtils.buildProperties(jobDetail.getJobDataMap(), "\n");
+        this.dataMap = JobUtils.toProperties(jobDetail.getJobDataMap(), "\n");
     }
 
     public JobDetail getJobDetails(JobDetail job) {
         return JobBuilder.newJob(job.getJobClass())
                          .withIdentity(job.getKey())
-                         .usingJobData(JobUtils.buildDataMap(properties))
+                         .usingJobData(JobUtils.fromProperties(dataMap))
                          .storeDurably()
                          .build();
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 }

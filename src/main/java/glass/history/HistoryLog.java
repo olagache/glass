@@ -43,7 +43,7 @@ public class HistoryLog {
 
     private String jobClass;
 
-    private String properties;
+    private String dataMap;
 
     private String stackTrace;
 
@@ -117,12 +117,12 @@ public class HistoryLog {
         this.triggerName = triggerName;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 
     public String getStackTrace() {
@@ -143,7 +143,7 @@ public class HistoryLog {
                 ", triggerGroup='" + triggerGroup + '\'' +
                 ", triggerName='" + triggerName + '\'' +
                 ", jobClass='" + jobClass + '\'' +
-                ", properties='" + properties + '\'' +
+                ", dataMap='" + dataMap + '\'' +
                 ", stackTrace='" + stackTrace + '\'' +
                 '}';
     }
@@ -159,7 +159,7 @@ public class HistoryLog {
         log.jobName = context.getJobDetail().getKey().getName();
         log.triggerGroup = context.getTrigger().getKey().getGroup();
         log.triggerName = context.getTrigger().getKey().getName();
-        log.properties = JobUtils.buildProperties(context.getMergedJobDataMap(), "\n");
+        log.dataMap = JobUtils.toProperties(context.getMergedJobDataMap(), "\n");
 
         return log;
     }

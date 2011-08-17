@@ -90,7 +90,7 @@ public class JobUtils {
         return annotation.description();
     }
 
-    public static String buildProperties(JobDataMap jobDataMap, String separator) {
+    public static String toProperties(JobDataMap jobDataMap, String separator) {
         String[] keys = jobDataMap.getKeys();
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -105,15 +105,15 @@ public class JobUtils {
         return stringBuilder.toString();
     }
 
-    public static JobDataMap buildDataMap(String properties) {
-        if (StringUtils.isEmpty(properties)) {
+    public static JobDataMap fromProperties(String dataMap) {
+        if (StringUtils.isEmpty(dataMap)) {
             return new JobDataMap();
         }
 
         Properties props = new Properties();
 
         try {
-            props.load(new StringReader(properties));
+            props.load(new StringReader(dataMap));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

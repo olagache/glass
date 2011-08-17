@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td colspan="5">
-                                <pre>${fn:escapeXml(log.properties)}</pre>
+                                <pre>${fn:escapeXml(log.dataMap)}</pre>
                                 <c:if test="${not empty log.stackTrace}">
                                      <pre>${fn:escapeXml(log.stackTrace)}</pre>
                                 </c:if>

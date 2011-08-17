@@ -45,7 +45,7 @@ public class CronTriggerForm {
     @NotEmpty
     private String cronExpression;
 
-    private String properties;
+    private String dataMap;
 
     public CronTriggerForm() {
     }
@@ -53,7 +53,7 @@ public class CronTriggerForm {
     public CronTriggerForm(Trigger trigger) {
         this.startTime = trigger.getStartTime();
         this.endTime = trigger.getEndTime();
-        this.properties = JobUtils.buildProperties(trigger.getJobDataMap(), "\n");
+        this.dataMap = JobUtils.toProperties(trigger.getJobDataMap(), "\n");
         this.cronExpression = ((CronTrigger) trigger).getCronExpression();
 
     }
@@ -63,7 +63,7 @@ public class CronTriggerForm {
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.buildDataMap(properties))
+                .usingJobData(JobUtils.fromProperties(dataMap))
                 .build();
     }
 
@@ -91,11 +91,11 @@ public class CronTriggerForm {
         this.cronExpression = cronExpression;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 }

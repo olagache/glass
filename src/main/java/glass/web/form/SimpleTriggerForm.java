@@ -45,7 +45,7 @@ public class SimpleTriggerForm {
 
     private Integer intervalInMilliseconds;
 
-    private String properties;
+    private String dataMap;
 
     public SimpleTriggerForm() {
     }
@@ -53,7 +53,7 @@ public class SimpleTriggerForm {
     public SimpleTriggerForm(Trigger trigger) {
         this.startTime = trigger.getStartTime();
         this.endTime = trigger.getEndTime();
-        this.properties = JobUtils.buildProperties(trigger.getJobDataMap(), "\n");
+        this.dataMap = JobUtils.toProperties(trigger.getJobDataMap(), "\n");
         this.repeatCount = ((SimpleTrigger) trigger).getRepeatCount();
         this.intervalInMilliseconds = (int) ((SimpleTrigger) trigger).getRepeatInterval();
     }
@@ -71,7 +71,7 @@ public class SimpleTriggerForm {
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .withSchedule(SimpleScheduleBuilder.repeatHourlyForTotalCount(repeatCount).withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.buildDataMap(properties))
+                .usingJobData(JobUtils.fromProperties(dataMap))
                 .build();
     }
 
@@ -107,11 +107,11 @@ public class SimpleTriggerForm {
         this.intervalInMilliseconds = intervalInMilliseconds;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 }

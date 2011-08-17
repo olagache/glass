@@ -57,7 +57,7 @@ public class NewSimpleTriggerForm {
 
     private Integer intervalInMilliseconds;
 
-    private String properties;
+    private String dataMap;
 
     public NewSimpleTriggerForm() {
     }
@@ -81,7 +81,7 @@ public class NewSimpleTriggerForm {
 
         TriggerBuilder builder = TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.buildDataMap(properties));
+                .usingJobData(JobUtils.fromProperties(dataMap));
 
         if (repeatCount == -1) {
             builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever()
@@ -158,11 +158,11 @@ public class NewSimpleTriggerForm {
         this.intervalInMilliseconds = intervalInMilliseconds;
     }
 
-    public String getProperties() {
-        return properties;
+    public String getDataMap() {
+        return dataMap;
     }
 
-    public void setProperties(String properties) {
-        this.properties = properties;
+    public void setDataMap(String dataMap) {
+        this.dataMap = dataMap;
     }
 }

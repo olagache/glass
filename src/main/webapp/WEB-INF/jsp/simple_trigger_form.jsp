@@ -68,8 +68,8 @@
                         <td><form:input path="intervalInMilliseconds" /><form:errors path="intervalInMilliseconds" /></td>
                     </tr>
                     <tr>
-                        <td>job data map :</td>
-                        <td><form:textarea path="properties" rows="20" cols="100" /></td>
+                        <td>data map :</td>
+                        <td><form:textarea path="dataMap" rows="20" cols="100" /></td>
                     </tr>
                 </table>
                 <input type="submit" value="create simple trigger"/>
