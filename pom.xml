@@ -399,7 +399,6 @@
             <scope>test</scope>
         </dependency>
 
-
         <!-- Quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -412,6 +411,13 @@
             <artifactId>quartz-oracle</artifactId>
             <version>2.0.2</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Groovy -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.8.1</version>
         </dependency>
 
     </dependencies>

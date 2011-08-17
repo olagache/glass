@@ -16,7 +16,7 @@
 
 package glass.web.controller;
 
-import glass.job.JobArgumentBean;
+import glass.annotation.JobArgumentBean;
 import glass.job.JobUtils;
 import glass.web.form.JobForm;
 import glass.web.form.NewJobForm;
@@ -84,7 +84,7 @@ public class JobsController {
         model.addAttribute("job", job);
         model.addAttribute("jobDescription", JobUtils.getJobDescription(job.getJobClass()));
         model.addAttribute("properties", JobUtils.buildProperties(job.getJobDataMap(), "\n"));
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
         List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(job.getKey());
@@ -175,7 +175,7 @@ public class JobsController {
             return null;
         }
         try {
-            return JobUtils.getJobArguments(Class.forName(className));
+            return JobArgumentBean.fromClass(Class.forName(className));
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -195,7 +195,7 @@ public class JobsController {
 
         model.addAttribute("jobClasses", jobClasses);
         model.addAttribute("jobDescription", JobUtils.getJobDescription(form.getClazz()));
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(form.getClazz()));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(form.getClazz()));
         model.addAttribute("form", form);
 
         return "new_job_form";
@@ -204,7 +204,7 @@ public class JobsController {
     private String form(Model model, JobForm form, Class<?> jobClass) {
         model.addAttribute("jobClass", jobClass);
         model.addAttribute("jobDescription", JobUtils.getJobDescription(jobClass));
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(jobClass));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(jobClass));
         model.addAttribute("form", form);
 
         return "job_form";

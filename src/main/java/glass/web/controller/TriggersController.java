@@ -16,7 +16,7 @@
 
 package glass.web.controller;
 
-import glass.job.JobUtils;
+import glass.annotation.JobArgumentBean;
 import glass.web.form.CronTriggerForm;
 import glass.web.form.NewCronTriggerForm;
 import glass.web.form.NewSimpleTriggerForm;
@@ -95,7 +95,7 @@ public class TriggersController {
         }
 
         model.addAttribute("form", new NewCronTriggerForm(job));
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         return "new_cron_trigger_form";
     }
@@ -110,7 +110,7 @@ public class TriggersController {
 
         if (result.hasErrors()) {
             model.addAttribute("form", form);
-            model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
             return "new_cron_trigger_form";
         }
@@ -129,7 +129,7 @@ public class TriggersController {
         }
 
         model.addAttribute("form", new NewSimpleTriggerForm(job));
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         return "new_simple_trigger_form";
     }
@@ -144,7 +144,7 @@ public class TriggersController {
 
         if (result.hasErrors()) {
             model.addAttribute("form", form);
-            model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
             return "new_simple_trigger_form";
         }
@@ -169,7 +169,7 @@ public class TriggersController {
         }
 
         model.addAttribute("trigger", trigger);
-        model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+        model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         if (trigger instanceof CronTrigger) {
             model.addAttribute("form", new CronTriggerForm(trigger));
@@ -198,7 +198,7 @@ public class TriggersController {
 
         if (result.hasErrors()) {
             model.addAttribute("trigger", trigger);
-            model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
             return "cron_trigger_form";
         }
@@ -224,7 +224,7 @@ public class TriggersController {
 
         if (result.hasErrors()) {
             model.addAttribute("trigger", trigger);
-            model.addAttribute("jobArguments", JobUtils.getJobArguments(job.getJobClass()));
+            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
             return "simple_trigger_form";
         }

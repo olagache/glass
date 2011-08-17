@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package glass.job;
+package glass.annotation;
 
-import glass.annotation.JobArgument;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Bean that can be used in jsp files and in json serialisations.
+ */
 public class JobArgumentBean {
 
     @JsonProperty
@@ -38,6 +43,24 @@ public class JobArgumentBean {
 
     @JsonProperty
     String[] sampleValues;
+
+    public static List<JobArgumentBean> fromClass(Class<?> jobClass) {
+        List<JobArgumentBean> jobArguments = new ArrayList<JobArgumentBean>();
+
+        if (jobClass == null) {
+            return null;
+        }
+
+        for (Field field : jobClass.getDeclaredFields()) {
+            JobArgument argument = field.getAnnotation(JobArgument.class);
+
+            if (argument != null) {
+                jobArguments.add(new JobArgumentBean(argument));
+            }
+        }
+
+        return jobArguments;
+    }
 
     public JobArgumentBean() {
 

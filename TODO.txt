@@ -13,18 +13,21 @@ x add link "defined triggers" in menu to a list of all triggers with links to jo
 x support -1 as no limit for simple trigger repeat attribute
 x delete trigger
 x in TriggerWrapperForJsp add planification attribute for cron and simple triggers and display this in jsp instead of cron expression
-- groovy jobs (saved in db ? mongo ? memory ?)
+x JobArgumentBean -> JsonJobArgument (nope cause it's not used only for json, done some refactoring instead)
+- properties -> dataMap
+- be able to use glass a base for another war
+
+v 0.2
 - add javamelody (+ configuration) + hyperlink in menu
 - 500 when creating a job : java.lang.IllegalArgumentException: Job class must implement the Job interface -> better message on screen
 - 500 when creating a job : Unable to store Trigger with name: 'test trigger' and group: 'DEFAULT', because one already exists with this identification -> better message on screen
 - add hyperlink for simple trigger no limit (sets -1 in field)
-
-v 0.2
 - when using in memory store, try to serialize and load jobs / trigges from tmp dir ?
 - filter history by job group / name and provide links form job page
 - better logging options
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
+- groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)
 
 v 0.3
 - view job class source ?

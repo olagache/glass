@@ -76,23 +76,6 @@ public class JobUtils {
         return jobArguments;
     }
 
-    public static List<JobArgumentBean> getJobArguments(Class<?> jobClass) {
-        if (jobClass == null) {
-            return null;
-        }
-
-        List<JobArgumentBean> jobArguments = new ArrayList<JobArgumentBean>();
-        JobArgument argument;
-        for (Field field : jobClass.getDeclaredFields()) {
-            // get annotation
-            argument = field.getAnnotation(JobArgument.class);
-            if (argument != null) {
-                jobArguments.add(new JobArgumentBean(argument));
-            }
-        }
-        return jobArguments;
-    }
-
     public static String getJobDescription(Class<?> jobClass) {
         if (jobClass == null) {
             return null;
