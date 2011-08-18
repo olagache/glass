@@ -16,7 +16,7 @@
                         <td>jobClass</td>
                         <td>$esc.html($jobClass.name)</td>
                     </tr>
-                    #if ($utils.notEmpty($jobDescription))
+                    #if ($utils.isNotEmpty($jobDescription))
                         <tr>
                             <td>description</td>
                             <td>$esc.html($jobDescription)</td>

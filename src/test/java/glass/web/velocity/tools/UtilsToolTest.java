@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package glass.web.tags;
+package glass.web.velocity.tools;
 
 import glass.job.DummyJob;
 import org.junit.Assert;
@@ -25,12 +25,15 @@ import org.quartz.impl.JobDetailImpl;
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
-public class JobFunctionsTest {
+public class UtilsToolTest {
+
+    private UtilsTool utilsTool = new UtilsTool();
+
     @Test
     public void testIsInterruptable() throws Exception {
         JobDetailImpl job = new JobDetailImpl();
         job.setJobClass(DummyJob.class);
 
-        Assert.assertEquals(true, JobFunctions.isInterruptible(job));
+        Assert.assertEquals(true, utilsTool.isInterruptible(job));
     }
 }

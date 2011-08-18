@@ -16,9 +16,9 @@ x in TriggerWrapperForJsp add planification attribute for cron and simple trigge
 x JobArgumentBean -> JsonJobArgument (nope cause it's not used only for json, done some refactoring instead)
 x properties -> dataMap
 - be able to use glass a base for another war
-- remove unneeded dependencies
-- configure velovity tools (VelocityToolsView)
 - configure cloudbees to build war (-P test) and jar file
+- remove unneeded dependencies
+- configure velocity tools (VelocityToolsView)
 - configure default date for formating
 - format duration on dashboard
 - start time (leave empty to start asap)

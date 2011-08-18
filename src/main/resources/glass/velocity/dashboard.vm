@@ -63,7 +63,7 @@
                                 #set ($duration = (($now.time - $jobContext.fireTime.time) / 1000))
                                 <td style="text-align: center">$duration seconds</td>
                                 <td style="text-align: center">
-                                    #if ($utils.interruptible($jobContext.jobDetail))
+                                    #if ($utils.isInterruptible($jobContext.jobDetail))
                                        <a href="/interrupt?group=$esc.xml($jobContext.jobDetail.group)&amp;name=$esc.xml($jobContext.jobDetail.name)">
                                            <img src="/image/stop.png" alt="stop" >
                                        </a>
