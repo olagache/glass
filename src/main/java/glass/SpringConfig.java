@@ -18,6 +18,8 @@ package glass;
 
 import glass.history.QuartzListenerForHistory;
 import glass.log.QuartzListenerForLogs;
+import glass.web.velocity.VelocityToolsView;
+import org.apache.velocity.exception.VelocityException;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
@@ -29,11 +31,13 @@ import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.view.velocity.VelocityConfig;
+import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
+import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -115,12 +119,26 @@ public class SpringConfig {
     }
 
     @Bean
-    public UrlBasedViewResolver urlBasedViewResolver() {
-        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-        resolver.setViewClass(JstlView.class);
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
-        return resolver;
+    public VelocityViewResolver viewResolver() {
+        VelocityViewResolver viewResolver = new VelocityViewResolver();
+        viewResolver.setCache(true);
+        viewResolver.setPrefix("/glass/velocity/");
+        viewResolver.setSuffix(".vm");
+        viewResolver.setViewClass(VelocityToolsView.class);
+        return viewResolver;
+    }
+
+    @Bean
+    public VelocityConfig velocityConfig() throws IOException, VelocityException {
+        Properties config = new Properties();
+        config.setProperty("resource.loader", "class");
+        config.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+        VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
+        velocityConfigurer.setVelocityProperties(config);
+        velocityConfigurer.afterPropertiesSet();
+
+        return velocityConfigurer;
     }
 
     @Bean

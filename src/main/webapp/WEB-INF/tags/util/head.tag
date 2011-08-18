@@ -18,6 +18,6 @@
 
 <title>Glass</title>
 		
-<link rel="stylesheet" href="/static/css/style.css" type="text/css" charset="utf-8" />
-<script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="/static/js/glass.js"></script>
+<link rel="stylesheet" href="/glass/velocity/css/style.css" type="text/css" charset="utf-8" />
+<script type="text/javascript" src="/glass/velocity/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/glass/velocity/js/glass.js"></script>

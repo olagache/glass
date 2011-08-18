@@ -1,0 +1,50 @@
+<html>
+	<head>
+		#parse("/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+		#parse("/glass/velocity/widgets/menu.vm")
+		
+		<h1><span>Create job</span></h1>
+
+        <div class="table">
+            <form:form id="jobActionForm" action="/jobs/new" commandName="form" method="POST" >
+                <table>
+                    <tr>
+                        <td>group</td>
+                        <td><form:input path="group" /><form:errors path="group" /></td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td><form:input path="name" /><form:errors path="name" /></td>
+                    </tr>
+                    <tr>
+                        <td>class</td>
+                        <td>
+                            <form:select path="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
+                                <form:option  label="------------------------------" value="null"/>
+                                <form:options itemLabel="name" itemValue="name" items="${jobClasses}"/>
+                            </form:select>
+                            <form:errors path="clazz" />
+                        </td>
+                    </tr>
+                    <c:if test="${not empty jobDescription}">
+                        <tr>
+                            <td>description</td>
+                            <td>${fn:escapeXml(jobDescription)}</td>
+                        </tr>
+                    </c:if>
+                    <tr>
+                        <td valign="top">data map</td>
+                        <td><form:textarea path="dataMap" rows="20" cols="100" /></td>
+                    </tr>
+                </table>
+                <input type="submit" value="create job"/>
+            </form:form>
+        </div>
+
+        <util:args arguments="${jobArguments}" />
+				
+	
+	</body>
+</html>

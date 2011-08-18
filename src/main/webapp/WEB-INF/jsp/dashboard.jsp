@@ -53,7 +53,7 @@
                                 <td><fmt:formatDate value="${trigger.nextFireTime}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                                 <td nowrap="nowrap">
                                     <a onclick="javascript:return(confirm('Are you sure you want to restart trigger ?'));" href="/restartTrigger?group=${fn:escapeXml(trigger.group)}&amp;name=${fn:escapeXml(trigger.name)}">
-                                        <img alt="restart" src="/static/image/restart.png" />
+                                        <img alt="restart" src="/glass/velocity/image/restart.png" />
                                     </a>
                                 </td>
                             </tr>
@@ -88,7 +88,7 @@
                                 <td style="text-align: center">${ (now.time - jobContext.fireTime.time) / 1000 }</td>
                                 <td style="text-align: center">
                                     <c:if test="${job:interruptable(jobContext.jobDetail)}">
-                                        <a href="/interrupt?group=${fn:escapeXml(jobContext.jobDetail.group)}&amp;name=${fn:escapeXml(jobContext.jobDetail.name)}"><img src="/static/image/stop.png" alt="stop" ></a>
+                                        <a href="/interrupt?group=${fn:escapeXml(jobContext.jobDetail.group)}&amp;name=${fn:escapeXml(jobContext.jobDetail.name)}"><img src="/glass/velocity/image/stop.png" alt="stop" ></a>
                                     </c:if>
                                 </td>
                             </tr>

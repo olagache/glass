@@ -72,6 +72,7 @@ public class IndexController {
             }
         }
 
+        model.addAttribute("toto", "arg");
         model.addAttribute("runningJobs", runningJobs);
         model.addAttribute("pausedTriggers", pausedTriggers);
         model.addAttribute("hangedTriggers", hangedTriggers);

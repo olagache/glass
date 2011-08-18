@@ -1,0 +1,20 @@
+<div class="menu">
+    <span class="title">Glass</span>
+    <ul class="items">
+        <li><a href="/">dashboard</a></li>
+        <li><a href="/jobs">defined jobs</a></li>
+        <li><a href="/triggers">defined triggers</a></li>
+        <li><a href="/jobs/new">add job</a></li>
+    </ul>
+    <ul class="jobs">
+        <li><a href="/history">run history</a></li>
+        <li><a href="/logs">logs</a></li>
+    </ul>
+    <span class="standby">
+        #if ($standby)
+            <a onclick="javascript:return(confirm('Are you sure you want to start scheduler ?'));" href="/start">start</a>
+        #else
+            <a onclick="javascript:return(confirm('Are you sure you want to standby scheduler ?'));" href="/standby">standby</a>
+        #end
+    </span>
+</div>

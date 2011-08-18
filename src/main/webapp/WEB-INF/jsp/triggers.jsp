@@ -64,7 +64,7 @@
                                 <td style="text-align: center;">${trigger.planification}</td>
                                 <td style="text-align: center;">
                                     <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/${fn:escapeXml(job.group)}/${fn:escapeXml(job.name)}/triggers/${fn:escapeXml(trigger.group)}/${fn:escapeXml(trigger.name)}/delete">
-                                        <img alt="delete" src="/static/image/delete.png" />
+                                        <img alt="delete" src="/glass/velocity/image/delete.png" />
                                     </a>
                                 </td>
                             </tr>

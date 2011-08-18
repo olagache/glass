@@ -42,27 +42,16 @@
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:glass/spring-glass-context.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!--jsp trimSpaces-->
-    <servlet>
-        <servlet-name>jsp</servlet-name>
-        <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
-        <init-param>
-            <param-name>fork</param-name>
-            <param-value>false</param-value>
-        </init-param>
-        <init-param>
-            <param-name>trimSpaces</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <load-on-startup>3</load-on-startup>
-    </servlet>
 
     <welcome-file-list>
         <welcome-file>index</welcome-file>
