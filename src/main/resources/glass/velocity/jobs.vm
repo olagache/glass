@@ -1,10 +1,11 @@
+<!DOCTYPE html>
+
 <html>
 	<head>
 		#parse("/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
-	
-		#parse("/glass/velocity/widgets/menu.vm")
+	    #parse("/glass/velocity/widgets/menu.vm")
 		
 		<h1><span>Defined jobs</span></h1>
         <div class="table">
@@ -19,11 +20,11 @@
                 <tbody>
                     #foreach ($job in $jobs)
                         <tr>
-                            <td><a href="/jobs/$esc.xml($job.group)}/$esc.xml($job.name)">$esc.html($job.group) / $esc.html($job.name)</a></td>
+                            <td><a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)">$esc.html($job.group) / $esc.html($job.name)</a></td>
                             <td>${job.jobClass.name}</td>
                             <td style="text-align: center;">
                                 <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/delete">
-                                    <img alt="delete" src="/glass/velocity/image/delete.png" />
+                                    <img alt="delete" src="/image/delete.png" />
                                 </a>
                             </td>
                         </tr>

@@ -19,6 +19,10 @@ x properties -> dataMap
 - remove unneeded dependencies
 - configure velovity tools (VelocityToolsView)
 - configure cloudbees to build war (-P test) and jar file
+- configure default date for formating
+- format duration on dashboard
+- start time (leave empty to start asap)
+- default repeat 1 or 0 ?
 
 v 0.2
 - add javamelody (+ configuration) + hyperlink in menu

@@ -23,12 +23,30 @@
     <artifactId>glass</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>glass</name>
-    <packaging>war</packaging>
+    <packaging>${profile.packaging}</packaging>
     <inceptionYear>2011</inceptionYear>
     <url>https://github.com/dbourdette/glass</url>
     <scm>
         <url>https://github.com/dbourdette/glass</url>
     </scm>
+
+    <profiles>
+        <profile>
+            <id>jar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.packaging>jar</profile.packaging>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profile.packaging>war</profile.packaging>
+            </properties>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>

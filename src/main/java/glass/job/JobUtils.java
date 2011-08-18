@@ -78,13 +78,13 @@ public class JobUtils {
 
     public static String getJobDescription(Class<?> jobClass) {
         if (jobClass == null) {
-            return null;
+            return "";
         }
 
         glass.annotation.Job annotation = jobClass.getAnnotation(glass.annotation.Job.class);
 
         if (annotation == null) {
-            return null;
+            return "";
         }
 
         return annotation.description();

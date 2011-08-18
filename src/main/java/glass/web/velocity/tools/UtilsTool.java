@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-package glass.web.tags;
+package glass.web.velocity.tools;
 
+import org.apache.commons.lang.StringUtils;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;
 
 /**
- * @author damien bourdette
+ * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
-public class JobFunctions {
-    public static boolean isInterruptible(JobDetail job) {
+public class UtilsTool {
+    public boolean isInterruptible(JobDetail job) {
         return InterruptableJob.class.isAssignableFrom(job.getJobClass());
+    }
+
+    public boolean isEmpty(String string) {
+        return StringUtils.isEmpty(string);
+    }
+
+    public boolean isNotEmpty(String string) {
+        return StringUtils.isNotEmpty(string);
     }
 }

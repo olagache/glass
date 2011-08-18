@@ -1,50 +1,63 @@
+<!DOCTYPE html>
+
 <html>
 	<head>
 		#parse("/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
 		#parse("/glass/velocity/widgets/menu.vm")
-		
+
 		<h1><span>Create job</span></h1>
 
         <div class="table">
-            <form:form id="jobActionForm" action="/jobs/new" commandName="form" method="POST" >
+            <form id="jobActionForm" action="/jobs/new" method="POST" >
                 <table>
+                    #springBind("form.group")
                     <tr>
                         <td>group</td>
-                        <td><form:input path="group" /><form:errors path="group" /></td>
+                        <td>
+                            <input type="text" name="group" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
                     </tr>
+                    #springBind("form.name")
                     <tr>
                         <td>name</td>
-                        <td><form:input path="name" /><form:errors path="name" /></td>
+                        <td>
+                            <input type="text" name="name" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
                     </tr>
+                    #springBind("form.clazz")
                     <tr>
                         <td>class</td>
                         <td>
-                            <form:select path="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
-                                <form:option  label="------------------------------" value="null"/>
-                                <form:options itemLabel="name" itemValue="name" items="${jobClasses}"/>
-                            </form:select>
-                            <form:errors path="clazz" />
+                            <select name="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
+                                <option label="------------------------------" value="" />
+                                #foreach ($value in $jobClasses)
+                                    <option label="$value.name" value="$value.name" />
+                                #end
+                            </select>
+                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
-                    <c:if test="${not empty jobDescription}">
+                    #if ($utils.notEmpty($jobDescription))
                         <tr>
                             <td>description</td>
-                            <td>${fn:escapeXml(jobDescription)}</td>
+                            <td>$esc.html($jobDescription)</td>
                         </tr>
-                    </c:if>
+                    #end
+                    #springBind("form.dataMap")
                     <tr>
                         <td valign="top">data map</td>
-                        <td><form:textarea path="dataMap" rows="20" cols="100" /></td>
+                        <td><textarea name="dataMap" rows="20" cols="100" >$!esc.html($status.value)</textarea></td>
                     </tr>
                 </table>
                 <input type="submit" value="create job"/>
-            </form:form>
+            </form>
         </div>
 
-        <util:args arguments="${jobArguments}" />
-				
-	
+        #parse("/glass/velocity/widgets/args.vm")
+
 	</body>
 </html>

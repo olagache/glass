@@ -16,6 +16,7 @@
 
 package glass.web.interceptor;
 
+import glass.web.velocity.tools.UtilsTool;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -34,6 +35,8 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private Scheduler quartzScheduler;
 
+    private UtilsTool utilsTool = new UtilsTool();
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView == null) {
@@ -42,8 +45,8 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
 
         ModelMap model =  modelAndView.getModelMap();
 
-        model.addAttribute("toto", "tata");
         model.addAttribute("standby", quartzScheduler.isInStandbyMode());
         model.addAttribute("now", new Date());
+        model.addAttribute("utils", utilsTool);
     }
 }

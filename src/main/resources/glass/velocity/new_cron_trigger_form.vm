@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+		#parse("/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+        #parse("/glass/velocity/widgets/menu.vm")
+
+        <h1><span>New cron trigger</span></h1>
+        <div class="table">
+            <form action="/jobs/$esc.xml($group)/$esc.xml($name)/triggers/new-cron" method="POST" >
+                <table>
+                    <tr>
+                        <td>job group :</td>
+                        <td>$esc.html($form.group)</td>
+                    </tr>
+                    <tr>
+                        <td>job name : </td>
+                        <td>$esc.html($form.name)</td>
+                    </tr>
+                    #springBind("form.triggerGroup")
+                    <tr>
+                        <td>group :</td>
+                        <td>
+                            <input type="text" name="triggerGroup" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
+                    </tr>
+                    #springBind("form.triggerName")
+                    <tr>
+                        <td>name :</td>
+                        <td>
+                            <input type="text" name="triggerName" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
+                    </tr>
+                    #springBind("form.startTime")
+                    <tr>
+                        <td>start time (dd/MM/yyyy HH:mm:ss) :</td>
+                        <td>
+                            <input type="text" name="startTime" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
+                    </tr>
+                    #springBind("form.endTime")
+                    <tr>
+                        <td>end time (dd/MM/yyyy HH:mm:ss) :</td>
+                        <td>
+                            <input type="text" name="endTime" value="$!esc.xml($status.value)" />
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
+                    </tr>
+                    #springBind("form.cronExpression")
+                    <tr>
+                        <td>cron expression :</td>
+                        <td>
+                            <input type="text" name="cronExpression" value="$!esc.xml($status.value)" />
+                            &nbsp;<a href="#cron-documentation">documentation</a>
+                            #if(${status.error}) ${status.errorMessage} #end
+                        </td>
+                    </tr>
+                    #springBind("form.dataMap")
+                    <tr>
+                        <td>data map :</td>
+                        <td><textarea name="dataMap" rows="20" cols="100" >$!esc.html($status.value)</textarea></td>
+                    </tr>
+                </table>
+                <input type="submit" value="create cron trigger"/>
+            </form>
+        </div>
+
+        #parse("/glass/velocity/widgets/args.vm")
+
+        #parse("/glass/velocity/widgets/cron_doc.vm")
+    </body>
+</html>

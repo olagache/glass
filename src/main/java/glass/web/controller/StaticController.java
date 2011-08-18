@@ -50,7 +50,7 @@ public class StaticController {
     public void javascript(@PathVariable String name, HttpServletResponse response) throws IOException {
         response.setContentType("application/javascript");
 
-        serveResource("/glass/velocity/js/" + name + ".png", response);
+        serveResource("/glass/velocity/js/" + name + ".js", response);
     }
 
     private void serveResource(String name, HttpServletResponse response) throws IOException {

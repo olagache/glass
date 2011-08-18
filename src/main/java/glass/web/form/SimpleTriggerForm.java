@@ -24,6 +24,7 @@ import org.quartz.TriggerBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.util.Date;
@@ -41,8 +42,11 @@ public class SimpleTriggerForm {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date endTime;
 
+    @Min(-1)
     private Integer repeatCount = 1;
 
+    @NotNull
+    @Min(1)
     private Integer intervalInMilliseconds;
 
     private String dataMap;

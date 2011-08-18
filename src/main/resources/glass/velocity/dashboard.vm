@@ -1,11 +1,11 @@
+<!DOCTYPE html>
 
 <html>
 	<head>
 		#parse("/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
-
-		#parse("/glass/velocity/widgets/menu.vm")
+        #parse("/glass/velocity/widgets/menu.vm")
 
         <h2><span>Hanged triggers</span></h2>
         <div class="table">
@@ -29,7 +29,7 @@
                                 <td>$date.format("dd/MM/yyyy HH:mm:ss", $trigger.nextFireTime)</td>
                                 <td nowrap="nowrap">
                                     <a onclick="javascript:return(confirm('Are you sure you want to restart trigger ?'));" href="/restartTrigger?group=$esc.xml($trigger.group)&amp;name=$esc.xml($trigger.name)">
-                                        <img alt="restart" src="/glass/velocity/image/restart.png" />
+                                        <img alt="restart" src="/image/restart.png" />
                                     </a>
                                 </td>
                             </tr>
@@ -60,13 +60,14 @@
                                 <td><a href="/jobs/$esc.xml($jobContext.jobDetail.group)/$esc.xml($jobContext.jobDetail.name)">${jobContext.jobDetail.group} / ${jobContext.jobDetail.name}</a></td>
                                 <td>${jobContext.jobDetail.jobClass}</td>
                                 <td style="text-align: center">$date.format("dd/MM/yyyy HH:mm:ss", $jobContext.fireTime)</td>
-                                <td style="text-align: center">${ (now.time - jobContext.fireTime.time) / 1000 }</td>
+                                #set ($duration = (($now.time - $jobContext.fireTime.time) / 1000))
+                                <td style="text-align: center">$duration seconds</td>
                                 <td style="text-align: center">
-                                    <!--
-                                    <c:if test="{job:interruptable(jobContext.jobDetail)}">
-                                        <a href="/interrupt?group={fn:escapeXml(jobContext.jobDetail.group)}&amp;name={fn:escapeXml(jobContext.jobDetail.name)}"><img src="/glass/velocity/image/stop.png" alt="stop" ></a>
-                                    </c:if>
-                                    -->
+                                    #if ($utils.interruptible($jobContext.jobDetail))
+                                       <a href="/interrupt?group=$esc.xml($jobContext.jobDetail.group)&amp;name=$esc.xml($jobContext.jobDetail.name)">
+                                           <img src="/image/stop.png" alt="stop" >
+                                       </a>
+                                    #end
                                 </td>
                             </tr>
                         #end
