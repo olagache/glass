@@ -26,7 +26,6 @@ import org.quartz.JobDetail;
  */
 public class UtilsTool {
     public boolean isInterruptible(JobDetail job) {
-        System.out.println(InterruptableJob.class.isAssignableFrom(job.getJobClass()));
         return InterruptableJob.class.isAssignableFrom(job.getJobClass());
     }
 

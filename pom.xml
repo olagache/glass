@@ -150,18 +150,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- javax -->
+        <!-- test db -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.1.2</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <scope>compile</scope>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.7</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- jee specs -->
@@ -222,22 +216,6 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- cglib -->
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>2.1_3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- aop -->
-        <dependency>
-            <groupId>aopalliance</groupId>
-            <artifactId>aopalliance</artifactId>
-            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -303,6 +281,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- aop -->
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- aspectj -->
         <dependency>
             <groupId>aspectj</groupId>
@@ -323,33 +309,25 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- cglib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.1_3</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>4.1.0.Beta1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- database drivers and morphia -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>2.5.2</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.morphia</groupId>
-            <artifactId>morphia</artifactId>
-            <version>0.99</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- web -->
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>1.1.2</version>
             <scope>compile</scope>
         </dependency>
 
@@ -372,12 +350,6 @@
             <version>1.6.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-jsptags</artifactId>
-            <version>1.0.2</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- jackson -->
         <dependency>
@@ -390,20 +362,6 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.5.3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- google commons -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>r09</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -421,14 +379,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- database drivers -->
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -441,13 +391,6 @@
             <artifactId>quartz-oracle</artifactId>
             <version>2.0.2</version>
             <scope>compile</scope>
-        </dependency>
-
-        <!-- Groovy -->
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>1.8.1</version>
         </dependency>
 
     </dependencies>
