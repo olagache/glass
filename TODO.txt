@@ -16,15 +16,17 @@ x in TriggerWrapperForJsp add planification attribute for cron and simple trigge
 x JobArgumentBean -> JsonJobArgument (nope cause it's not used only for json, done some refactoring instead)
 x properties -> dataMap
 x configure cloudbees to build war (-P test) and jar file
+x remove unneeded dependencies
+x glass -> org.glass
 - be able to use glass a base for another war
-- remove unneeded dependencies
-- configure velocity tools (VelocityToolsView)
-- configure default date for formating
-- format duration on dashboard
 - start time for triggers ("leave empty to start asap")
 - default repeat 1 or 0 ?
+- excluse DummyJob from jar build profile
 
 v 0.2
+- format duration on dashboard
+- configure velocity tools (VelocityToolsView)
+- configure default date for formating
 - add javamelody (+ configuration) + hyperlink in menu
 - 500 when creating a job : java.lang.IllegalArgumentException: Job class must implement the Job interface -> better message on screen
 - 500 when creating a job : Unable to store Trigger with name: 'test trigger' and group: 'DEFAULT', because one already exists with this identification -> better message on screen
@@ -35,6 +37,7 @@ v 0.2
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
 - groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)
+- find a public maven repo for jar files
 
 v 0.3
 - view job class source ?

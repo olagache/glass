@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		#parse("/org/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+	    #parse("/org/glass/velocity/widgets/menu.vm")
+		
+		<h1><span>Job</span></h1>
+        <div class="actions">
+            <a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/edit">edit</a>
+            <a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/fire">fire now</a>
+            <a href="/history?job=${job.jobClass.simpleName}">history</a>
+            <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/delete">delete</a>
+        </div>
+        <div class="table">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Group</td>
+                        <td>$esc.html($job.group)</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>$esc.html($job.name)</td>
+                    </tr>
+                    <tr>
+                        <td>Class</td>
+                        <td>$esc.html($job.jobClass.name)</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>$esc.html($jobDescription)</td>
+                    </tr>
+                    <tr>
+                        <td>Data map</td>
+                        <td>
+                            <pre>$esc.html($dataMap)</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        #parse("/org/glass/velocity/widgets/args.vm")
+
+		<h2><span>Defined triggers</span></h2>
+        <div class="actions">
+            <a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/triggers/new-cron">add cron</a>
+            <a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/triggers/new-simple">add simple</a>
+        </div>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Group / name</th>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th>Last fire time</th>
+                        <th>Next fire time</th>
+                        <th>planification</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach ($trigger in $triggers)
+                        <tr>
+                            <td style="text-align: center;">$esc.html($trigger.type)</td>
+                            <td><a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/triggers/$esc.xml($trigger.group)/$esc.xml($trigger.name)/edit">$esc.html($trigger.group) / $esc.html($trigger.name)</a></td>
+                            <td style="text-align: center;">
+                                $date.format("dd/MM/yyyy HH:mm:ss", $trigger.startTime)
+                                #if ($trigger.running) &nbsp;<span style="color: red;">running</span> #end
+                            </td>
+                            <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.endTime)</td>
+                            <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.previousFireTime)</td>
+                            <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.nextFireTime)</td>
+                            <td style="text-align: center;">${trigger.planification}</td>
+                            <td style="text-align: center;">
+                                <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/triggers/$esc.xml($trigger.group)/$esc.xml($trigger.name)/delete">
+                                    <img alt="delete" src="/image/delete.png" />
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <pre>$!esc.hmtl($trigger.dataMap)</pre>
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+	</body>
+</html>

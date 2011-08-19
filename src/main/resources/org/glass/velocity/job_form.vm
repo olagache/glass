@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		#parse("/org/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+		#parse("/org/glass/velocity/widgets/menu.vm")
+		
+		<h1><span>Edit job</span></h1>
+
+        <div class="table">
+            <form id="jobActionForm" action="/jobs/$esc.xml($group)/$esc.xml($name)/edit" method="POST" >
+                <table>
+                    <tr>
+                        <td>jobClass</td>
+                        <td>$esc.html($jobClass.name)</td>
+                    </tr>
+                    #if ($utils.isNotEmpty($jobDescription))
+                        <tr>
+                            <td>description</td>
+                            <td>$esc.html($jobDescription)</td>
+                        </tr>
+                    #end
+                    <tr>
+                        <td>group</td>
+                        <td>$esc.html($group)</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>$esc.html($name)</td>
+                    </tr>
+                    #springBind("form.dataMap")
+                    <tr>
+                        <td valign="top">data map</td>
+                        <td><textarea name="dataMap" rows="20" cols="100" >$!esc.html($status.value)</textarea></td>
+                    </tr>
+                </table>
+                <input type="submit" value="update job"/>
+            </form>
+        </div>
+
+        #parse("/org/glass/velocity/widgets/args.vm")
+	
+	</body>
+</html>
