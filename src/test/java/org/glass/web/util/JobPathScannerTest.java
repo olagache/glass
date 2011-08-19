@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/org.glass/spring-context.xml" })
+@ContextConfiguration(locations = { "/org/glass/spring-context.xml" })
 public class JobPathScannerTest {
 
     @Inject
