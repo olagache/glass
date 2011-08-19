@@ -9,21 +9,21 @@
 
         <h1><span>New cron trigger</span></h1>
         <div class="table">
-            <form action="/jobs/$esc.xml($group)/$esc.xml($name)/triggers/new-cron" method="POST" >
+            <form action="/jobs/$format.html($group)/$format.html($name)/triggers/new-cron" method="POST" >
                 <table>
                     <tr>
                         <td>job group :</td>
-                        <td>$esc.html($form.group)</td>
+                        <td>$format.html($form.group)</td>
                     </tr>
                     <tr>
                         <td>job name : </td>
-                        <td>$esc.html($form.name)</td>
+                        <td>$format.html($form.name)</td>
                     </tr>
                     #springBind("form.triggerGroup")
                     <tr>
                         <td>group :</td>
                         <td>
-                            <input type="text" name="triggerGroup" value="$!esc.xml($status.value)" />
+                            <input type="text" name="triggerGroup" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -31,7 +31,7 @@
                     <tr>
                         <td>name :</td>
                         <td>
-                            <input type="text" name="triggerName" value="$!esc.xml($status.value)" />
+                            <input type="text" name="triggerName" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -39,7 +39,7 @@
                     <tr>
                         <td>start time (dd/MM/yyyy HH:mm:ss) :</td>
                         <td>
-                            <input type="text" name="startTime" value="$!esc.xml($status.value)" />
+                            <input type="text" name="startTime" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -47,7 +47,7 @@
                     <tr>
                         <td>end time (dd/MM/yyyy HH:mm:ss) :</td>
                         <td>
-                            <input type="text" name="endTime" value="$!esc.xml($status.value)" />
+                            <input type="text" name="endTime" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -55,7 +55,7 @@
                     <tr>
                         <td>cron expression :</td>
                         <td>
-                            <input type="text" name="cronExpression" value="$!esc.xml($status.value)" />
+                            <input type="text" name="cronExpression" value="$!format.html($status.value)" />
                             &nbsp;<a href="#cron-documentation">documentation</a>
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
@@ -63,7 +63,7 @@
                     #springBind("form.dataMap")
                     <tr>
                         <td>data map :</td>
-                        <td><textarea name="dataMap" rows="20" cols="100" >$!esc.html($status.value)</textarea></td>
+                        <td><textarea name="dataMap" rows="20" cols="100" >$!format.html($status.value)</textarea></td>
                     </tr>
                 </table>
                 <input type="submit" value="create cron trigger"/>

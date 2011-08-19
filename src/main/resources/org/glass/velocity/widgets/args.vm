@@ -15,16 +15,16 @@
                     <td style="text-align: center">
                         #if ($argument.required)
                             <span style="font-weight:bold;" >
-                                $esc.html($argument.name)*
+                                $format.html($argument.name)*
                             </span>
                         #else
-                            $esc.html($argument.name)*
+                            $format.html($argument.name)*
                         #end
                     </td>
-                    <td>$esc.html($argument.description)</td>
+                    <td>$format.html($argument.description)</td>
                     <td>
                         #foreach ($sampleValue in $argument.sampleValues)
-                            $esc.html($sampleValue)<br>
+                            $format.html($sampleValue)<br>
                         </c:forEach>
                         #end
                     </c:if></td>

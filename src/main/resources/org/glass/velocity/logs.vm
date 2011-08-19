@@ -19,13 +19,13 @@
                 <tbody>
                     #foreach ($log in $logs)
                         <tr>
-                            <td>$date.format("dd/MM/yyyy HH:mm:ss", ${log.date})</td>
-                            <td>$esc.html($log.message)</td>
+                            <td>$format.date(${log.date})</td>
+                            <td>$format.html($log.message)</td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 #if ($utils.isNotEmpty($log.stackTrace))
-                                     <pre>$esc.html($log.stackTrace)</pre>
+                                     <pre>$format.html($log.stackTrace)</pre>
                                 #end
                             </td>
                         </tr>

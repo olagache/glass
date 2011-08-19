@@ -21,13 +21,12 @@ x glass -> org.glass
 x be able to use glass a base for another war
 --- beta 1 ---
 x remove apache commons io
+x remove velocity tools
 - start time for triggers ("leave empty to start asap")
 - default repeat 1 or 0 ?
 - excluse DummyJob from jar build profile
 - spring conversion for jobs : date, numbers...
 - @Inject in jobs
-
-- remove velocity tools
 
 v 0.2
 - remove apache commons

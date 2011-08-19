@@ -28,26 +28,26 @@
                         #set ($job = $jobAndTriggers.jobDetail)
                         #foreach ($trigger in $jobAndTriggers.triggers)
                             <tr>
-                                <td style="text-align: center;">$esc.html($trigger.type)</td>
-                                <td><a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)">$esc.html($job.group) / $esc.html($job.name)</a></td>
-                                <td>$esc.html($trigger.group) / $esc.html($trigger.name)</td>
+                                <td style="text-align: center;">$format.html($trigger.type)</td>
+                                <td><a href="/jobs/$format.html($job.group)/$format.html($job.name)">$format.html($job.group) / $format.html($job.name)</a></td>
+                                <td>$format.html($trigger.group) / $format.html($trigger.name)</td>
                                 <td style="text-align: center;">
-                                    $date.format("dd/MM/yyyy HH:mm:ss", $trigger.startTime)
+                                    $format.date($trigger.startTime)
                                     #if ($trigger.running) &nbsp;<span style="color: red;">running</span> #end
                                 </td>
-                                <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.endTime)</td>
-                                <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.previousFireTime)</td>
-                                <td style="text-align: center;">$!date.format("dd/MM/yyyy HH:mm:ss", $trigger.nextFireTime)</td>
-                                <td style="text-align: center;">$esc.html($trigger.planification)</td>
+                                <td style="text-align: center;">$format.date($trigger.endTime)</td>
+                                <td style="text-align: center;">$format.date($trigger.previousFireTime)</td>
+                                <td style="text-align: center;">$format.date($trigger.nextFireTime)</td>
+                                <td style="text-align: center;">$format.html($trigger.planification)</td>
                                 <td style="text-align: center;">
-                                    <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/triggers/$esc.xml($trigger.group)/$esc.xml($trigger.name)/delete">
+                                    <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$format.html($job.group)/$format.html($job.name)/triggers/$format.html($trigger.group)/$format.html($trigger.name)/delete">
                                         <img alt="delete" src="/image/delete.png" />
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="9">
-                                    <pre>$esc.html($trigger.dataMap)</pre>
+                                    <pre>$format.html($trigger.dataMap)</pre>
                                 </td>
                             </tr>
                         #end

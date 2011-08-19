@@ -16,12 +16,14 @@
 
 package org.glass.web.interceptor;
 
+import org.glass.web.velocity.tools.FormatTool;
 import org.glass.web.velocity.tools.UtilsTool;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContext;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +40,8 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
 
     private UtilsTool utilsTool = new UtilsTool();
 
+    private FormatTool formatTool = new FormatTool();
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView == null) {
@@ -49,5 +53,6 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
         model.addAttribute("standby", quartzScheduler.isInStandbyMode());
         model.addAttribute("now", new Date());
         model.addAttribute("utils", utilsTool);
+        model.addAttribute("format", formatTool);
     }
 }

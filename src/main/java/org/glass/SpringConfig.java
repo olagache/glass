@@ -16,10 +16,11 @@
 
 package org.glass;
 
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.glass.history.QuartzListenerForHistory;
 import org.glass.log.QuartzListenerForLogs;
-import org.glass.web.velocity.VelocityToolsView;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.springframework.web.servlet.view.velocity.VelocityConfig;
@@ -90,7 +92,7 @@ public class SpringConfig {
         factory.setApplicationContextSchedulerContextKey(APPLICATION_CONTEXT_KEY);
 
         // use our own copy of SpringBeanJobFactory until it is fix in spring 3.1.0 RC1 for quartz 2.0
-        factory.setJobFactory(new org.glass.spring.SpringBeanJobFactory());
+        factory.setJobFactory(new SpringBeanJobFactory());
 
         Properties properties = new Properties();
         properties.setProperty("org.quartz.threadPool.class", SimpleThreadPool.class.getName());
@@ -134,7 +136,6 @@ public class SpringConfig {
         viewResolver.setCache(true);
         viewResolver.setPrefix("/org/glass/velocity/");
         viewResolver.setSuffix(".vm");
-        viewResolver.setViewClass(VelocityToolsView.class);
         return viewResolver;
     }
 

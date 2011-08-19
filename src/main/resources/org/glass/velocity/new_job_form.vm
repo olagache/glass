@@ -16,7 +16,7 @@
                     <tr>
                         <td>group</td>
                         <td>
-                            <input type="text" name="group" value="$!esc.xml($status.value)" />
+                            <input type="text" name="group" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>name</td>
                         <td>
-                            <input type="text" name="name" value="$!esc.xml($status.value)" />
+                            <input type="text" name="name" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -44,13 +44,13 @@
                     #if ($utils.isNotEmpty($jobDescription))
                         <tr>
                             <td>description</td>
-                            <td>$esc.html($jobDescription)</td>
+                            <td>$format.html($jobDescription)</td>
                         </tr>
                     #end
                     #springBind("form.dataMap")
                     <tr>
                         <td valign="top">data map</td>
-                        <td><textarea name="dataMap" rows="20" cols="100" >$!esc.html($status.value)</textarea></td>
+                        <td><textarea name="dataMap" rows="20" cols="100" >$!format.html($status.value)</textarea></td>
                     </tr>
                 </table>
                 <input type="submit" value="create job"/>

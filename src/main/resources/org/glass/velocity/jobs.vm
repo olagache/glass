@@ -20,10 +20,10 @@
                 <tbody>
                     #foreach ($job in $jobs)
                         <tr>
-                            <td><a href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)">$esc.html($job.group) / $esc.html($job.name)</a></td>
+                            <td><a href="/jobs/$format.html($job.group)/$format.html($job.name)">$format.html($job.group) / $format.html($job.name)</a></td>
                             <td>${job.jobClass.name}</td>
                             <td style="text-align: center;">
-                                <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$esc.xml($job.group)/$esc.xml($job.name)/delete">
+                                <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="/jobs/$format.html($job.group)/$format.html($job.name)/delete">
                                     <img alt="delete" src="/image/delete.png" />
                                 </a>
                             </td>
