@@ -24,6 +24,8 @@ x glass -> org.glass
 - excluse DummyJob from jar build profile
 
 v 0.2
+- remove apache commons
+- add favicon.ico
 - format duration on dashboard
 - configure velocity tools (VelocityToolsView)
 - configure default date for formating

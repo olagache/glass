@@ -24,6 +24,8 @@
 
 	<context:component-scan base-package="org.glass" />
 
+    <mvc:default-servlet-handler />
+
     <mvc:interceptors>
         <bean class="org.glass.web.interceptor.AddToModelInterceptor" />
     </mvc:interceptors>
