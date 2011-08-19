@@ -16,10 +16,10 @@
 
 package org.glass;
 
+import org.apache.velocity.exception.VelocityException;
 import org.glass.history.QuartzListenerForHistory;
 import org.glass.log.QuartzListenerForLogs;
 import org.glass.web.velocity.VelocityToolsView;
-import org.apache.velocity.exception.VelocityException;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
@@ -36,6 +36,7 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Locale;
@@ -54,17 +55,26 @@ public class SpringConfig {
     private QuartzListenerForLogs quartzListenerForLogs;
 
     @Inject
-    private Parameters parameters;
+    private ServletContext servletContext;
+
+    @Bean
+    public Parameters parameters() {
+        Parameters parameters = new Parameters();
+
+        parameters.init(servletContext);
+
+        return parameters;
+    }
 
     @Bean
     public DataSource dataSource() throws Exception {
-        if (parameters.isInMemory()) {
+        if (parameters().isInMemory()) {
             return null;
         }
 
         JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
 
-        factoryBean.setJndiName("java:comp/env/glass/jdbc");
+        factoryBean.setJndiName("java:comp/env/jdbc/glassDb");
 
         factoryBean.afterPropertiesSet();
 
@@ -87,14 +97,14 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.threadCount", "15");
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
 
-        if (parameters.isInMemory()) {
+        if (parameters().isInMemory()) {
             properties.setProperty("org.quartz.jobStore.class", RAMJobStore.class.getName());
         } else {
             factory.setDataSource(dataSource());
 
-            properties.setProperty("org.quartz.jobStore.tablePrefix", parameters.getTablePrefix());
+            properties.setProperty("org.quartz.jobStore.tablePrefix", parameters().getTablePrefix());
             properties.setProperty("org.quartz.jobStore.isClustered", "false");
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", parameters.getDriverDelegateClass());
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", parameters().getDriverDelegateClass());
         }
 
         factory.setQuartzProperties(properties);

@@ -16,7 +16,7 @@
 
 package org.glass.web.util;
 
-import org.glass.SpringConfig;
+import org.glass.Parameters;
 import org.glass.annotation.Job;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -24,6 +24,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,9 @@ public class JobPathScanner {
 
     List<String> jobPaths = new ArrayList<String>();
 
+    @Inject
+    private Parameters parameters;
+
     public List<String> getJobsPaths() {
         return jobPaths;
     }
@@ -45,7 +49,7 @@ public class JobPathScanner {
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(Job.class));
 
-        for (BeanDefinition definition : provider.findCandidateComponents(SpringConfig.class.getPackage().getName())) {
+        for (BeanDefinition definition : provider.findCandidateComponents(parameters.getJobBasePackage())) {
             jobPaths.add(definition.getBeanClassName());
         }
 

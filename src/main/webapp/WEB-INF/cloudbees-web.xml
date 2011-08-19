@@ -29,7 +29,12 @@
         <param-value>glass_</param-value>
     </context-param>
 
-    <resource name="glass/jdbc" auth="Container" type="javax.sql.DataSource">
+    <context-param>
+        <param-name>glass/jobBasePackage</param-name>
+        <param-value>org.glass.job</param-value>
+    </context-param>
+
+    <resource name="jdbc/glassDb" auth="Container" type="javax.sql.DataSource">
         <param name="username" value="glass" />
         <param name="password" value="icoulddrinksome" />
         <param name="url" value="jdbc:cloudbees://glass" />

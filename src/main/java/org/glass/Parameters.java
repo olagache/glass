@@ -17,12 +17,10 @@
 package org.glass;
 
 import org.apache.commons.lang.StringUtils;
+import org.glass.job.DummyJob;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 /**
@@ -31,35 +29,32 @@ import javax.servlet.ServletContext;
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
-@Component
 public class Parameters {
 
     public static final String MEMORY = "memory";
 
     public static final String DEFAULT_TABLE_PREFIX = "glass_";
 
-    @Inject
-    private ServletContext servletContext;
-
     /**
      * Supported values are : memory (default), oracle and mysql.
      */
-    private String store;
+    private String store = MEMORY;
 
-    private String tablePrefix;
+    private String tablePrefix = DEFAULT_TABLE_PREFIX;
 
-    @PostConstruct
-    public void init() {
-        store = servletContext.getInitParameter("org.glass/store");
+    private String jobBasePackage = DummyJob.class.getPackage().getName();
 
-        if (StringUtils.isEmpty(store)) {
-            store = MEMORY;
+    public void init(ServletContext servletContext) {
+        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/store"))) {
+            store = servletContext.getInitParameter("glass/store");
         }
 
-        tablePrefix = servletContext.getInitParameter("org.glass/tablePrefix");
+        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/tablePrefix"))) {
+            tablePrefix = servletContext.getInitParameter("glass/tablePrefix");
+        }
 
-        if (StringUtils.isEmpty(tablePrefix)) {
-            tablePrefix = DEFAULT_TABLE_PREFIX;
+        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/jobBasePackage"))) {
+            jobBasePackage = servletContext.getInitParameter("glass/jobBasePackage");
         }
     }
 
@@ -83,5 +78,9 @@ public class Parameters {
 
     public String getTablePrefix() {
         return tablePrefix;
+    }
+
+    public String getJobBasePackage() {
+        return jobBasePackage;
     }
 }

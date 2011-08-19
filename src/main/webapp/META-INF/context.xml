@@ -17,6 +17,6 @@
 
 <Context swallowOutput="true" useHttpOnly="true">
 
-    <Parameter name="store" value="memory"/>
+    <Parameter name="glass/store" value="memory"/>
 
 </Context>

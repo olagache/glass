@@ -18,10 +18,12 @@ x properties -> dataMap
 x configure cloudbees to build war (-P test) and jar file
 x remove unneeded dependencies
 x glass -> org.glass
-- be able to use glass a base for another war
+x be able to use glass a base for another war
+--- beta 1 ---
 - start time for triggers ("leave empty to start asap")
 - default repeat 1 or 0 ?
 - excluse DummyJob from jar build profile
+- spring conversion for jobs : date, numbers...
 
 v 0.2
 - remove apache commons
