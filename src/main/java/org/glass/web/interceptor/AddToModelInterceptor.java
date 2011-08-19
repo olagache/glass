@@ -23,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -32,7 +33,7 @@ import java.util.Date;
  * @version \$Revision$
  */
 public class AddToModelInterceptor extends HandlerInterceptorAdapter {
-    @Autowired
+    @Inject
     private Scheduler quartzScheduler;
 
     private UtilsTool utilsTool = new UtilsTool();

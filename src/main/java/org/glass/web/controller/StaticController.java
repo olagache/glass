@@ -16,7 +16,6 @@
 
 package org.glass.web.controller;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author damien bourdette
@@ -32,6 +32,9 @@ import java.io.InputStream;
  */
 @Controller
 public class StaticController {
+
+    public static final int BUFFER_SIZE = 1024;
+
     @RequestMapping("/css/style.css")
     public void ccs(HttpServletResponse response) throws IOException {
         response.setContentType("text/css");
@@ -55,8 +58,14 @@ public class StaticController {
 
     private void serveResource(String name, HttpServletResponse response) throws IOException {
         InputStream inputStream = getClass().getResourceAsStream(name);
+        OutputStream outputStream = response.getOutputStream();
 
-        IOUtils.copy(inputStream, response.getOutputStream());
+        byte[] buffer = new byte[BUFFER_SIZE];
+
+        int size = 0;
+        while ((size = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, size);
+        }
 
         inputStream.close();
     }
