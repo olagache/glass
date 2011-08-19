@@ -35,7 +35,11 @@
                             <select name="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
                                 <option label="------------------------------" value="" />
                                 #foreach ($value in $jobClasses)
-                                    <option label="$value.name" value="$value.name" />
+                                    #if ($value == $form.clazz)
+                                        <option label="$value.name" value="$value.name" selected="selected" />
+                                    #else
+                                        <option label="$value.name" value="$value.name" />
+                                    #end
                                 #end
                             </select>
                              #if(${status.error}) ${status.errorMessage} #end
