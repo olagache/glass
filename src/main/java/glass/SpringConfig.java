@@ -64,7 +64,7 @@ public class SpringConfig {
 
         JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
 
-        factoryBean.setJndiName("java:comp/env/jdbc/glass");
+        factoryBean.setJndiName("java:comp/env/glass/jdbc");
 
         factoryBean.afterPropertiesSet();
 
@@ -92,7 +92,7 @@ public class SpringConfig {
         } else {
             factory.setDataSource(dataSource());
 
-            properties.setProperty("org.quartz.jobStore.tablePrefix", "glass_");
+            properties.setProperty("org.quartz.jobStore.tablePrefix", parameters.getTablePrefix());
             properties.setProperty("org.quartz.jobStore.isClustered", "false");
             properties.setProperty("org.quartz.jobStore.driverDelegateClass", parameters.getDriverDelegateClass());
         }

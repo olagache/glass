@@ -20,11 +20,16 @@
     <appid>dbourdette/glass</appid>
 
     <context-param>
-        <param-name>store</param-name>
+        <param-name>glass/store</param-name>
         <param-value>mysql</param-value>
     </context-param>
 
-    <resource name="jdbc/glass" auth="Container" type="javax.sql.DataSource">
+    <context-param>
+        <param-name>glass/tablePrefix</param-name>
+        <param-value>glass_</param-value>
+    </context-param>
+
+    <resource name="glass/jdbc" auth="Container" type="javax.sql.DataSource">
         <param name="username" value="glass" />
         <param name="password" value="icoulddrinksome" />
         <param name="url" value="jdbc:cloudbees://glass" />

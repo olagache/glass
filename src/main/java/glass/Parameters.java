@@ -35,6 +35,9 @@ import javax.servlet.ServletContext;
 public class Parameters {
 
     public static final String MEMORY = "memory";
+
+    public static final String DEFAULT_TABLE_PREFIX = "glass_";
+
     @Inject
     private ServletContext servletContext;
 
@@ -43,17 +46,21 @@ public class Parameters {
      */
     private String store;
 
+    private String tablePrefix;
+
     @PostConstruct
     public void init() {
-        store = servletContext.getInitParameter("store");
+        store = servletContext.getInitParameter("glass/store");
 
         if (StringUtils.isEmpty(store)) {
             store = MEMORY;
         }
-    }
 
-    public String getStore() {
-        return store;
+        tablePrefix = servletContext.getInitParameter("glass/tablePrefix");
+
+        if (StringUtils.isEmpty(tablePrefix)) {
+            tablePrefix = DEFAULT_TABLE_PREFIX;
+        }
     }
 
     public boolean isInMemory() {
@@ -68,5 +75,13 @@ public class Parameters {
         }
 
         return "";
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public String getTablePrefix() {
+        return tablePrefix;
     }
 }

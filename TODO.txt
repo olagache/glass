@@ -15,13 +15,13 @@ x delete trigger
 x in TriggerWrapperForJsp add planification attribute for cron and simple triggers and display this in jsp instead of cron expression
 x JobArgumentBean -> JsonJobArgument (nope cause it's not used only for json, done some refactoring instead)
 x properties -> dataMap
+x configure cloudbees to build war (-P test) and jar file
 - be able to use glass a base for another war
-- configure cloudbees to build war (-P test) and jar file
 - remove unneeded dependencies
 - configure velocity tools (VelocityToolsView)
 - configure default date for formating
 - format duration on dashboard
-- start time (leave empty to start asap)
+- start time for triggers ("leave empty to start asap")
 - default repeat 1 or 0 ?
 
 v 0.2
