@@ -16,8 +16,8 @@
 
 package org.glass.web.interceptor;
 
+import org.glass.velocity.tools.FormatTool;
 import org.glass.velocity.tools.UtilsTool;
-import org.glass.web.velocity.tools.FormatTool;
 import org.quartz.Scheduler;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;

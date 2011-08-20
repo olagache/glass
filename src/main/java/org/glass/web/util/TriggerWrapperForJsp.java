@@ -95,15 +95,25 @@ public class TriggerWrapperForJsp {
 
         SimpleTrigger simpleTrigger = (SimpleTrigger) trigger;
 
-        String planification = "";
+        return getPlanification(simpleTrigger.getRepeatCount(), simpleTrigger.getRepeatInterval());
+    }
 
-        if (simpleTrigger.getRepeatCount() == -1) {
-            planification += "forever every ";
+    public String getPlanification(int repeatCount, long repeatInterval) {
+         String planification = "";
+
+        if (repeatCount == -1) {
+            planification += "repeat forever every ";
+        } else if (repeatCount == 0) {
+            planification += "execute once";
+
+            return planification;
+        } else if (repeatCount == 1) {
+            planification += "repeat one time in ";
         } else {
-            planification += simpleTrigger.getRepeatCount() + " times every ";
+            planification += "repeat " + repeatCount + " times every ";
         }
 
-        planification += simpleTrigger.getRepeatInterval() + "ms";
+        planification += repeatInterval + "ms";
 
         return planification;
     }

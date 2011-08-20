@@ -46,7 +46,7 @@ public class SimpleTriggerForm {
     private Integer repeatCount;
 
     @NotNull
-    @Min(1)
+    @Min(0)
     private Integer intervalInMilliseconds;
 
     private String dataMap;
