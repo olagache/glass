@@ -46,7 +46,6 @@ public class NewSimpleTriggerForm {
     @NotEmpty
     private String triggerName;
 
-    @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Future
     private Date startTime;
@@ -71,7 +70,6 @@ public class NewSimpleTriggerForm {
         this.name = job.getKey().getName();
         this.triggerGroup = job.getKey().getGroup();
         this.triggerName = job.getKey().getName() + " trigger";
-        this.startTime = new DateTime().plusMinutes(1).toDate();
     }
 
     public Trigger getTrigger() throws ParseException {
@@ -81,6 +79,10 @@ public class NewSimpleTriggerForm {
 
         if (intervalInMilliseconds == null) {
             intervalInMilliseconds = 1;
+        }
+
+        if (startTime == null) {
+            startTime = new DateTime().plusSeconds(1).toDate();
         }
 
         TriggerBuilder builder = TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())

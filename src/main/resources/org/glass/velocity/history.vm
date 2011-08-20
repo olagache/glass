@@ -22,11 +22,11 @@
                 <tbody>
                     #foreach ($log in $logs)
                         <tr>
-                            <td>$format.html($log.type)</td>
-                            <td>$format.date(${log.date})</td>
+                            <td>$log.type</td>
+                            <td>$!format.date(${log.date})</td>
                             <td><a href="/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
-                            <td>$format.html($log.triggerGroup) / $format.html($log.triggerName)</td>
-                            <td>${log.jobClass}</td>
+                            <td>$!format.html($log.triggerGroup) / $format.html($log.triggerName)</td>
+                            <td>$!log.jobClass</td>
                         </tr>
                         <tr>
                             <td colspan="5">

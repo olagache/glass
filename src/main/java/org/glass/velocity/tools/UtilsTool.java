@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.glass.web.velocity.tools;
+package org.glass.velocity.tools;
 
 import org.apache.commons.lang.StringUtils;
 import org.quartz.InterruptableJob;

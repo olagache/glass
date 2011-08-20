@@ -16,11 +16,10 @@
 
 package org.glass;
 
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.glass.history.QuartzListenerForHistory;
 import org.glass.log.QuartzListenerForLogs;
+import org.glass.velocity.SpringBeanJobFactory;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
@@ -30,7 +29,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.springframework.web.servlet.view.velocity.VelocityConfig;

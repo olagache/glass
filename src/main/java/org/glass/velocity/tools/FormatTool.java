@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.glass.web.velocity.tools;
+package org.glass.velocity.tools;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -38,7 +38,11 @@ public class FormatTool {
         return sdf.format(date);
     }
 
-    public String html(String text) {
-        return StringEscapeUtils.escapeHtml(text);
+    public String html(Object object) {
+        if (object == null) {
+            return null;
+        }
+
+        return StringEscapeUtils.escapeHtml(object.toString());
     }
 }

@@ -1,4 +1,5 @@
-v 0.1
+v 0.1 - good to go
+v 0.1-beta1 - be able to use glass a base for another war
 x DEV@cloudbees
 x mysql sql init file
 x run@cloudbees
@@ -19,21 +20,25 @@ x configure cloudbees to build war (-P test) and jar file
 x remove unneeded dependencies
 x glass -> org.glass
 x be able to use glass a base for another war
---- beta 1 ---
+v 0.1-beta2 - easy job configuration
 x remove apache commons io
 x remove velocity tools
-- start time for triggers ("leave empty to start asap")
-- default repeat 1 or 0 ?
-- excluse DummyJob from jar build profile
+x start time for triggers ("leave blank to start now")
+- default repeat 1 or 0 ? + planification (0 times in 0ms)
 - spring conversion for jobs : date, numbers...
 - @Inject in jobs
-
-v 0.2
-- remove apache commons
-- add favicon.ico
+- inject @JobParamters values (no setter required)
 - format duration on dashboard
-- configure velocity tools (VelocityToolsView)
 - configure default date for formating
+- logs config as info (slf4j) at startup
+v 0.1-beta3 - tests
+- selenium tests
+v 0.1-beta4 - history and logs
+- selenium tests
+
+v 0.2 - smooth
+- remove apache commons lang
+- add favicon.ico
 - add javamelody (+ configuration) + hyperlink in menu
 - 500 when creating a job : java.lang.IllegalArgumentException: Job class must implement the Job interface -> better message on screen
 - 500 when creating a job : Unable to store Trigger with name: 'test trigger' and group: 'DEFAULT', because one already exists with this identification -> better message on screen
@@ -43,10 +48,10 @@ v 0.2
 - better logging options
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
-- groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)
 - find a public maven repo for jar files
 
-v 0.3
+v 0.3 - stuff
+- groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)
 - view job class source ?
 
 

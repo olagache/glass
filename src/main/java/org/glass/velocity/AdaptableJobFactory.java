@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.glass.spring;
+package org.glass.velocity;
 
 import org.quartz.Job;
 import org.quartz.Scheduler;

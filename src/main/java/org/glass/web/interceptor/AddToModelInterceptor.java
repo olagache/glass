@@ -16,14 +16,12 @@
 
 package org.glass.web.interceptor;
 
+import org.glass.velocity.tools.UtilsTool;
 import org.glass.web.velocity.tools.FormatTool;
-import org.glass.web.velocity.tools.UtilsTool;
 import org.quartz.Scheduler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContext;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

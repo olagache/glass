@@ -17,6 +17,7 @@
 package org.glass.web.velocity.tools;
 
 import org.glass.job.DummyJob;
+import org.glass.velocity.tools.UtilsTool;
 import org.junit.Assert;
 import org.junit.Test;
 import org.quartz.impl.JobDetailImpl;
