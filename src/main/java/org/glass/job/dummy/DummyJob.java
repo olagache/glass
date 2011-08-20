@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.glass.job;
+package org.glass.job.dummy;
 
 import org.glass.annotation.Job;
 import org.glass.annotation.JobArgument;
+import org.glass.job.JobUtils;
 import org.glass.log.Log;
 import org.glass.log.Logs;
 import org.quartz.DisallowConcurrentExecution;
@@ -25,6 +26,8 @@ import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
+
+import javax.inject.Inject;
 
 /**
  * A dummy quartz job for testing purposes.
@@ -54,9 +57,5 @@ public class DummyJob implements InterruptableJob {
     @Override
     public void interrupt() throws UnableToInterruptJobException {
         runningThread.interrupt();
-    }
-
-    public void setDuration(Long duration) {
-        this.duration = duration;
     }
 }

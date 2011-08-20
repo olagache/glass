@@ -19,8 +19,10 @@ package org.glass;
 import org.apache.velocity.exception.VelocityException;
 import org.glass.history.QuartzListenerForHistory;
 import org.glass.log.QuartzListenerForLogs;
+import org.glass.velocity.GlassJobFactory;
 import org.glass.velocity.SpringBeanJobFactory;
 import org.quartz.Scheduler;
+import org.quartz.simpl.PropertySettingJobFactory;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.context.ApplicationContext;
@@ -90,7 +92,7 @@ public class SpringConfig {
         factory.setApplicationContextSchedulerContextKey(APPLICATION_CONTEXT_KEY);
 
         // use our own copy of SpringBeanJobFactory until it is fix in spring 3.1.0 RC1 for quartz 2.0
-        factory.setJobFactory(new SpringBeanJobFactory());
+        factory.setJobFactory(new GlassJobFactory());
 
         Properties properties = new Properties();
         properties.setProperty("org.quartz.threadPool.class", SimpleThreadPool.class.getName());

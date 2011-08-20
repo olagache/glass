@@ -26,9 +26,9 @@ x remove velocity tools
 x start time for triggers ("leave blank to start now")
 x default repeat is 0 ("leave blank for one shot")
 x planification (0 times in 0ms)
+x @Inject in jobs (nope, better user http://www.gridshore.nl/2009/01/27/injecting-domain-objects-with-spring/)
+x inject @JobParamters values (no setter required)
 - spring conversion for jobs : date, numbers...
-- @Inject in jobs
-- inject @JobParamters values (no setter required)
 - planification on dashboard
 - logs config as info (slf4j) at startup
 - format duration on dashboard

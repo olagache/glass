@@ -34,6 +34,5 @@ public class QuartzListenerForLogs extends SchedulerListenerSupport {
     @Override
     public void schedulerError(String message, SchedulerException cause) {
         logs.add(Log.exception(message, cause));
-        System.out.println("error tudfuududududdudu pouet");
     }
 }
