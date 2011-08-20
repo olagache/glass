@@ -45,9 +45,10 @@
                     </tr>
                     #springBind("form.repeatCount")
                     <tr>
-                        <td>repeat count (-1 for no limit) :</td>
+                        <td>repeat count :</td>
                         <td>
                             <input type="text" name="repeatCount" value="$!format.html($status.value)" />
+                            &nbsp;leave blank for one shot, -1 for no limit
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>

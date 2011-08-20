@@ -43,7 +43,7 @@ public class SimpleTriggerForm {
     private Date endTime;
 
     @Min(-1)
-    private Integer repeatCount = 1;
+    private Integer repeatCount;
 
     @NotNull
     @Min(1)

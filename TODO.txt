@@ -24,7 +24,8 @@ v 0.1-beta2 - easy job configuration
 x remove apache commons io
 x remove velocity tools
 x start time for triggers ("leave blank to start now")
-- default repeat 1 or 0 ? + planification (0 times in 0ms)
+x default repeat is 0 ("leave blank for one shot")
+- planification (0 times in 0ms)
 - spring conversion for jobs : date, numbers...
 - @Inject in jobs
 - inject @JobParamters values (no setter required)

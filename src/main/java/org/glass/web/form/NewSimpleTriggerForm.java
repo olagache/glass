@@ -54,7 +54,7 @@ public class NewSimpleTriggerForm {
     private Date endTime;
 
     @Min(-1)
-    private Integer repeatCount = 1;
+    private Integer repeatCount;
 
     @NotNull
     @Min(1)
@@ -74,7 +74,7 @@ public class NewSimpleTriggerForm {
 
     public Trigger getTrigger() throws ParseException {
         if (repeatCount == null) {
-            repeatCount = 1;
+            repeatCount = 0;
         }
 
         if (intervalInMilliseconds == null) {
