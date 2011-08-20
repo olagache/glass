@@ -26,17 +26,22 @@ x remove velocity tools
 x start time for triggers ("leave blank to start now")
 x default repeat is 0 ("leave blank for one shot")
 x planification (0 times in 0ms)
-- planification on dashboard
 - spring conversion for jobs : date, numbers...
 - @Inject in jobs
 - inject @JobParamters values (no setter required)
-- format duration on dashboard
-- configure default date for formating
+- planification on dashboard
 - logs config as info (slf4j) at startup
-v 0.1-beta3 - tests
+- format duration on dashboard
+- stateful vs non stateful jobs
+- problem when multiple job parameters in parameters table in template (missing a </tr> ?)
+- correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
+v 0.1-beta3 - quality
 - selenium tests
+- quality reports (pmd ?)
 v 0.1-beta4 - history and logs
-- selenium tests
+- fold exception and messages after a few lines
+- "more" button on exception (up to non java and non quartz packages)
+- regroup items on history (start and stop for same job) (bases on what id ? object reference id ?)
 
 v 0.2 - smooth
 - remove apache commons lang
