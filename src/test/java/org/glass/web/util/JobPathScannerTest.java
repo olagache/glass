@@ -16,7 +16,7 @@
 
 package org.glass.web.util;
 
-import org.glass.job.DummyJob;
+import org.glass.job.dummy.DummyJob;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

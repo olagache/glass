@@ -17,7 +17,7 @@
 package org.glass;
 
 import org.apache.commons.lang.StringUtils;
-import org.glass.job.DummyJob;
+import org.glass.job.JobUtils;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 
@@ -42,7 +42,7 @@ public class Parameters {
 
     private String tablePrefix = DEFAULT_TABLE_PREFIX;
 
-    private String jobBasePackage = org.glass.job.dummy.DummyJob.class.getPackage().getName();
+    private String jobBasePackage = JobUtils.class.getPackage().getName();
 
     public void init(ServletContext servletContext) {
         if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/store"))) {

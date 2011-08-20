@@ -17,10 +17,11 @@
 package org.glass.web.util;
 
 import org.glass.Parameters;
-import org.glass.annotation.Job;
+import org.quartz.Job;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +48,7 @@ public class JobPathScanner {
     @PostConstruct
     protected void scanPaths() {
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
-        provider.addIncludeFilter(new AnnotationTypeFilter(Job.class));
+        provider.addIncludeFilter(new AssignableTypeFilter(Job.class));
 
         for (BeanDefinition definition : provider.findCandidateComponents(parameters.getJobBasePackage())) {
             jobPaths.add(definition.getBeanClassName());

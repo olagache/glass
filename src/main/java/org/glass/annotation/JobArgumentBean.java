@@ -55,7 +55,7 @@ public class JobArgumentBean {
             JobArgument argument = field.getAnnotation(JobArgument.class);
 
             if (argument != null) {
-                jobArguments.add(new JobArgumentBean(argument));
+                jobArguments.add(new JobArgumentBean(field.getName(), argument));
             }
         }
 
@@ -66,8 +66,8 @@ public class JobArgumentBean {
 
     }
 
-    public JobArgumentBean(JobArgument argument) {
-        name = argument.name();
+    public JobArgumentBean(String name, JobArgument argument) {
+        this.name = name;
         required = argument.required();
         description = argument.description();
         sampleValues = argument.sampleValues();
@@ -80,41 +80,6 @@ public class JobArgumentBean {
         this.defaultValue = defaultValue;
         this.sampleValues = sampleValues;
     }
-
-    @JsonIgnore
-    public JobArgument getJobArgument() {
-        return new JobArgument() {
-
-            @Override
-            public Class<? extends Annotation> annotationType() {
-                return JobArgument.class;
-            }
-
-            @Override
-            public String[] sampleValues() {
-                return getSampleValues();
-            }
-
-            @Override
-            public boolean required() {
-                return isRequired();
-            }
-
-            @Override
-            public String name() {
-                return getName();
-            }
-
-            @Override
-            public String description() {
-                return getDescription();
-            }
-        };
-    }
-
-    /*
-     * Accessors
-     */
 
     public String getName() {
         return name;

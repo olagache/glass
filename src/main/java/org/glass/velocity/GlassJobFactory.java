@@ -16,6 +16,7 @@
 
 package org.glass.velocity;
 
+import org.glass.Parameters;
 import org.glass.SpringConfig;
 import org.quartz.Job;
 import org.quartz.JobDetail;
@@ -23,18 +24,25 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.spi.JobFactory;
 import org.quartz.spi.TriggerFiredBundle;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.ConfigurablePropertyAccessor;
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.beans.PropertyAccessorFactory;
+import org.springframework.beans.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+
+import java.beans.PropertyEditor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
 public class GlassJobFactory implements JobFactory {
+    // TODO : make this configuragble through context params
+    public static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
         Job job = createJob(bundle.getJobDetail());
@@ -55,13 +63,21 @@ public class GlassJobFactory implements JobFactory {
     }
 
     private void setProperties(TriggerFiredBundle bundle, Job job) {
-        ConfigurablePropertyAccessor bw = PropertyAccessorFactory.forDirectFieldAccess(job);
-
         MutablePropertyValues pvs = new MutablePropertyValues();
 
         pvs.addPropertyValues(bundle.getJobDetail().getJobDataMap());
         pvs.addPropertyValues(bundle.getTrigger().getJobDataMap());
 
-        bw.setPropertyValues(pvs, true);
+        buildAccessor(job).setPropertyValues(pvs, true);
+    }
+
+    private DirectFieldAccessor buildAccessor(Job job) {
+        DirectFieldAccessor directFieldAccessor = new DirectFieldAccessor(job);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        CustomDateEditor customDateEditor = new CustomDateEditor(simpleDateFormat, true);
+        directFieldAccessor.registerCustomEditor(Date.class, customDateEditor);
+
+        return directFieldAccessor;
     }
 }

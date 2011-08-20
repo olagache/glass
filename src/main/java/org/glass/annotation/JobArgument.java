@@ -26,11 +26,6 @@ import java.lang.annotation.Target;
 public @interface JobArgument {
 
     /**
-     * Name of Job Parameter Map to bind into argument
-     */
-    String name();
-
-	/**
 	 * Whether the parameter is required in Job Parameters Map
      */
     boolean required() default false;

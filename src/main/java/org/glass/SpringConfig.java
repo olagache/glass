@@ -20,11 +20,11 @@ import org.apache.velocity.exception.VelocityException;
 import org.glass.history.QuartzListenerForHistory;
 import org.glass.log.QuartzListenerForLogs;
 import org.glass.velocity.GlassJobFactory;
-import org.glass.velocity.SpringBeanJobFactory;
 import org.quartz.Scheduler;
-import org.quartz.simpl.PropertySettingJobFactory;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
+import org.springframework.beans.factory.config.CustomEditorConfigurer;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,9 +40,10 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
+import java.beans.PropertyEditor;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Configuration
 @EnableWebMvc
