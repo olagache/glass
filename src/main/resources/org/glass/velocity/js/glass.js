@@ -68,13 +68,14 @@ JobArguments.prototype.buildHtml = function(elementId) {
 		_this = this;
 		$.getJSON('/jobs/arguments', {"className": this.classname}, function(args) {
 			_this.arguments = args;
-			var htmlBuilder="<tr>";
+			var htmlBuilder="";
 			$(args).each(function(index, argument) {
+                htmlBuilder += "<tr>";
 				if(argument.required) {
 					htmlBuilder +='<td style="text-align: center;"><span style="font-weight:bold;" >'+argument.name+'*</span></td>';
 				}
 				else {
-					htmlBuilder += "<td>"+argument.name+"</td>";
+					htmlBuilder += '<td style="text-align: center;">'+argument.name+"</td>";
 				}
 				htmlBuilder += "<td>"+argument.description+"</td>";
 				htmlBuilder += "<td>";
@@ -85,8 +86,9 @@ JobArguments.prototype.buildHtml = function(elementId) {
 					htmlBuilder += sample;
 				});
 				htmlBuilder += "</td>"
+                htmlBuilder+="</tr>";
 			});
-			htmlBuilder+="</tr>";
+
 			$("#"+elementId).html(htmlBuilder);
 		});
 	
