@@ -42,8 +42,10 @@ x correct misfire configuration (http://www.quartz-scheduler.org/documentation/q
 v 0.1-beta3 - quality
 - selenium tests
 - quality reports (pmd ?)
+- kill code duplication
 v 0.1-beta4 - history and logs
 - fold exception and messages after a few lines
+- avoid overflow on the right of logs
 - better logging api
 - "more" button on exception (up to non java and non quartz packages)
 - regroup items on history (start and stop for same job) (bases on what id ? object reference id ?)
