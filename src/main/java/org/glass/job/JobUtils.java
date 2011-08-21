@@ -39,15 +39,15 @@ public class JobUtils {
     }
 
     public static ApplicationContext getApplicationContext(JobExecutionContext context) throws JobExecutionException {
-        ApplicationContext applicationContext = null;
-
         try {
-            SchedulerContext schedulerContext = context.getScheduler().getContext();
-
-            applicationContext = (ApplicationContext) schedulerContext.get(SpringConfig.APPLICATION_CONTEXT_KEY);
+            return getApplicationContext(context.getScheduler().getContext());
         } catch (SchedulerException e) {
             throw new JobExecutionException("Failed to get scheduler from JobExecutionContext");
         }
+    }
+
+    public static ApplicationContext getApplicationContext(SchedulerContext schedulerContext) throws JobExecutionException {
+        ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get(SpringConfig.APPLICATION_CONTEXT_KEY);
 
         if (applicationContext == null) {
             throw new JobExecutionException("No application context available in scheduler context for key \""

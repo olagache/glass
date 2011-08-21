@@ -23,6 +23,7 @@ import org.glass.velocity.GlassJobFactory;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
+import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContext;
@@ -60,6 +61,9 @@ public class SpringConfig {
     @Inject
     private ServletContext servletContext;
 
+    @Inject
+    private GlassJobFactory glassJobFactory;
+
     @Bean
     public Parameters parameters() {
         Parameters parameters = new Parameters();
@@ -91,9 +95,7 @@ public class SpringConfig {
         factory.setApplicationContext(context);
         factory.setExposeSchedulerInRepository(true);
         factory.setApplicationContextSchedulerContextKey(APPLICATION_CONTEXT_KEY);
-
-        // use our own copy of SpringBeanJobFactory until it is fix in spring 3.1.0 RC1 for quartz 2.0
-        factory.setJobFactory(new GlassJobFactory());
+        factory.setJobFactory(glassJobFactory);
 
         Properties properties = new Properties();
         properties.setProperty("org.quartz.threadPool.class", SimpleThreadPool.class.getName());

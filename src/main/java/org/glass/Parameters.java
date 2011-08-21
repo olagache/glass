@@ -35,6 +35,8 @@ public class Parameters {
 
     public static final String DEFAULT_TABLE_PREFIX = "glass_";
 
+    public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+
     /**
      * Supported values are : memory (default), oracle and mysql.
      */
@@ -43,6 +45,8 @@ public class Parameters {
     private String tablePrefix = DEFAULT_TABLE_PREFIX;
 
     private String jobBasePackage = JobUtils.class.getPackage().getName();
+
+    private String dateFormat = DEFAULT_DATE_FORMAT;
 
     public void init(ServletContext servletContext) {
         if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/store"))) {
@@ -55,6 +59,10 @@ public class Parameters {
 
         if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/jobBasePackage"))) {
             jobBasePackage = servletContext.getInitParameter("glass/jobBasePackage");
+        }
+
+        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/dateFormat"))) {
+            dateFormat = servletContext.getInitParameter("glass/dateFormat");
         }
     }
 
@@ -82,5 +90,9 @@ public class Parameters {
 
     public String getJobBasePackage() {
         return jobBasePackage;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
     }
 }

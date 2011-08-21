@@ -28,7 +28,9 @@ import org.springframework.beans.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.beans.PropertyEditor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,9 +41,10 @@ import java.util.Map;
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
+@Component
 public class GlassJobFactory implements JobFactory {
-    // TODO : make this configuragble through context params
-    public static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    @Inject
+    private Parameters parameters;
 
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
@@ -74,7 +77,7 @@ public class GlassJobFactory implements JobFactory {
     private DirectFieldAccessor buildAccessor(Job job) {
         DirectFieldAccessor directFieldAccessor = new DirectFieldAccessor(job);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(parameters.getDateFormat());
         CustomDateEditor customDateEditor = new CustomDateEditor(simpleDateFormat, true);
         directFieldAccessor.registerCustomEditor(Date.class, customDateEditor);
 

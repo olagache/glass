@@ -30,7 +30,8 @@ x @Inject in jobs (nope, better user http://www.gridshore.nl/2009/01/27/injectin
 x inject @JobParamters values (no setter required)
 x problem when multiple job parameters in parameters table in template (missing a </tr> ?)
 x spring conversion for jobs : date, numbers...
-- use standard (ISO) date patterns
+x date format configurable through context params
+- use a default standard (ISO) date patterns
 - planification on dashboard
 - duration on job and triggers screens
 - logs config as info (slf4j) at startup
