@@ -35,7 +35,7 @@ public class Parameters {
 
     public static final String DEFAULT_TABLE_PREFIX = "glass_";
 
-    public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * Supported values are : memory (default), oracle and mysql.

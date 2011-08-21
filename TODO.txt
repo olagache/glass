@@ -31,13 +31,14 @@ x inject @JobParamters values (no setter required)
 x problem when multiple job parameters in parameters table in template (missing a </tr> ?)
 x spring conversion for jobs : date, numbers...
 x date format configurable through context params
-- use a default standard (ISO) date patterns
+x use a default standard (ISO) date patterns
 - planification on dashboard
 - duration on job and triggers screens
 - logs config as info (slf4j) at startup
 - format duration on dashboard
 - stateful vs non stateful jobs
 - correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
+- view config page (dateFormat, store, tablePrefix....)
 v 0.1-beta3 - quality
 - selenium tests
 - quality reports (pmd ?)
