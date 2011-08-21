@@ -17,7 +17,7 @@
 package org.glass.job;
 
 import org.glass.SpringConfig;
-import org.glass.annotation.*;
+import org.glass.job.annotation.*;
 import org.apache.commons.lang.StringUtils;
 import org.quartz.*;
 import org.quartz.Job;
@@ -78,7 +78,7 @@ public class JobUtils {
             return "";
         }
 
-        org.glass.annotation.Job annotation = jobClass.getAnnotation(org.glass.annotation.Job.class);
+        org.glass.job.annotation.Job annotation = jobClass.getAnnotation(org.glass.job.annotation.Job.class);
 
         if (annotation == null) {
             return "";

@@ -17,6 +17,7 @@
 
 <Context swallowOutput="true" useHttpOnly="true">
 
-    <Parameter name="glass/store" value="memory"/>
+    <Parameter name="glass/store" value="MEMORY"/>
+    <Parameter name="glass/job.injectionType" value="FIELD"/>
 
 </Context>

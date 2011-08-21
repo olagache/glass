@@ -16,8 +16,8 @@
 
 package org.glass.job.dummy;
 
-import org.glass.annotation.Job;
-import org.glass.annotation.JobArgument;
+import org.glass.job.annotation.Job;
+import org.glass.job.annotation.JobArgument;
 import org.glass.job.JobUtils;
 import org.glass.log.Log;
 import org.glass.log.Logs;
@@ -26,8 +26,6 @@ import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
-
-import javax.inject.Inject;
 
 /**
  * A dummy quartz job for testing purposes.

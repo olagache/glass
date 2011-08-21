@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package org.glass.annotation;
+package org.glass.job.annotation;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;

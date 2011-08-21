@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.glass.annotation;
+package org.glass.job.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,12 +22,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
-public @interface Job {
+@Target( { ElementType.FIELD })
+public @interface JobArgument {
 
     /**
-     * User friendly description of job
+	 * Whether the parameter is required in Job Configuration Map
      */
-    String description();
+    boolean required() default false;
+
+    /**
+     * User friendly description of parameter
+     */
+    String description() default "";
+
+    /**
+     * Sample values to illustrate what kind of entry the user is expected to enter.
+     */
+    String[] sampleValues() default {};
 
 }

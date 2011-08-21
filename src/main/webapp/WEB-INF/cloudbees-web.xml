@@ -21,17 +21,22 @@
 
     <context-param>
         <param-name>glass/store</param-name>
-        <param-value>mysql</param-value>
+        <param-value>MYSQL</param-value>
     </context-param>
 
     <context-param>
-        <param-name>glass/tablePrefix</param-name>
+        <param-name>glass/store.tablePrefix</param-name>
         <param-value>glass_</param-value>
     </context-param>
 
     <context-param>
-        <param-name>glass/jobBasePackage</param-name>
+        <param-name>glass/job.BasePackage</param-name>
         <param-value>org.glass.job</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>glass/job.injectionType</param-name>
+        <param-value>FIELD</param-value>
     </context-param>
 
     <resource name="jdbc/glassDb" auth="Container" type="javax.sql.DataSource">

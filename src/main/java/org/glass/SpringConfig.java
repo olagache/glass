@@ -17,18 +17,15 @@
 package org.glass;
 
 import org.apache.velocity.exception.VelocityException;
+import org.glass.configuration.Configuration;
 import org.glass.history.QuartzListenerForHistory;
+import org.glass.job.GlassJobFactory;
 import org.glass.log.QuartzListenerForLogs;
-import org.glass.velocity.GlassJobFactory;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
-import org.quartz.spi.JobFactory;
-import org.springframework.beans.factory.config.CustomEditorConfigurer;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -41,12 +38,10 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
-import java.beans.PropertyEditor;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Configuration
+@org.springframework.context.annotation.Configuration
 @EnableWebMvc
 public class SpringConfig {
 
@@ -65,17 +60,17 @@ public class SpringConfig {
     private GlassJobFactory glassJobFactory;
 
     @Bean
-    public Parameters parameters() {
-        Parameters parameters = new Parameters();
+    public Configuration configuration() {
+        Configuration configuration = new Configuration();
 
-        parameters.init(servletContext);
+        configuration.init(servletContext);
 
-        return parameters;
+        return configuration;
     }
 
     @Bean
     public DataSource dataSource() throws Exception {
-        if (parameters().isInMemory()) {
+        if (configuration().isInMemory()) {
             return null;
         }
 
@@ -102,14 +97,14 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.threadCount", "15");
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
 
-        if (parameters().isInMemory()) {
+        if (configuration().isInMemory()) {
             properties.setProperty("org.quartz.jobStore.class", RAMJobStore.class.getName());
         } else {
             factory.setDataSource(dataSource());
 
-            properties.setProperty("org.quartz.jobStore.tablePrefix", parameters().getTablePrefix());
+            properties.setProperty("org.quartz.jobStore.tablePrefix", configuration().getTablePrefix());
             properties.setProperty("org.quartz.jobStore.isClustered", "false");
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", parameters().getDriverDelegateClass());
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", configuration().getDriverDelegateClass());
         }
 
         factory.setQuartzProperties(properties);

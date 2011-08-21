@@ -16,7 +16,7 @@
 
 package org.glass.web.controller;
 
-import org.glass.annotation.JobArgumentBean;
+import org.glass.job.annotation.JobArgumentBean;
 import org.glass.job.JobUtils;
 import org.glass.web.form.JobForm;
 import org.glass.web.form.NewJobForm;

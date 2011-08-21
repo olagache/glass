@@ -16,7 +16,7 @@
 
 package org.glass.job.types;
 
-import org.glass.annotation.JobArgument;
+import org.glass.job.annotation.JobArgument;
 import org.glass.job.JobUtils;
 import org.glass.log.Log;
 import org.glass.log.Logs;
@@ -30,7 +30,7 @@ import java.util.Date;
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
-@org.glass.annotation.Job(description = "Test job for value conversions")
+@org.glass.job.annotation.Job(description = "Test job for value conversions")
 public class TypesJob implements Job {
     @JobArgument(description = "test for long value")
     private Long longValue;

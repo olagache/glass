@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-package org.glass.velocity;
+package org.glass.job;
 
-import org.glass.Parameters;
-import org.glass.SpringConfig;
+import org.glass.configuration.Configuration;
+import org.glass.configuration.InjectionType;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.spi.JobFactory;
 import org.quartz.spi.TriggerFiredBundle;
-import org.springframework.beans.*;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
+import org.springframework.beans.AbstractPropertyAccessor;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.DirectFieldAccessor;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.beans.PropertyEditor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
@@ -44,7 +42,7 @@ import java.util.Map;
 @Component
 public class GlassJobFactory implements JobFactory {
     @Inject
-    private Parameters parameters;
+    private Configuration configuration;
 
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
@@ -74,13 +72,20 @@ public class GlassJobFactory implements JobFactory {
         buildAccessor(job).setPropertyValues(pvs, true);
     }
 
-    private DirectFieldAccessor buildAccessor(Job job) {
-        DirectFieldAccessor directFieldAccessor = new DirectFieldAccessor(job);
+    private AbstractPropertyAccessor buildAccessor(Job job) {
+        AbstractPropertyAccessor accessor = null;
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(parameters.getDateFormat());
+        if (configuration.getInjectionType() == InjectionType.FIELD) {
+            accessor = new DirectFieldAccessor(job);
+        } else {
+            accessor = new BeanWrapperImpl(job);
+        }
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(configuration.getDateFormat());
         CustomDateEditor customDateEditor = new CustomDateEditor(simpleDateFormat, true);
-        directFieldAccessor.registerCustomEditor(Date.class, customDateEditor);
+        accessor.registerCustomEditor(Date.class, customDateEditor);
 
-        return directFieldAccessor;
+        return accessor;
     }
 }

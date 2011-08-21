@@ -16,7 +16,7 @@
 
 package org.glass.web.controller;
 
-import org.glass.annotation.JobArgumentBean;
+import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.CronTriggerForm;
 import org.glass.web.form.NewCronTriggerForm;
 import org.glass.web.form.NewSimpleTriggerForm;

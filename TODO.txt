@@ -28,22 +28,23 @@ x default repeat is 0 ("leave blank for one shot")
 x planification (0 times in 0ms)
 x @Inject in jobs (nope, better user http://www.gridshore.nl/2009/01/27/injecting-domain-objects-with-spring/)
 x inject @JobParamters values (no setter required)
-x problem when multiple job parameters in parameters table in template (missing a </tr> ?)
+x problem when multiple job configuration in configuration table in template (missing a </tr> ?)
 x spring conversion for jobs : date, numbers...
 x date format configurable through context params
 x use a default standard (ISO) date patterns
 x planification on dashboard
 x format duration on dashboard
-- stateful vs non stateful jobs
-- correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
-- job injection type configuration (setters or direct)
+x job injection type configuration (setters or direct)
 - logs config as info (slf4j) at startup
 - view config page (dateFormat, store, tablePrefix....)
+- stateful vs non stateful jobs
+- correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
 v 0.1-beta3 - quality
 - selenium tests
 - quality reports (pmd ?)
 v 0.1-beta4 - history and logs
 - fold exception and messages after a few lines
+- better logging api
 - "more" button on exception (up to non java and non quartz packages)
 - regroup items on history (start and stop for same job) (bases on what id ? object reference id ?)
 
