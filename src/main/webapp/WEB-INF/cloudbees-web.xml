@@ -30,7 +30,7 @@
     </context-param>
 
     <context-param>
-        <param-name>glass/job.BasePackage</param-name>
+        <param-name>glass/job.basePackage</param-name>
         <param-value>org.glass.job</param-value>
     </context-param>
 

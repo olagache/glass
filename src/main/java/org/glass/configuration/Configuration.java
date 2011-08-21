@@ -23,6 +23,9 @@ import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 
 import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Reads parameters from ServletContext and provides easy access to application configuration.
  *
@@ -30,6 +33,8 @@ import javax.servlet.ServletContext;
  * @version \$Revision$
  */
 public class Configuration {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Configuration.class);
 
     public static final String DEFAULT_TABLE_PREFIX = "glass_";
 
@@ -46,25 +51,26 @@ public class Configuration {
     private InjectionType injectionType = InjectionType.SETTER;
 
     public void init(ServletContext servletContext) {
-        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/store"))) {
-            store = Store.valueOf(servletContext.getInitParameter("glass/store"));
-        }
+        String value = servletContext.getInitParameter("glass/store");
+        if (StringUtils.isNotEmpty(value)) { store = Store.valueOf(value); }
 
-        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/store.tablePrefix"))) {
-            tablePrefix = servletContext.getInitParameter("glass/tablePrefix");
-        }
+        value = servletContext.getInitParameter("glass/store.tablePrefix");
+        if (StringUtils.isNotEmpty(value)) { tablePrefix = value; }
 
-        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/job.BasePackage"))) {
-            jobBasePackage = servletContext.getInitParameter("glass/jobBasePackage");
-        }
+        value = servletContext.getInitParameter("glass/job.basePackage");
+        if (StringUtils.isNotEmpty(value)) { jobBasePackage = value; }
 
-        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/job.dateFormat"))) {
-            dateFormat = servletContext.getInitParameter("glass/dateFormat");
-        }
+        value = servletContext.getInitParameter("glass/job.dateFormat");
+        if (StringUtils.isNotEmpty(value)) { dateFormat = servletContext.getInitParameter("glass/dateFormat"); }
 
-        if (StringUtils.isNotEmpty(servletContext.getInitParameter("glass/job.injectionType"))) {
-            injectionType = InjectionType.valueOf(servletContext.getInitParameter("glass/injectionType"));
-        }
+        value = servletContext.getInitParameter("glass/job.injectionType");
+        if (StringUtils.isNotEmpty(value)) { injectionType = InjectionType.valueOf(value); }
+
+        LOG.info("Using store " + store);
+        LOG.info("Using store tablePrefix " + tablePrefix);
+        LOG.info("Using job basePackage " + jobBasePackage);
+        LOG.info("Using job dateFormat " + dateFormat);
+        LOG.info("Using job injectionType " + injectionType);
     }
 
     public boolean isInMemory() {
