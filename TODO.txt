@@ -43,6 +43,7 @@ v 0.1-beta3 - quality
 - selenium tests
 - quality reports (pmd ?)
 - kill code duplication
+- documentation on gh-pages
 v 0.1-beta4 - history and logs
 - fold exception and messages after a few lines
 - avoid overflow on the right of logs
