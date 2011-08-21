@@ -32,7 +32,7 @@ x problem when multiple job parameters in parameters table in template (missing 
 x spring conversion for jobs : date, numbers...
 x date format configurable through context params
 x use a default standard (ISO) date patterns
-- planification on dashboard
+x planification on dashboard
 - duration on job and triggers screens
 - logs config as info (slf4j) at startup
 - format duration on dashboard

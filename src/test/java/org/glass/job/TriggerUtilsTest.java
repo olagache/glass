@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.glass.web.util;
+package org.glass.job;
 
+import org.glass.web.util.TriggerWrapperForJsp;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,14 +24,12 @@ import org.junit.Test;
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$
  */
-public class TriggerWrapperForJspTest {
+public class TriggerUtilsTest {
     @Test
     public void getPlanification() {
-        TriggerWrapperForJsp triggerWrapperForJsp = new TriggerWrapperForJsp();
-
-        Assert.assertEquals("repeat 10 times every 100ms", triggerWrapperForJsp.getPlanification(10, 100));
-        Assert.assertEquals("repeat forever every 100ms", triggerWrapperForJsp.getPlanification(-1, 100));
-        Assert.assertEquals("execute once", triggerWrapperForJsp.getPlanification(0, 100));
-        Assert.assertEquals("repeat one time in 100ms", triggerWrapperForJsp.getPlanification(1, 100));
+        Assert.assertEquals("repeat 10 times every 100ms", TriggerUtils.getPlanification(10, 100));
+        Assert.assertEquals("repeat forever every 100ms", TriggerUtils.getPlanification(-1, 100));
+        Assert.assertEquals("execute once", TriggerUtils.getPlanification(0, 100));
+        Assert.assertEquals("repeat one time in 100ms", TriggerUtils.getPlanification(1, 100));
     }
 }

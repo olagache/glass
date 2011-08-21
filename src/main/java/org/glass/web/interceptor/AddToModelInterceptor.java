@@ -49,7 +49,6 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
         ModelMap model =  modelAndView.getModelMap();
 
         model.addAttribute("standby", quartzScheduler.isInStandbyMode());
-        model.addAttribute("now", new Date());
         model.addAttribute("utils", utilsTool);
         model.addAttribute("format", formatTool);
     }

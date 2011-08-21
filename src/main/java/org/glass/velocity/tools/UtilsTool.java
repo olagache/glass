@@ -17,8 +17,13 @@
 package org.glass.velocity.tools;
 
 import org.apache.commons.lang.StringUtils;
+import org.glass.job.TriggerUtils;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.Trigger;
+
+import java.util.Date;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
@@ -27,6 +32,14 @@ import org.quartz.JobDetail;
 public class UtilsTool {
     public boolean isInterruptible(JobDetail job) {
         return InterruptableJob.class.isAssignableFrom(job.getJobClass());
+    }
+
+    public String duration(JobExecutionContext context) {
+        return ((new Date().getTime() -  context.getFireTime().getTime()) / 1000) + " secondes";
+    }
+
+    public String planification(Trigger trigger) {
+        return TriggerUtils.getPlanification(trigger);
     }
 
     public boolean isEmpty(String string) {
