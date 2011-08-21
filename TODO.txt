@@ -64,6 +64,7 @@ v 0.2 - smooth
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
 - find a public maven repo for jar files
+- do not fail at startup when a job class no longer exists (admin screen whith relocate or delete old job ?)
 
 v 0.3 - stuff
 - groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)
