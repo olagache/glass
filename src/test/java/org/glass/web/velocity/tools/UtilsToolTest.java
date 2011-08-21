@@ -18,9 +18,12 @@ package org.glass.web.velocity.tools;
 
 import org.glass.job.dummy.DummyJob;
 import org.glass.velocity.tools.UtilsTool;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.quartz.impl.JobDetailImpl;
+
+import java.util.Date;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
@@ -36,5 +39,14 @@ public class UtilsToolTest {
         job.setJobClass(DummyJob.class);
 
         Assert.assertEquals(true, utilsTool.isInterruptible(job));
+    }
+
+    @Test
+    public void duration() throws Exception {
+        DateTime start = new DateTime();
+
+        Assert.assertEquals("6s", utilsTool.duration(start.toDate(), start.plusSeconds(6).toDate()));
+        Assert.assertEquals("1m 2s", utilsTool.duration(start.toDate(), start.plusSeconds(62).toDate()));
+        Assert.assertEquals("2h 2s", utilsTool.duration(start.toDate(), start.plusHours(2).plusSeconds(2).toDate()));
     }
 }

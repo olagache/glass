@@ -33,9 +33,7 @@ import java.util.Properties;
 public class JobUtils {
 
     public static <T> T getSpringBean(JobExecutionContext context, Class<T> beanClass) throws JobExecutionException {
-        ApplicationContext applicationContext = getApplicationContext(context);
-
-        return applicationContext.getBean(beanClass);
+        return getApplicationContext(context).getBean(beanClass);
     }
 
     public static ApplicationContext getApplicationContext(JobExecutionContext context) throws JobExecutionException {
@@ -50,8 +48,7 @@ public class JobUtils {
         ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get(SpringConfig.APPLICATION_CONTEXT_KEY);
 
         if (applicationContext == null) {
-            throw new JobExecutionException("No application context available in scheduler context for key \""
-                    + SpringConfig.APPLICATION_CONTEXT_KEY + "\"");
+            throw new JobExecutionException("No application context available in scheduler context for key \"" + SpringConfig.APPLICATION_CONTEXT_KEY + "\"");
         }
 
         return applicationContext;

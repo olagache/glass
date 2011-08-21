@@ -33,11 +33,11 @@ x spring conversion for jobs : date, numbers...
 x date format configurable through context params
 x use a default standard (ISO) date patterns
 x planification on dashboard
-- duration on job and triggers screens
-- logs config as info (slf4j) at startup
-- format duration on dashboard
+x format duration on dashboard
 - stateful vs non stateful jobs
 - correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
+- job injection type configuration (setters or direct)
+- logs config as info (slf4j) at startup
 - view config page (dateFormat, store, tablePrefix....)
 v 0.1-beta3 - quality
 - selenium tests

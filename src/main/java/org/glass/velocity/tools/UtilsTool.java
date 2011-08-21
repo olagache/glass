@@ -18,6 +18,8 @@ package org.glass.velocity.tools;
 
 import org.apache.commons.lang.StringUtils;
 import org.glass.job.TriggerUtils;
+import org.joda.time.Duration;
+import org.joda.time.Period;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -35,7 +37,20 @@ public class UtilsTool {
     }
 
     public String duration(JobExecutionContext context) {
-        return ((new Date().getTime() -  context.getFireTime().getTime()) / 1000) + " secondes";
+        return duration(context.getFireTime(), new Date());
+    }
+
+    public String duration(Date start, Date end) {
+        Period period = new Period(start.getTime(), end.getTime());
+
+        StringBuilder builder = new StringBuilder();
+
+        appendDuration(builder, period.getDays(), "d");
+        appendDuration(builder, period.getHours(), "h");
+        appendDuration(builder, period.getMinutes(), "m");
+        appendDuration(builder, period.getSeconds(), "s");
+
+        return builder.toString().trim();
     }
 
     public String planification(Trigger trigger) {
@@ -48,5 +63,11 @@ public class UtilsTool {
 
     public boolean isNotEmpty(String string) {
         return StringUtils.isNotEmpty(string);
+    }
+
+    public void appendDuration(StringBuilder builder, int value, String unit) {
+        if (value != 0) {
+            builder.append(value + unit + " ");
+        }
     }
 }
