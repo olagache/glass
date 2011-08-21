@@ -35,8 +35,8 @@ x use a default standard (ISO) date patterns
 x planification on dashboard
 x format duration on dashboard
 x job injection type configuration (setters or direct)
-- logs config as info (slf4j) at startup
-- view config page (dateFormat, store, tablePrefix....)
+x logs config as info (slf4j) at startup
+x view config page (dateFormat, store, tablePrefix....)
 - stateful vs non stateful jobs
 - correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
 v 0.1-beta3 - quality

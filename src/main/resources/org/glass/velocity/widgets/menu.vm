@@ -9,6 +9,7 @@
     <ul class="jobs">
         <li><a href="/history">run history</a></li>
         <li><a href="/logs">logs</a></li>
+        <li><a href="/configuration">configuration</a></li>
     </ul>
     <span class="standby">
         #if ($standby)
