@@ -18,6 +18,7 @@ package org.glass.web.form;
 
 import org.glass.job.JobUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Trigger;
@@ -34,7 +35,6 @@ import java.util.Date;
  * @version \$Revision$
  */
 public class CronTriggerForm {
-    @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Future
     private Date startTime;
@@ -59,6 +59,9 @@ public class CronTriggerForm {
     }
 
     public Trigger getTrigger(Trigger trigger) throws ParseException {
+        if (startTime == null) {
+            startTime = new DateTime().plusSeconds(1).toDate();
+        }
         return TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionIgnoreMisfires())

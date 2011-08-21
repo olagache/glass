@@ -37,8 +37,8 @@ x format duration on dashboard
 x job injection type configuration (setters or direct)
 x logs config as info (slf4j) at startup
 x view config page (dateFormat, store, tablePrefix....)
-- stateful vs non stateful jobs
-- correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05)
+x stateful vs non stateful jobs (quartz 2.0 -> @DisallowConcurrentExecution and @PersistJobDataAfterExecution)
+x correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05) (using default : smar policy)
 v 0.1-beta3 - quality
 - selenium tests
 - quality reports (pmd ?)

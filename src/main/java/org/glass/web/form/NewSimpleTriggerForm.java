@@ -91,10 +91,10 @@ public class NewSimpleTriggerForm {
 
         if (repeatCount == -1) {
             builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever()
-                    .withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires());
+                    .withIntervalInMilliseconds(intervalInMilliseconds));
         } else {
             builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().withRepeatCount(repeatCount)
-                    .withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires());
+                    .withIntervalInMilliseconds(intervalInMilliseconds));
         }
 
         return builder.build();

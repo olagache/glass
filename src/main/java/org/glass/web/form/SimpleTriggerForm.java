@@ -17,6 +17,7 @@
 package org.glass.web.form;
 
 import org.glass.job.JobUtils;
+import org.joda.time.DateTime;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
@@ -34,7 +35,6 @@ import java.util.Date;
  * @version \$Revision$
  */
 public class SimpleTriggerForm {
-    @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Future
     private Date startTime;
@@ -64,19 +64,31 @@ public class SimpleTriggerForm {
 
     public Trigger getTrigger(Trigger trigger) throws ParseException {
         if (repeatCount == null) {
-            repeatCount = 1;
+            repeatCount = 0;
         }
 
         if (intervalInMilliseconds == null) {
             intervalInMilliseconds = 0;
         }
 
-        return TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
+        if (startTime == null) {
+            startTime = new DateTime().plusSeconds(1).toDate();
+        }
+
+        TriggerBuilder builder = TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
-                .withSchedule(SimpleScheduleBuilder.repeatHourlyForTotalCount(repeatCount).withIntervalInMilliseconds(intervalInMilliseconds).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.fromProperties(dataMap))
-                .build();
+                .usingJobData(JobUtils.fromProperties(dataMap));
+
+        if (repeatCount == -1) {
+            builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever()
+                    .withIntervalInMilliseconds(intervalInMilliseconds));
+        } else {
+            builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().withRepeatCount(repeatCount)
+                    .withIntervalInMilliseconds(intervalInMilliseconds));
+        }
+
+        return builder.build();
     }
 
     public Date getStartTime() {
