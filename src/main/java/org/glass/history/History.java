@@ -48,9 +48,9 @@ public class History {
         List<HistoryLog> page = null;
 
         if (logs.size() > PAGE_SIZE) {
-            page = new ArrayList(logs.subList(0, PAGE_SIZE));
+            page = new ArrayList<HistoryLog>(logs.subList(0, PAGE_SIZE));
         } else {
-            page = new ArrayList(logs.subList(0, logs.size()));
+            page = new ArrayList<HistoryLog>(logs.subList(0, logs.size()));
         }
 
         Collections.reverse(page);
