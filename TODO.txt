@@ -45,6 +45,7 @@ v 0.1-beta3 - bugs
 - use iso date pattern for all date formats
 - org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
 - find a public maven repo for jar files (oss sonatype ?)
+- imports
 v 0.1-beta4 - quality
 - selenium tests
 - quality reports (pmd ?)
