@@ -16,10 +16,10 @@
 
 package org.glass.velocity.tools;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>

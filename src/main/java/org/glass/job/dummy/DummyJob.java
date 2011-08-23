@@ -16,9 +16,9 @@
 
 package org.glass.job.dummy;
 
+import org.glass.job.JobUtils;
 import org.glass.job.annotation.Job;
 import org.glass.job.annotation.JobArgument;
-import org.glass.job.JobUtils;
 import org.glass.log.Log;
 import org.glass.log.Logs;
 import org.quartz.DisallowConcurrentExecution;

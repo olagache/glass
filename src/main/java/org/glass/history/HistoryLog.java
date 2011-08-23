@@ -16,13 +16,13 @@
 
 package org.glass.history;
 
-import org.glass.job.JobUtils;
+import java.util.Date;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.glass.job.JobUtils;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-
-import java.util.Date;
 
 /**
  * @author damien bourdette

@@ -23,8 +23,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.quartz.impl.JobDetailImpl;
 
-import java.util.Date;
-
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
  * @version \$Revision$

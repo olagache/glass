@@ -16,11 +16,11 @@
 
 package org.glass.job.annotation;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Bean that can be used in jsp files and in json serialisations.

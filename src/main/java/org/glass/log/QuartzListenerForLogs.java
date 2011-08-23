@@ -16,11 +16,11 @@
 
 package org.glass.log;
 
+import javax.inject.Inject;
+
 import org.quartz.SchedulerException;
 import org.quartz.listeners.SchedulerListenerSupport;
 import org.springframework.stereotype.Component;
-
-import javax.inject.Inject;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>

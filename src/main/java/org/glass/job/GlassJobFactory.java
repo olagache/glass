@@ -16,6 +16,11 @@
 
 package org.glass.job;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import org.glass.configuration.Configuration;
 import org.glass.configuration.InjectionType;
 import org.quartz.Job;
@@ -30,10 +35,6 @@ import org.springframework.beans.DirectFieldAccessor;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Component;
-
-import javax.inject.Inject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>

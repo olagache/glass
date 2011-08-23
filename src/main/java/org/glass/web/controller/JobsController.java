@@ -16,8 +16,6 @@
 
 package org.glass.web.controller;
 
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +44,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * All currently defined jobs and services around form list.

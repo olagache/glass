@@ -16,15 +16,15 @@
 
 package org.glass.job.types;
 
-import org.glass.job.annotation.JobArgument;
+import java.util.Date;
+
 import org.glass.job.JobUtils;
+import org.glass.job.annotation.JobArgument;
 import org.glass.log.Log;
 import org.glass.log.Logs;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-
-import java.util.Date;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>

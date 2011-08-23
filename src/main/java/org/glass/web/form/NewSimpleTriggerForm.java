@@ -16,6 +16,13 @@
 
 package org.glass.web.form;
 
+import java.text.ParseException;
+import java.util.Date;
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.glass.job.JobUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
@@ -24,12 +31,6 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.text.ParseException;
-import java.util.Date;
 
 /**
  * @author damien bourdette

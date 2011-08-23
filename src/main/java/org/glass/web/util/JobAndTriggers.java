@@ -16,9 +16,9 @@
 
 package org.glass.web.util;
 
-import org.quartz.JobDetail;
-
 import java.util.List;
+
+import org.quartz.JobDetail;
 
 /**
  * Allow controllers to send a job and its associated triggers

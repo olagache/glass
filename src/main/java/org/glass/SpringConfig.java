@@ -16,6 +16,14 @@
 
 package org.glass;
 
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Properties;
+
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.sql.DataSource;
+
 import org.apache.velocity.exception.VelocityException;
 import org.glass.configuration.Configuration;
 import org.glass.history.QuartzListenerForHistory;
@@ -34,12 +42,6 @@ import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.springframework.web.servlet.view.velocity.VelocityConfig;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
-
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.*;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc

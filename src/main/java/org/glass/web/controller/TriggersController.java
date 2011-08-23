@@ -16,8 +16,6 @@
 
 package org.glass.web.controller;
 
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +46,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * @author damien bourdette

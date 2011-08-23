@@ -16,13 +16,13 @@
 
 package org.glass.web.form;
 
+import javax.validation.constraints.NotNull;
+
 import org.glass.job.JobUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Form for job editing

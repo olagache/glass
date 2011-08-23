@@ -16,9 +16,9 @@
 
 package org.glass.log;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
-
 import java.util.Date;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  * @author damien bourdette

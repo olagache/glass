@@ -16,12 +16,12 @@
 
 package org.glass.history;
 
+import javax.inject.Inject;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
-
-import javax.inject.Inject;
 
 /**
  * @author damien bourdette
