@@ -16,16 +16,15 @@
 
 package org.glass.velocity.tools;
 
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 import org.glass.job.TriggerUtils;
-import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
-
-import java.util.Date;
 
 /**
  * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>

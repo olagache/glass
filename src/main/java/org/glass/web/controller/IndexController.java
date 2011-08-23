@@ -58,8 +58,6 @@ public class IndexController {
             Collections.sort(jobKeys);
 
             for (JobKey jobKey : jobKeys) {
-                JobDetail jobDetail = quartzScheduler.getJobDetail(jobKey);
-
                 List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(jobKey);
 
                 for (Trigger trigger : triggers) {
@@ -72,7 +70,6 @@ public class IndexController {
             }
         }
 
-        model.addAttribute("toto", "arg");
         model.addAttribute("runningJobs", runningJobs);
         model.addAttribute("pausedTriggers", pausedTriggers);
         model.addAttribute("hangedTriggers", hangedTriggers);

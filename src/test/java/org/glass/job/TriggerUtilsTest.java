@@ -16,7 +16,7 @@
 
 package org.glass.job;
 
-import org.glass.web.util.TriggerWrapperForJsp;
+import org.glass.web.util.TriggerWrapperForView;
 import org.junit.Assert;
 import org.junit.Test;
 

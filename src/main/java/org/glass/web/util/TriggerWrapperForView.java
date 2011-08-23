@@ -16,22 +16,21 @@
 
 package org.glass.web.util;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.glass.job.JobUtils;
 import org.glass.job.TriggerUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobExecutionContext;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author damien bourdette
  * @version \$Revision$
  */
-public class TriggerWrapperForJsp {
+public class TriggerWrapperForView {
     private String group;
 
     private String name;
@@ -48,8 +47,8 @@ public class TriggerWrapperForJsp {
 
     private boolean running;
 
-    public static List<TriggerWrapperForJsp> fromList(List<? extends Trigger> triggers, List<JobExecutionContext> runningJobs) {
-        List<TriggerWrapperForJsp> wrappers = new ArrayList<TriggerWrapperForJsp>();
+    public static List<TriggerWrapperForView> fromList(List<? extends Trigger> triggers, List<JobExecutionContext> runningJobs) {
+        List<TriggerWrapperForView> wrappers = new ArrayList<TriggerWrapperForView>();
 
         for (Trigger trigger : triggers) {
             wrappers.add(fromTrigger(trigger, runningJobs));
@@ -58,8 +57,8 @@ public class TriggerWrapperForJsp {
         return wrappers;
     }
 
-    public static TriggerWrapperForJsp fromTrigger(Trigger trigger, List<JobExecutionContext> runningJobs) {
-        TriggerWrapperForJsp wrapper = new TriggerWrapperForJsp();
+    public static TriggerWrapperForView fromTrigger(Trigger trigger, List<JobExecutionContext> runningJobs) {
+        TriggerWrapperForView wrapper = new TriggerWrapperForView();
 
         wrapper.trigger = trigger;
         wrapper.group = trigger.getKey().getGroup();
