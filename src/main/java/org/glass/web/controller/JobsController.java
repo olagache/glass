@@ -31,7 +31,7 @@ import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.JobForm;
 import org.glass.web.form.NewJobForm;
 import org.glass.web.util.JobPathScanner;
-import org.glass.web.util.TriggerWrapperForJsp;
+import org.glass.web.util.TriggerWrapperForView;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
@@ -99,7 +99,7 @@ public class JobsController {
         List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
         List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(job.getKey());
 
-        model.addAttribute("triggers", TriggerWrapperForJsp.fromList(triggers, runningJobs));
+        model.addAttribute("triggers", TriggerWrapperForView.fromList(triggers, runningJobs));
 
         return "job";
     }

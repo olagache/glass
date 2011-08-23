@@ -32,7 +32,7 @@ import org.glass.web.form.NewCronTriggerForm;
 import org.glass.web.form.NewSimpleTriggerForm;
 import org.glass.web.form.SimpleTriggerForm;
 import org.glass.web.util.JobAndTriggers;
-import org.glass.web.util.TriggerWrapperForJsp;
+import org.glass.web.util.TriggerWrapperForView;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -76,7 +76,7 @@ public class TriggersController {
 
                 JobAndTriggers jobAndTrigger = new JobAndTriggers();
                 jobAndTrigger.setJobDetail(jobDetail);
-                jobAndTrigger.setTriggers(TriggerWrapperForJsp.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
+                jobAndTrigger.setTriggers(TriggerWrapperForView.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
 
                 jobsAndTriggers.add(jobAndTrigger);
             }

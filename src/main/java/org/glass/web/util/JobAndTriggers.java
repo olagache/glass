@@ -29,7 +29,7 @@ import java.util.List;
 public class JobAndTriggers {
     private JobDetail jobDetail;
 
-    private List<TriggerWrapperForJsp> triggers;
+    private List<TriggerWrapperForView> triggers;
 
     public JobDetail getJobDetail() {
         return jobDetail;
@@ -39,11 +39,11 @@ public class JobAndTriggers {
         this.jobDetail = jobDetail;
     }
 
-    public List<TriggerWrapperForJsp> getTriggers() {
+    public List<TriggerWrapperForView> getTriggers() {
         return triggers;
     }
 
-    public void setTriggers(List<TriggerWrapperForJsp> triggers) {
+    public void setTriggers(List<TriggerWrapperForView> triggers) {
         this.triggers = triggers;
     }
 }
