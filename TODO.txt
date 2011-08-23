@@ -44,7 +44,12 @@ v 0.1-beta3 - quality
 - quality reports (pmd ?)
 - kill code duplication
 - documentation on gh-pages
+- use iso date pattern for all date formats
+- find a public maven repo for jar files (oss sonatype)
+- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
 v 0.1-beta4 - history and logs
+- logs pagination
+- history pagination
 - fold exception and messages after a few lines
 - avoid overflow on the right of logs
 - better logging api
@@ -63,7 +68,6 @@ v 0.2 - smooth
 - better logging options
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
-- find a public maven repo for jar files
 - do not fail at startup when a job class no longer exists (admin screen whith relocate or delete old job ?)
 
 v 0.3 - stuff
