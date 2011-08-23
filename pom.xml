@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.glass</groupId>
     <artifactId>glass</artifactId>
-    <version>0.1.0-beta3</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>glass</name>
     <packaging>${profile.packaging}</packaging>
     <inceptionYear>2011</inceptionYear>
