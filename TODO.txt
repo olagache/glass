@@ -39,15 +39,18 @@ x logs config as info (slf4j) at startup
 x view config page (dateFormat, store, tablePrefix....)
 x stateful vs non stateful jobs (quartz 2.0 -> @DisallowConcurrentExecution and @PersistJobDataAfterExecution)
 x correct misfire configuration (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05) (using default : smar policy)
-v 0.1-beta3 - quality
+v 0.1-beta3 - bugs
+- move glass servlet to /glass so apps can have their own resources
+- $revision in file headers
+- use iso date pattern for all date formats
+- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
+- find a public maven repo for jar files (oss sonatype ?)
+v 0.1-beta4 - quality
 - selenium tests
 - quality reports (pmd ?)
 - kill code duplication
 - documentation on gh-pages
-- use iso date pattern for all date formats
-- find a public maven repo for jar files (oss sonatype)
-- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
-v 0.1-beta4 - history and logs
+v 0.1-beta5 - history and logs
 - logs pagination
 - history pagination
 - fold exception and messages after a few lines
