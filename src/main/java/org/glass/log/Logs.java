@@ -16,12 +16,11 @@
 
 package org.glass.log;
 
-import org.glass.history.HistoryLog;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 /**
  * @author damien bourdette
@@ -43,13 +42,13 @@ public class Logs {
         }
     }
 
-    public synchronized List<HistoryLog> getLogs() {
-        List<HistoryLog> page = null;
+    public synchronized List<Log> getLogs() {
+        List<Log> page = null;
 
         if (logs.size() > PAGE_SIZE) {
-            page = new ArrayList(logs.subList(0, PAGE_SIZE));
+            page = new ArrayList<Log>(logs.subList(0, PAGE_SIZE));
         } else {
-            page = new ArrayList(logs.subList(0, logs.size()));
+            page = new ArrayList<Log>(logs.subList(0, logs.size()));
         }
 
         Collections.reverse(page);
