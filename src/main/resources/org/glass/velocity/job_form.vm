@@ -10,7 +10,7 @@
 		<h1><span>Edit job</span></h1>
 
         <div class="table">
-            <form id="jobActionForm" action="/jobs/$format.html($group)/$format.html($name)/edit" method="POST" >
+            <form id="jobActionForm" action="$root/jobs/$format.html($group)/$format.html($name)/edit" method="POST" >
                 <table>
                     <tr>
                         <td>jobClass</td>

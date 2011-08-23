@@ -9,7 +9,7 @@
 
         <h1><span>New simple trigger</span></h1>
         <div class="table">
-            <form action="/jobs/$format.html($group)/$format.html($name)/triggers/$format.html($triggerGroup)/$format.html($triggerName)/edit-simple" method="POST" >
+            <form action="$root/jobs/$format.html($group)/$format.html($name)/triggers/$format.html($triggerGroup)/$format.html($triggerName)/edit-simple" method="POST" >
                 <table>
                     <tr>
                         <td>job group :</td>

@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
+import org.glass.configuration.Configuration;
 import org.glass.job.JobUtils;
 import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.JobForm;
@@ -56,6 +57,9 @@ public class JobsController {
 
     @Inject
     protected Scheduler quartzScheduler;
+    
+    @Inject
+    protected Configuration configuration;
 
     @Inject
     protected JobPathScanner jobPathScanner;
@@ -88,7 +92,7 @@ public class JobsController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/jobs";
+            return "redirect:" + configuration.getRoot() + "/jobs";
         }
 
         model.addAttribute("job", job);
@@ -117,7 +121,7 @@ public class JobsController {
 
         quartzScheduler.addJob(form.getJobDetails(), true);
 
-        return "redirect:/jobs/" + form.getGroup() + "/" + form.getName();
+        return "redirect:" + configuration.getRoot() + "/jobs/" + form.getGroup() + "/" + form.getName();
     }
 
     @RequestMapping("/jobs/{group}/{name}/edit")
@@ -125,7 +129,7 @@ public class JobsController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/jobs";
+            return "redirect:" + configuration.getRoot() + "/jobs";
         }
 
         return form(model, new JobForm(job), job.getJobClass());
@@ -136,7 +140,7 @@ public class JobsController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/jobs";
+            return "redirect:" + configuration.getRoot() + "/jobs";
         }
 
         if (bindingResult.hasErrors()) {
@@ -145,7 +149,7 @@ public class JobsController {
 
         quartzScheduler.addJob(form.getJobDetails(job), true);
 
-        return "redirect:/jobs/{group}/{name}";
+        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
     }
 
     @RequestMapping("/jobs/{group}/{name}/delete")
@@ -153,12 +157,12 @@ public class JobsController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/jobs";
+            return "redirect:" + configuration.getRoot() + "/jobs";
         }
 
         quartzScheduler.deleteJob(job.getKey());
 
-        return "redirect:/jobs";
+        return "redirect:" + configuration.getRoot() + "/jobs";
     }
 
     @RequestMapping("/jobs/{group}/{name}/fire")
@@ -166,12 +170,12 @@ public class JobsController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/jobs";
+            return "redirect:" + configuration.getRoot() + "/jobs";
         }
 
         quartzScheduler.triggerJob(job.getKey());
 
-        return "redirect:/jobs/{group}/{name}";
+        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
     }
 
     /**

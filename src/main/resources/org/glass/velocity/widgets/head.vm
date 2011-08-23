@@ -1,5 +1,5 @@
 <title>Glass</title>
 
-<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8" />
-<script type="text/javascript" src="/js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="/js/glass.js"></script>
+<link rel="stylesheet" href="$root/css/style.css" type="text/css" charset="utf-8" />
+<script type="text/javascript" src="$root/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="$root/js/glass.js"></script>

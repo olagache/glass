@@ -28,8 +28,8 @@
                                 <td>$format.date($trigger.previousFireTime)</td>
                                 <td>$format.date($trigger.nextFireTime)</td>
                                 <td nowrap="nowrap">
-                                    <a onclick="javascript:return(confirm('Are you sure you want to restart trigger ?'));" href="/restartTrigger?group=$format.html($trigger.group)&amp;name=$format.html($trigger.name)">
-                                        <img alt="restart" src="/image/restart.png" />
+                                    <a onclick="javascript:return(confirm('Are you sure you want to restart trigger ?'));" href="$root/restartTrigger?group=$format.html($trigger.group)&amp;name=$format.html($trigger.name)">
+                                        <img alt="restart" src="$root/image/restart.png" />
                                     </a>
                                 </td>
                             </tr>
@@ -58,15 +58,15 @@
                     <tbody>
                         #foreach ($jobContext in $runningJobs)
                             <tr>
-                                <td><a href="/jobs/$format.html($jobContext.jobDetail.group)/$format.html($jobContext.jobDetail.name)">${jobContext.jobDetail.group} / ${jobContext.jobDetail.name}</a></td>
+                                <td><a href="$root/jobs/$format.html($jobContext.jobDetail.group)/$format.html($jobContext.jobDetail.name)">${jobContext.jobDetail.group} / ${jobContext.jobDetail.name}</a></td>
                                 <td>${jobContext.jobDetail.jobClass}</td>
                                 <td style="text-align: center">$format.date($jobContext.fireTime)</td>
                                 <td style="text-align: center">$utils.duration($jobContext)</td>
                                 <td style="text-align: center">$utils.planification($jobContext.trigger)</td>
                                 <td style="text-align: center">
                                     #if ($utils.isInterruptible($jobContext.jobDetail))
-                                       <a href="/interrupt?group=$format.html($jobContext.jobDetail.group)&amp;name=$format.html($jobContext.jobDetail.name)">
-                                           <img src="/image/stop.png" alt="stop" >
+                                       <a href="$root/interrupt?group=$format.html($jobContext.jobDetail.group)&amp;name=$format.html($jobContext.jobDetail.name)">
+                                           <img src="$root/image/stop.png" alt="stop" >
                                        </a>
                                     #end
                                 </td>

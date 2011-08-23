@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.glass.configuration.Configuration;
 import org.joda.time.DateTime;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -46,6 +47,9 @@ public class IndexController {
 
     @Inject
     protected Scheduler quartzScheduler;
+    
+    @Inject
+    protected Configuration configuration;
 
     @RequestMapping({"/", "/index"})
     public String dashboard(Model model) throws SchedulerException {
@@ -88,14 +92,14 @@ public class IndexController {
     public String start() throws SchedulerException {
         quartzScheduler.start();
 
-        return "redirect:/";
+        return "redirect:" + configuration.getRoot() + "/";
     }
 
     @RequestMapping("/standby")
     public String standby() throws SchedulerException {
         quartzScheduler.standby();
 
-        return "redirect:/";
+        return "redirect:" + configuration.getRoot() + "/";
     }
 
     @RequestMapping("/restartTrigger")
@@ -103,14 +107,14 @@ public class IndexController {
         Trigger trigger = quartzScheduler.getTrigger(new TriggerKey(name, group));
 
         if (trigger == null) {
-            return "redirect:/";
+            return "redirect:" + configuration.getRoot() + "/";
         }
 
         trigger = trigger.getTriggerBuilder().startAt(new Date()).build();
 
         quartzScheduler.rescheduleJob(trigger.getKey(), trigger);
 
-        return "redirect:/";
+        return "redirect:" + configuration.getRoot() + "/";
     }
 
     @RequestMapping("/interrupt")
@@ -118,12 +122,12 @@ public class IndexController {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
-            return "redirect:/";
+            return "redirect:" + configuration.getRoot() + "/";
         }
 
         quartzScheduler.interrupt(job.getKey());
 
-        return "redirect:/";
+        return "redirect:" + configuration.getRoot() + "/";
     }
 
     private boolean isPaused(Trigger trigger) throws SchedulerException {

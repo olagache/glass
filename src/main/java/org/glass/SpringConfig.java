@@ -21,7 +21,6 @@ import java.util.Locale;
 import java.util.Properties;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.apache.velocity.exception.VelocityException;
@@ -58,23 +57,14 @@ public class SpringConfig {
     private QuartzListenerForLogs quartzListenerForLogs;
 
     @Inject
-    private ServletContext servletContext;
+    private Configuration configuration;
 
     @Inject
     private GlassJobFactory glassJobFactory;
 
     @Bean
-    public Configuration configuration() {
-        Configuration configuration = new Configuration();
-
-        configuration.init(servletContext);
-
-        return configuration;
-    }
-
-    @Bean
     public DataSource dataSource() throws Exception {
-        if (configuration().isInMemory()) {
+        if (configuration.isInMemory()) {
             return null;
         }
 
@@ -101,14 +91,14 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.threadCount", "15");
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
 
-        if (configuration().isInMemory()) {
+        if (configuration.isInMemory()) {
             properties.setProperty("org.quartz.jobStore.class", RAMJobStore.class.getName());
         } else {
             factory.setDataSource(dataSource());
 
-            properties.setProperty("org.quartz.jobStore.tablePrefix", configuration().getTablePrefix());
+            properties.setProperty("org.quartz.jobStore.tablePrefix", configuration.getTablePrefix());
             properties.setProperty("org.quartz.jobStore.isClustered", "false");
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", configuration().getDriverDelegateClass());
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", configuration.getDriverDelegateClass());
         }
 
         factory.setQuartzProperties(properties);

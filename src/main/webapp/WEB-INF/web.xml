@@ -46,15 +46,14 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:org/glass/springConfig.xml</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/glass/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>index</welcome-file>
+        <welcome-file>glass/index</welcome-file>
     </welcome-file-list>
 
     <!-- Error pages handling -->

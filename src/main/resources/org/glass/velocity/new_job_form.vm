@@ -10,7 +10,7 @@
 		<h1><span>Create job</span></h1>
 
         <div class="table">
-            <form id="jobActionForm" action="/jobs/new" method="POST" >
+            <form id="jobActionForm" action="$root/jobs/new" method="POST" >
                 <table>
                     #springBind("form.group")
                     <tr>
@@ -35,7 +35,7 @@
                             <select name="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
                                 <option label="------------------------------" value="" />
                                 #foreach ($value in $jobClasses)
-                                    #if ($value == $form.clazz)
+                                    #if ($value == $status.value)
                                         <option label="$value.name" value="$value.name" selected="selected" />
                                     #else
                                         <option label="$value.name" value="$value.name" />

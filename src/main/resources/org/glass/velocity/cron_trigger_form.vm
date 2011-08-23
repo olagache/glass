@@ -9,7 +9,7 @@
 
         <h1><span>Edit cron trigger</span></h1>
         <div class="table">
-            <form action="/jobs/$format.html($group)/$format.html($name)/triggers/$format.html($triggerGroup)/$format.html($triggerName)/edit-cron" method="POST" >
+            <form action="$root/jobs/$format.html($group)/$format.html($name)/triggers/$format.html($triggerGroup)/$format.html($triggerName)/edit-cron" method="POST" >
                 <table>
                     <tr>
                         <td>job group :</td>

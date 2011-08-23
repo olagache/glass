@@ -16,6 +16,7 @@
 
 package org.glass.configuration;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,12 +25,15 @@ import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Reads parameters from ServletContext and provides easy access to application configuration.
  *
  * @author damien bourdette
  */
+@Component
 public class Configuration {
 
     private static final Logger LOG = LoggerFactory.getLogger(Configuration.class);
@@ -37,6 +41,9 @@ public class Configuration {
     public static final String DEFAULT_TABLE_PREFIX = "glass_";
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    @Autowired(required = false)
+    private ServletContext servletContext;
 
     private Store store = Store.MEMORY;
 
@@ -48,7 +55,12 @@ public class Configuration {
 
     private InjectionType injectionType = InjectionType.SETTER;
 
-    public void init(ServletContext servletContext) {
+    @PostConstruct
+    public void init() {
+        if (servletContext == null) {
+            return;
+        }
+
         String value = servletContext.getInitParameter("glass/store");
         if (StringUtils.isNotEmpty(value)) { store = Store.valueOf(value); }
 
@@ -69,6 +81,10 @@ public class Configuration {
         LOG.info("Using job basePackage " + jobBasePackage);
         LOG.info("Using job dateFormat " + dateFormat);
         LOG.info("Using job injectionType " + injectionType);
+    }
+
+    public String getRoot() {
+        return servletContext.getContextPath() + "/glass";
     }
 
     public boolean isInMemory() {
