@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.glass.velocity.tools.FormatTool;
 import org.glass.velocity.tools.UtilsTool;
 import org.quartz.Scheduler;
@@ -41,6 +42,10 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView == null) {
+            return;
+        }
+
+        if (StringUtils.startsWith(modelAndView.getViewName(), "redirect:")) {
             return;
         }
 
