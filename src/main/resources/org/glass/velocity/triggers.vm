@@ -2,10 +2,10 @@
 
 <html>
 	<head>
-		#parse("/org/glass/velocity/widgets/head.vm")
+		#parse("org/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
-	    #parse("/org/glass/velocity/widgets/menu.vm")
+	    #parse("org/glass/velocity/widgets/menu.vm")
 		
 		<h1><span>Defined triggers</span></h1>
         <div class="table">

@@ -132,7 +132,7 @@ public class SpringConfig {
     public VelocityViewResolver viewResolver() {
         VelocityViewResolver viewResolver = new VelocityViewResolver();
         viewResolver.setCache(true);
-        viewResolver.setPrefix("/org/glass/velocity/");
+        viewResolver.setPrefix("org/glass/velocity/");
         viewResolver.setSuffix(".vm");
         return viewResolver;
     }

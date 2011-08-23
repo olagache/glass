@@ -2,10 +2,10 @@
 
 <html>
     <head>
-		#parse("/org/glass/velocity/widgets/head.vm")
+		#parse("org/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
-        #parse("/org/glass/velocity/widgets/menu.vm")
+        #parse("org/glass/velocity/widgets/menu.vm")
 
         <h1><span>Edit cron trigger</span></h1>
         <div class="table">
@@ -63,8 +63,8 @@
             </form>
         </div>
 
-        #parse("/org/glass/velocity/widgets/args.vm")
+        #parse("org/glass/velocity/widgets/args.vm")
 
-        #parse("/org/glass/velocity/widgets/cron_doc.vm")
+        #parse("org/glass/velocity/widgets/cron_doc.vm")
     </body>
 </html>

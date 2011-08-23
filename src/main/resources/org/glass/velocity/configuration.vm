@@ -2,10 +2,10 @@
 
 <html>
 	<head>
-		#parse("/org/glass/velocity/widgets/head.vm")
+		#parse("org/glass/velocity/widgets/head.vm")
 	</head>
 	<body>
-        #parse("/org/glass/velocity/widgets/menu.vm")
+        #parse("org/glass/velocity/widgets/menu.vm")
 
         <h2><span>Configuration</span></h2>
         <div class="table">
