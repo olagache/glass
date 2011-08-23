@@ -54,25 +54,6 @@ public class JobUtils {
         return applicationContext;
     }
 
-    public static List<JobArgumentWithField> getJobArgumentsWithFields(Class<? extends Job> jobClass) {
-
-        List<JobArgumentWithField> jobArguments = new ArrayList<JobArgumentWithField>();
-        JobArgument argument;
-        for (Field field : jobClass.getDeclaredFields()) {
-            // get annotation
-            argument = field.getAnnotation(JobArgument.class);
-            if (argument != null) {
-                // Disable security constraints for reflection operations.
-                // it only affects reflection operations, not regular code execution
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                jobArguments.add(new JobArgumentWithField(argument, field));
-            }
-        }
-        return jobArguments;
-    }
-
     public static String getJobDescription(Class<?> jobClass) {
         if (jobClass == null) {
             return "";
@@ -122,27 +103,6 @@ public class JobUtils {
         }
 
         return map;
-    }
-
-    private static class JobArgumentWithField {
-
-        private final JobArgument argument;
-
-        private final Field field;
-
-        public JobArgumentWithField(JobArgument argument, Field field) {
-            this.argument = argument;
-            this.field = field;
-        }
-
-        public JobArgument getArgument() {
-            return argument;
-        }
-
-        public Field getField() {
-            return field;
-        }
-
     }
 
 }
