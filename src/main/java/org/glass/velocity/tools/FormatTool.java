@@ -20,21 +20,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.glass.SpringConfig;
 
 /**
  * @author damien bourdette
  */
 public class FormatTool {
-    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
-
     public String date(Date date) {
         if (date == null) {
             return "";
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(datePattern());
 
         return sdf.format(date);
+    }
+
+    public String datePattern() {
+        return SpringConfig.DATE_FORMAT;
     }
 
     public String html(Object object) {

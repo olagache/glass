@@ -47,6 +47,8 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 @EnableWebMvc
 public class SpringConfig {
 
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     public static final String APPLICATION_CONTEXT_KEY = "applicationContext";
 
     @Inject

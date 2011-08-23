@@ -29,7 +29,7 @@
                     </tr>
                     #springBind("form.startTime")
                     <tr>
-                        <td>start time (dd/MM/yyyy HH:mm:ss) :</td>
+                        <td>start time ($format.datePattern()) :</td>
                         <td>
                             <input type="text" name="startTime" value="$!format.html($status.value)" />
                             &nbsp;leave blank to start now
@@ -38,7 +38,7 @@
                     </tr>
                     #springBind("form.endTime")
                     <tr>
-                        <td>end time (dd/MM/yyyy HH:mm:ss) :</td>
+                        <td>end time ($format.datePattern()) :</td>
                         <td>
                             <input type="text" name="endTime" value="$!format.html($status.value)" />
                             #if(${status.error}) ${status.errorMessage} #end

@@ -23,6 +23,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.glass.SpringConfig;
 import org.glass.job.JobUtils;
 import org.joda.time.DateTime;
 import org.quartz.SimpleScheduleBuilder;
@@ -35,11 +36,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author damien bourdette
  */
 public class SimpleTriggerForm {
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
     @Future
     private Date startTime;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
     private Date endTime;
 
     @Min(-1)

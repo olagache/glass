@@ -21,6 +21,7 @@ import java.util.Date;
 
 import javax.validation.constraints.Future;
 
+import org.glass.SpringConfig;
 import org.glass.job.JobUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
@@ -34,11 +35,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author damien bourdette
  */
 public class CronTriggerForm {
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
     @Future
     private Date startTime;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
     private Date endTime;
 
     @NotEmpty

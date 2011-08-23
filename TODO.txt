@@ -42,8 +42,9 @@ x correct misfire configuration (http://www.quartz-scheduler.org/documentation/q
 v 0.1-beta3 - bugs
 x imports
 x remove $revision in file headers
+x use iso date pattern for all date formats
+- do not add to model in AddToModelInterceptor when redirecting
 - move glass servlet to /glass so apps can have their own resources
-- use iso date pattern for all date formats
 - org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
 - find a public maven repo for jar files (oss sonatype ?)
 v 0.1-beta4 - quality
