@@ -16,16 +16,15 @@
 
 package org.glass.web.util;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.glass.job.JobUtils;
 import org.glass.job.TriggerUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobExecutionContext;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author damien bourdette

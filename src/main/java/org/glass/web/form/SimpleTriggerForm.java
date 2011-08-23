@@ -75,7 +75,7 @@ public class SimpleTriggerForm {
             startTime = new DateTime().plusSeconds(1).toDate();
         }
 
-        TriggerBuilder builder = TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
+        TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .startAt(startTime).endAt(endTime)
                 .usingJobData(JobUtils.fromProperties(dataMap));

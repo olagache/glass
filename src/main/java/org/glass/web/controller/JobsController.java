@@ -16,26 +16,36 @@
 
 package org.glass.web.controller;
 
-import org.glass.job.annotation.JobArgumentBean;
-import org.glass.job.JobUtils;
-import org.glass.web.form.JobForm;
-import org.glass.web.form.NewJobForm;
-import org.glass.web.util.JobPathScanner;
-import org.glass.web.util.TriggerWrapperForJsp;
-import org.apache.commons.lang.StringUtils;
-import org.quartz.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.apache.commons.lang.StringUtils;
+import org.glass.job.JobUtils;
+import org.glass.job.annotation.JobArgumentBean;
+import org.glass.web.form.JobForm;
+import org.glass.web.form.NewJobForm;
+import org.glass.web.util.JobPathScanner;
+import org.glass.web.util.TriggerWrapperForJsp;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * All currently defined jobs and services around form list.

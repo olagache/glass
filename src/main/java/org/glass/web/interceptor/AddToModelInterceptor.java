@@ -16,17 +16,16 @@
 
 package org.glass.web.interceptor;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.glass.velocity.tools.FormatTool;
 import org.glass.velocity.tools.UtilsTool;
 import org.quartz.Scheduler;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * @author damien bourdette
