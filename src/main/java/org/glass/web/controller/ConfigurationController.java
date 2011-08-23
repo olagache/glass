@@ -16,21 +16,13 @@
 
 package org.glass.web.controller;
 
+import javax.inject.Inject;
+
 import org.glass.configuration.Configuration;
-import org.joda.time.DateTime;
-import org.quartz.*;
-import org.quartz.Trigger.TriggerState;
+import org.quartz.SchedulerException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * The home page !

@@ -16,13 +16,23 @@
 
 package org.glass.web.controller;
 
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.CronTriggerForm;
 import org.glass.web.form.NewCronTriggerForm;
 import org.glass.web.form.NewSimpleTriggerForm;
 import org.glass.web.form.SimpleTriggerForm;
 import org.glass.web.util.JobAndTriggers;
-import org.glass.web.util.TriggerWrapperForJsp;
+import org.glass.web.util.TriggerWrapperForView;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -38,15 +48,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * @author damien bourdette
@@ -75,7 +76,7 @@ public class TriggersController {
 
                 JobAndTriggers jobAndTrigger = new JobAndTriggers();
                 jobAndTrigger.setJobDetail(jobDetail);
-                jobAndTrigger.setTriggers(TriggerWrapperForJsp.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
+                jobAndTrigger.setTriggers(TriggerWrapperForView.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
 
                 jobsAndTriggers.add(jobAndTrigger);
             }

@@ -16,19 +16,18 @@
 
 package org.glass.job;
 
-import org.glass.SpringConfig;
-import org.glass.job.annotation.*;
-import org.apache.commons.lang.StringUtils;
-import org.quartz.*;
-import org.quartz.Job;
-import org.springframework.context.ApplicationContext;
-
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.lang.StringUtils;
+import org.glass.SpringConfig;
+import org.quartz.JobDataMap;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.SchedulerContext;
+import org.quartz.SchedulerException;
+import org.springframework.context.ApplicationContext;
 
 public class JobUtils {
 
