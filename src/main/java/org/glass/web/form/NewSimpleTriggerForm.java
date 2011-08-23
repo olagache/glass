@@ -34,7 +34,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class NewSimpleTriggerForm {
     private String group;

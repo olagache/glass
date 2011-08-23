@@ -32,7 +32,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class NewCronTriggerForm {
     private String group;

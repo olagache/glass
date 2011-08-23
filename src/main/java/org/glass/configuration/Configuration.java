@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Reads parameters from ServletContext and provides easy access to application configuration.
  *
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class Configuration {
 

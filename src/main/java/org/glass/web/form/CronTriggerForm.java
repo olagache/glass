@@ -32,7 +32,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class CronTriggerForm {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")

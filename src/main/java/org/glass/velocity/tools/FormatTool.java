@@ -22,8 +22,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class FormatTool {
     private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";

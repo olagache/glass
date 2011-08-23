@@ -23,8 +23,7 @@ import org.quartz.JobDetail;
 /**
  * Allow controllers to send a job and its associated triggers
  *
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class JobAndTriggers {
     private JobDetail jobDetail;

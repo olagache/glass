@@ -22,7 +22,6 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class Log {
     private Date date;

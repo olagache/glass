@@ -27,8 +27,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class UtilsTool {
     public boolean isInterruptible(JobDetail job) {

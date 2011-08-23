@@ -22,7 +22,6 @@ import org.quartz.JobDetail;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class JobForm {
     private String dataMap;

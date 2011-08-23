@@ -33,7 +33,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class SimpleTriggerForm {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")

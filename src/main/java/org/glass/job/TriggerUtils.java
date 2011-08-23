@@ -21,8 +21,7 @@ import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class TriggerUtils {
     public static String getPlanification(Trigger trigger) {

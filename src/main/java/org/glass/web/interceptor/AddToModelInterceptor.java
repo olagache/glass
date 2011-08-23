@@ -29,7 +29,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class AddToModelInterceptor extends HandlerInterceptorAdapter {
     @Inject

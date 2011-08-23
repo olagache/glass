@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 @Component
 public class QuartzListenerForHistory extends JobListenerSupport {

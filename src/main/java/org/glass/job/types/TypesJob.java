@@ -27,8 +27,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 @org.glass.job.annotation.Job(description = "Test job for value conversions")
 public class TypesJob implements Job {

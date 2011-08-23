@@ -28,7 +28,6 @@ import org.quartz.Trigger;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class TriggerWrapperForView {
     private String group;

@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 @Service
 public class Logs {

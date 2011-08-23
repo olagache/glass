@@ -23,8 +23,7 @@ import org.quartz.listeners.SchedulerListenerSupport;
 import org.springframework.stereotype.Component;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 @Component
 public class QuartzListenerForLogs extends SchedulerListenerSupport {

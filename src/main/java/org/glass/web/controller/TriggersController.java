@@ -51,7 +51,6 @@ import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 @Controller
 public class TriggersController {

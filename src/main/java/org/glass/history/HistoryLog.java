@@ -26,7 +26,6 @@ import org.quartz.JobExecutionException;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 public class HistoryLog {
     private Date date;

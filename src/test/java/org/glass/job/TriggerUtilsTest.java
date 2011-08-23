@@ -20,8 +20,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public class TriggerUtilsTest {
     @Test

@@ -17,8 +17,7 @@
 package org.glass.configuration;
 
 /**
- * @author damien bourdette <a href="https://github.com/dbourdette">dbourdette on github</a>
- * @version \$Revision$
+ * @author damien bourdette
  */
 public enum InjectionType {
     SETTER, FIELD

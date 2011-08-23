@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author damien bourdette
- * @version \$Revision$
  */
 @Controller
 public class HistoryController {
