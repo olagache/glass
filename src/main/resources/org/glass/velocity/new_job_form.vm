@@ -25,6 +25,7 @@
                         <td>name</td>
                         <td>
                             <input type="text" name="name" value="$!format.html($status.value)" />
+                            <span id="nameProposal"></span>
                             #if(${status.error}) ${status.errorMessage} #end
                         </td>
                     </tr>
@@ -32,7 +33,7 @@
                     <tr>
                         <td>class</td>
                         <td>
-                            <select name="clazz" onchange="javascript:var args=new JobArguments(this[this.selectedIndex].value);args.buildHtml('arguments-body-id')">
+                            <select name="clazz" onchange="javascript:var value = this[this.selectedIndex].value;new JobArguments(value).buildHtml('arguments-body-id');proposeJobName($('#nameProposal'), value);">
                                 <option label="------------------------------" value="" />
                                 #foreach ($value in $jobClasses)
                                     #if ($value == $status.value)
@@ -59,6 +60,7 @@
                 </table>
                 <input type="submit" value="create job"/>
             </form>
+            <script type="text/javascript">proposeJobName($('#nameProposal'), '$!form.clazz')</script>
         </div>
 
         #parse("org/glass/velocity/widgets/args.vm")

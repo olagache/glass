@@ -17,6 +17,19 @@
 
 var SERVICE_URL = '/glass/jobs/arguments';
 
+/**
+ * Fills input with value if input has no value yet.
+ */
+function proposeJobName(proposalElement, class) {
+    if (class == '' && class.indexOf('.') == -1) {
+        return;
+    }
+
+    var name = class.substring(class.lastIndexOf('.') + 1, class.length);
+
+    proposalElement.text("maybe " + name + " ?");
+}
+
 /* ************ */
 /* JobArguments */
 /* ************ */
