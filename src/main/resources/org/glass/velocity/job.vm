@@ -7,7 +7,7 @@
 	<body>
 	    #parse("org/glass/velocity/widgets/menu.vm")
 		
-		<h1><span>Job</span></h1>
+		<h1><span>Job $format.html($job.name)</span></h1>
         <div class="actions">
             <a href="$root/jobs/$format.html($job.group)/$format.html($job.name)/edit">edit</a>
             <a href="$root/jobs/$format.html($job.group)/$format.html($job.name)/fire">fire now</a>

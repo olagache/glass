@@ -50,7 +50,7 @@ v 0.1-beta4 - quality
 x displaying arg with js is broken
 x add a proposal for job name when creating a job
 x errors in red
-- display job name in h2 when in job page
+x display job name in h2 when in job page
 - quality reports (pmd ?)
 - kill code duplication
 - org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
