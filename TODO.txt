@@ -47,6 +47,9 @@ x do not add to model in AddToModelInterceptor when redirecting
 x find a public maven repo for jar files => cloud bees
 x move glass servlet to /glass so apps can have their own resources
 v 0.1-beta4 - quality
+x displaying arg with js is broken
+- in job args, say "Job arguments for class xxx" (easy coy - paste for job name)
+- display job name in h2 when in job page
 - selenium tests
 - quality reports (pmd ?)
 - kill code duplication

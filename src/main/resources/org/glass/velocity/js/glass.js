@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+var SERVICE_URL = '/glass/jobs/arguments';
+
 /* ************ */
 /* JobArguments */
 /* ************ */
@@ -45,7 +47,7 @@ JobArguments.prototype.findByClassname = function(classname) {
 	data["className"]=classname;
 
 	_this=this;
-	$.getJSON('/jobs/arguments', data, function(args) {
+	$.getJSON(SERVICE_URL, data, function(args) {
 		_this.arguments = args;
 		_this.log();
 	});
@@ -66,7 +68,7 @@ JobArguments.prototype.buildHtml = function(elementId) {
 	
 	if(this.arguments==null && this.classname!=null) {
 		_this = this;
-		$.getJSON('/jobs/arguments', {"className": this.classname}, function(args) {
+		$.getJSON(SERVICE_URL, {"className": this.classname}, function(args) {
 			_this.arguments = args;
 			var htmlBuilder="";
 			$(args).each(function(index, argument) {
