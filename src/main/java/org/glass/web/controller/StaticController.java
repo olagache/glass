@@ -38,21 +38,21 @@ public class StaticController {
     public void ccs(HttpServletResponse response) throws IOException {
         response.setContentType("text/css");
 
-        serveResource("/org/glass/velocity/css/style.css", response);
+        serveResource("/org/glass/css/style.css", response);
     }
 
     @RequestMapping("/image/{name}.png")
     public void image(@PathVariable String name, HttpServletResponse response) throws IOException {
         response.setContentType("image/png");
 
-        serveResource("/org/glass/velocity/image/" + name + ".png", response);
+        serveResource("/org/glass/image/" + name + ".png", response);
     }
 
     @RequestMapping("/js/{name}.js")
     public void javascript(@PathVariable String name, HttpServletResponse response) throws IOException {
         response.setContentType("application/javascript");
 
-        serveResource("/org/glass/velocity/js/" + name + ".js", response);
+        serveResource("/org/glass/js/" + name + ".js", response);
     }
 
     private void serveResource(String name, HttpServletResponse response) throws IOException {

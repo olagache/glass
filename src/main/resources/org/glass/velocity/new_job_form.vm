@@ -17,7 +17,7 @@
                         <td>group</td>
                         <td>
                             <input type="text" name="group" value="$!format.html($status.value)" />
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.name")
@@ -26,7 +26,7 @@
                         <td>
                             <input type="text" name="name" value="$!format.html($status.value)" />
                             <span id="nameProposal"></span>
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.clazz")
@@ -43,7 +43,7 @@
                                     #end
                                 #end
                             </select>
-                             #if(${status.error}) ${status.errorMessage} #end
+                             #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #if ($utils.isNotEmpty($jobDescription))

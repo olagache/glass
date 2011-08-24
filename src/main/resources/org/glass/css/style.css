@@ -179,3 +179,7 @@ table.dashboard td {
 table.dashboard th{
 
 }
+
+span.error {
+    color:red;
+}

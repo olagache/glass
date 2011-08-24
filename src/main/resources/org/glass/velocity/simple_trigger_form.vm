@@ -33,7 +33,7 @@
                         <td>
                             <input type="text" name="startTime" value="$!format.html($status.value)" />
                             &nbsp;leave blank to start now
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.endTime")
@@ -41,7 +41,7 @@
                         <td>end time ($format.datePattern()) :</td>
                         <td>
                             <input type="text" name="endTime" value="$!format.html($status.value)" />
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.repeatCount")
@@ -50,7 +50,7 @@
                         <td>
                             <input type="text" name="repeatCount" value="$!format.html($status.value)" />
                             &nbsp;leave blank for one shot, -1 for no limit
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.intervalInMilliseconds")
@@ -58,7 +58,7 @@
                         <td>repeat interval (ms)  :</td>
                         <td>
                             <input type="text" name="intervalInMilliseconds" value="$!format.html($status.value)" />
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.dataMap")

@@ -33,7 +33,7 @@
                         <td>
                             <input type="text" name="startTime" value="$!format.html($status.value)" />
                             &nbsp;leave blank to start now
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.endTime")
@@ -41,7 +41,7 @@
                         <td>end time ($format.datePattern()) :</td>
                         <td>
                             <input type="text" name="endTime" value="$!format.html($status.value)" />
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
                     #springBind("form.cronExpression")
@@ -49,7 +49,7 @@
                         <td>cron expression :</td>
                         <td>
                             <input type="text" name="cronExpression" value="$!format.html($status.value)" />
-                            #if(${status.error}) ${status.errorMessage} #end
+                            #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                             &nbsp;<a href="#cron-documentation">documentation</a>
                         </td>
                     </tr>
