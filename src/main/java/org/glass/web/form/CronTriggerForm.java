@@ -22,7 +22,7 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 
 import org.glass.SpringConfig;
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.quartz.CronScheduleBuilder;
@@ -53,7 +53,7 @@ public class CronTriggerForm {
     public CronTriggerForm(Trigger trigger) {
         this.startTime = trigger.getStartTime();
         this.endTime = trigger.getEndTime();
-        this.dataMap = JobUtils.toProperties(trigger.getJobDataMap(), "\n");
+        this.dataMap = JobDataMapUtils.toProperties(trigger.getJobDataMap(), "\n");
         this.cronExpression = ((CronTrigger) trigger).getCronExpression();
 
     }
@@ -66,7 +66,7 @@ public class CronTriggerForm {
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.fromProperties(dataMap))
+                .usingJobData(JobDataMapUtils.fromProperties(dataMap))
                 .build();
     }
 

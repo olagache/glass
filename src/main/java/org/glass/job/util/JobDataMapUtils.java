@@ -14,58 +14,16 @@
  * limitations under the License.
  */
 
-package org.glass.job;
+package org.glass.job.util;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.glass.SpringConfig;
 import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.SchedulerContext;
-import org.quartz.SchedulerException;
-import org.springframework.context.ApplicationContext;
 
-public class JobUtils {
-
-    public static <T> T getSpringBean(JobExecutionContext context, Class<T> beanClass) throws JobExecutionException {
-        return getApplicationContext(context).getBean(beanClass);
-    }
-
-    public static ApplicationContext getApplicationContext(JobExecutionContext context) throws JobExecutionException {
-        try {
-            return getApplicationContext(context.getScheduler().getContext());
-        } catch (SchedulerException e) {
-            throw new JobExecutionException("Failed to get scheduler from JobExecutionContext");
-        }
-    }
-
-    public static ApplicationContext getApplicationContext(SchedulerContext schedulerContext) throws JobExecutionException {
-        ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get(SpringConfig.APPLICATION_CONTEXT_KEY);
-
-        if (applicationContext == null) {
-            throw new JobExecutionException("No application context available in scheduler context for key \"" + SpringConfig.APPLICATION_CONTEXT_KEY + "\"");
-        }
-
-        return applicationContext;
-    }
-
-    public static String getJobDescription(Class<?> jobClass) {
-        if (jobClass == null) {
-            return "";
-        }
-
-        org.glass.job.annotation.Job annotation = jobClass.getAnnotation(org.glass.job.annotation.Job.class);
-
-        if (annotation == null) {
-            return "";
-        }
-
-        return annotation.description();
-    }
+public class JobDataMapUtils {
 
     public static String toProperties(JobDataMap jobDataMap, String separator) {
         String[] keys = jobDataMap.getKeys();

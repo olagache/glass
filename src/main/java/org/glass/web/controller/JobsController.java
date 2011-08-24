@@ -25,7 +25,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.glass.configuration.Configuration;
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.JobForm;
 import org.glass.web.form.NewJobForm;
@@ -96,8 +96,8 @@ public class JobsController {
         }
 
         model.addAttribute("job", job);
-        model.addAttribute("jobDescription", JobUtils.getJobDescription(job.getJobClass()));
-        model.addAttribute("dataMap", JobUtils.toProperties(job.getJobDataMap(), "\n"));
+        model.addAttribute("jobDescription", getJobDescription(job.getJobClass()));
+        model.addAttribute("dataMap", JobDataMapUtils.toProperties(job.getJobDataMap(), "\n"));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
         List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
@@ -208,7 +208,7 @@ public class JobsController {
         }
 
         model.addAttribute("jobClasses", jobClasses);
-        model.addAttribute("jobDescription", JobUtils.getJobDescription(form.getClazz()));
+        model.addAttribute("jobDescription", getJobDescription(form.getClazz()));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(form.getClazz()));
         model.addAttribute("form", form);
 
@@ -217,10 +217,26 @@ public class JobsController {
 
     private String form(Model model, JobForm form, Class<?> jobClass) {
         model.addAttribute("jobClass", jobClass);
-        model.addAttribute("jobDescription", JobUtils.getJobDescription(jobClass));
+        model.addAttribute("jobDescription", getJobDescription(jobClass));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(jobClass));
         model.addAttribute("form", form);
 
         return "job_form";
     }
+
+    private String getJobDescription(Class<?> jobClass) {
+        if (jobClass == null) {
+            return "";
+        }
+
+        org.glass.job.annotation.Job annotation = jobClass.getAnnotation(org.glass.job.annotation.Job.class);
+
+        if (annotation == null) {
+            return "";
+        }
+
+        return annotation.description();
+    }
+
+
 }

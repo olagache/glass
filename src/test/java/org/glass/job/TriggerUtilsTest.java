@@ -16,6 +16,7 @@
 
 package org.glass.job;
 
+import org.glass.job.util.TriggerUtils;
 import org.junit.Assert;
 import org.junit.Test;
 

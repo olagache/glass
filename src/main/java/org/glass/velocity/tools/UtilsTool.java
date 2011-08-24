@@ -19,7 +19,7 @@ package org.glass.velocity.tools;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
-import org.glass.job.TriggerUtils;
+import org.glass.job.util.TriggerUtils;
 import org.joda.time.Period;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;

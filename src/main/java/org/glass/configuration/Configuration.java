@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.glass.job.JobUtils;
+import org.glass.job.GlassJobFactory;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class Configuration {
 
     private String tablePrefix = DEFAULT_TABLE_PREFIX;
 
-    private String jobBasePackage = JobUtils.class.getPackage().getName();
+    private String jobBasePackage = GlassJobFactory.class.getPackage().getName();
 
     private String dateFormat = DEFAULT_DATE_FORMAT;
 

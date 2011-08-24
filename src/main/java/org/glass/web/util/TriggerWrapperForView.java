@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.glass.job.JobUtils;
-import org.glass.job.TriggerUtils;
+import org.glass.job.util.JobDataMapUtils;
+import org.glass.job.util.TriggerUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
@@ -64,7 +64,7 @@ public class TriggerWrapperForView {
         wrapper.name = trigger.getKey().getName();
         wrapper.startTime = trigger.getStartTime();
         wrapper.endTime = trigger.getEndTime();
-        wrapper.dataMap = JobUtils.toProperties(trigger.getJobDataMap(), "\n");
+        wrapper.dataMap = JobDataMapUtils.toProperties(trigger.getJobDataMap(), "\n");
 
         if (trigger instanceof CronTrigger) {
             CronTrigger cronTrigger = (CronTrigger) trigger;

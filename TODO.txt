@@ -51,11 +51,12 @@ x displaying arg with js is broken
 x add a proposal for job name when creating a job
 x errors in red
 x display job name in h2 when in job page
-- quality reports (pmd ?)
-- kill code duplication
+x JobUtils for spring -> Spring.getBean
 - org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
 - update description when picking a job class on new job screen
-- JobUtils for spring -> Spring.getBean in spring package with no context param
+- quality reports (pmd ?)
+- kill code duplication
+- proper logging facilities
 v 0.1-beta5 - history and logs
 - logs pagination
 - history pagination

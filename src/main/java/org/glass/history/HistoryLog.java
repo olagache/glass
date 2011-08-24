@@ -19,7 +19,7 @@ package org.glass.history;
 import java.util.Date;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -158,7 +158,7 @@ public class HistoryLog {
         log.jobName = context.getJobDetail().getKey().getName();
         log.triggerGroup = context.getTrigger().getKey().getGroup();
         log.triggerName = context.getTrigger().getKey().getName();
-        log.dataMap = JobUtils.toProperties(context.getMergedJobDataMap(), "\n");
+        log.dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
 
         return log;
     }

@@ -16,7 +16,7 @@
 
 package org.glass.web.form;
 
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 
@@ -29,13 +29,13 @@ public class JobForm {
     public JobForm() {}
 
     public JobForm(JobDetail jobDetail) {
-        this.dataMap = JobUtils.toProperties(jobDetail.getJobDataMap(), "\n");
+        this.dataMap = JobDataMapUtils.toProperties(jobDetail.getJobDataMap(), "\n");
     }
 
     public JobDetail getJobDetails(JobDetail job) {
         return JobBuilder.newJob(job.getJobClass())
                          .withIdentity(job.getKey())
-                         .usingJobData(JobUtils.fromProperties(dataMap))
+                         .usingJobData(JobDataMapUtils.fromProperties(dataMap))
                          .storeDurably()
                          .build();
     }

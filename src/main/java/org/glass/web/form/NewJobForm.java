@@ -18,7 +18,7 @@ package org.glass.web.form;
 
 import javax.validation.constraints.NotNull;
 
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -48,7 +48,7 @@ public class NewJobForm {
         this.group = jobDetail.getKey().getGroup();
         this.name = jobDetail.getKey().getName();
         this.clazz = jobDetail.getJobClass();
-        this.dataMap = JobUtils.toProperties(jobDetail.getJobDataMap(), "\n");
+        this.dataMap = JobDataMapUtils.toProperties(jobDetail.getJobDataMap(), "\n");
     }
 
     /**
@@ -59,7 +59,7 @@ public class NewJobForm {
     public JobDetail getJobDetails() {
         return JobBuilder.newJob(clazz)
                          .withIdentity(name.trim(), group.trim())
-                         .usingJobData(JobUtils.fromProperties(dataMap))
+                         .usingJobData(JobDataMapUtils.fromProperties(dataMap))
                          .storeDurably()
                          .build();
     }

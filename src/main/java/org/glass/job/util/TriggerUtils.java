@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.glass.job;
+package org.glass.job.util;
 
 import org.quartz.CronTrigger;
 import org.quartz.SimpleTrigger;

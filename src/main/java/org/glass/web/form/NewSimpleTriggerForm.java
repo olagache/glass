@@ -24,7 +24,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.glass.SpringConfig;
-import org.glass.job.JobUtils;
+import org.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.quartz.JobDetail;
@@ -88,7 +88,7 @@ public class NewSimpleTriggerForm {
 
         TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
                 .startAt(startTime).endAt(endTime)
-                .usingJobData(JobUtils.fromProperties(dataMap));
+                .usingJobData(JobDataMapUtils.fromProperties(dataMap));
 
         if (repeatCount == -1) {
             builder.withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever()

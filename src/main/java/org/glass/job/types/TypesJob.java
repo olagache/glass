@@ -18,8 +18,8 @@ package org.glass.job.types;
 
 import java.util.Date;
 
-import org.glass.job.JobUtils;
 import org.glass.job.annotation.JobArgument;
+import org.glass.job.util.Spring;
 import org.glass.log.Log;
 import org.glass.log.Logs;
 import org.quartz.Job;
@@ -39,7 +39,7 @@ public class TypesJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        Logs logs = JobUtils.getSpringBean(context, Logs.class);
+        Logs logs = Spring.getBean(context, Logs.class);
 
         logs.add(Log.info("longValue = " + longValue));
         logs.add(Log.info("dateValue = " + dateValue));
