@@ -54,11 +54,6 @@
             <name>Spring milstones</name>
             <url>http://maven.springframework.org/milestone</url>
         </repository>
-        <repository>
-            <id>morphia.googlecode.com</id>
-            <name>Morphia repository</name>
-            <url>http://morphia.googlecode.com/svn/mavenrepo</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
