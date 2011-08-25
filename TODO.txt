@@ -54,13 +54,14 @@ x display job name in h2 when in job page
 x JobUtils for spring -> Spring.getBean
 x quality reports : mvn pmd:pmd and mvn pmd:cdp
 x remove commons logging and log4j
-- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
-- update description when picking a job class on new job screen
+x add findbugs plugin
 - kill code duplication
+- update description when picking a job class on new job screen
 - proper logging facilities
-- publish source and javadoc to release repo
-- release with maven
 - repositories in settings.xml ?
+- publish source and javadoc to release repo
+- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
+- release with maven
 v 0.1-beta5 - history and logs
 - logs pagination
 - history pagination
