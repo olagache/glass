@@ -23,12 +23,32 @@
     <artifactId>glass</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>glass</name>
+    <description>A web user interface for quartz</description>
     <packaging>${profile.packaging}</packaging>
     <inceptionYear>2011</inceptionYear>
     <url>https://github.com/dbourdette/glass</url>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>manual</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
     <scm>
         <url>https://github.com/dbourdette/glass</url>
+        <connection>git@github.com:dbourdette/glass.git</connection>
     </scm>
+
+    <developers>
+        <developer>
+            <id>dbourdette</id>
+            <name>Damien Bourdete</name>
+            <email>dbourdette@gmail.com</email>
+        </developer>
+    </developers>
 
     <profiles>
         <profile>
@@ -113,6 +133,13 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
                 </includes>
             </resource>
         </resources>

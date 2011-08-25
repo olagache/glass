@@ -36,7 +36,7 @@
                             <select id="clazz" name="clazz" onchange="javascript:onJobSelected();">
                                 <option label="------------------------------" value="" />
                                 #foreach ($value in $jobClasses)
-                                    #if ($value == $status.value)
+                                    #if ("$value" == "$status.value")
                                         <option label="$value.name" value="$value.name" selected="selected" />
                                     #else
                                         <option label="$value.name" value="$value.name" />

@@ -58,11 +58,10 @@ x add findbugs plugin
 x kill code duplication
 x kill bugs reported in findBugs
 x update description when picking a job class on new job screen
-- proper logging facilities
-- repositories in settings.xml ?
-- publish source and javadoc to release repo
-- org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value
-- release with maven
+x proper logging facilities
+x repositories in settings.xml : nope
+x publish source and javadoc to release repo (use webdav for releases)
+x org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value (http://robertmarkbramprogrammer.blogspot.com/2010/10/left-side-xx-of-y-operation-has-null.html)
 v 0.1-beta5 - history and logs
 - logs pagination
 - history pagination
@@ -78,6 +77,7 @@ v 0.1-beta6 - selenium
 - selenium tests
 v 0.1-beta7 - documentation
 - documentation on gh-pages
+- include a NOTICE for apache licence
 
 v 0.2 - smooth
 - remove apache commons lang
