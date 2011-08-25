@@ -55,7 +55,8 @@ x JobUtils for spring -> Spring.getBean
 x quality reports : mvn pmd:pmd and mvn pmd:cdp
 x remove commons logging and log4j
 x add findbugs plugin
-- kill code duplication
+x kill code duplication
+- kill bugs reported in findBugs
 - update description when picking a job class on new job screen
 - proper logging facilities
 - repositories in settings.xml ?

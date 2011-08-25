@@ -17,40 +17,27 @@
 package org.glass.web.form;
 
 import java.text.ParseException;
-import java.util.Date;
 
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.glass.SpringConfig;
 import org.glass.job.util.JobDataMapUtils;
 import org.joda.time.DateTime;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
  */
-public class SimpleTriggerForm {
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    @Future
-    private Date startTime;
-
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    private Date endTime;
-
+public class SimpleTriggerForm extends TriggerFormSupport implements TriggerForm {
     @Min(-1)
-    private Integer repeatCount;
+    protected Integer repeatCount;
 
     @NotNull
     @Min(0)
-    private Integer intervalInMilliseconds;
-
-    private String dataMap;
+    protected Integer intervalInMilliseconds;
 
     public SimpleTriggerForm() {
     }
@@ -64,17 +51,7 @@ public class SimpleTriggerForm {
     }
 
     public Trigger getTrigger(Trigger trigger) throws ParseException {
-        if (repeatCount == null) {
-            repeatCount = 0;
-        }
-
-        if (intervalInMilliseconds == null) {
-            intervalInMilliseconds = 0;
-        }
-
-        if (startTime == null) {
-            startTime = new DateTime().plusSeconds(1).toDate();
-        }
+        fixParameters();
 
         TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
@@ -90,22 +67,6 @@ public class SimpleTriggerForm {
         }
 
         return builder.build();
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public Integer getRepeatCount() {
@@ -124,11 +85,17 @@ public class SimpleTriggerForm {
         this.intervalInMilliseconds = intervalInMilliseconds;
     }
 
-    public String getDataMap() {
-        return dataMap;
-    }
+    protected void fixParameters() {
+        if (repeatCount == null) {
+            repeatCount = 0;
+        }
 
-    public void setDataMap(String dataMap) {
-        this.dataMap = dataMap;
+        if (intervalInMilliseconds == null) {
+            intervalInMilliseconds = 0;
+        }
+
+        if (startTime == null) {
+            startTime = new DateTime().plusSeconds(1).toDate();
+        }
     }
 }

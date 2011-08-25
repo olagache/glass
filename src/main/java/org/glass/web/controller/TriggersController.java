@@ -30,6 +30,7 @@ import org.glass.web.form.CronTriggerForm;
 import org.glass.web.form.NewCronTriggerForm;
 import org.glass.web.form.NewSimpleTriggerForm;
 import org.glass.web.form.SimpleTriggerForm;
+import org.glass.web.form.TriggerForm;
 import org.glass.web.util.JobAndTriggers;
 import org.glass.web.util.TriggerWrapperForView;
 import org.quartz.CronTrigger;
@@ -187,55 +188,13 @@ public class TriggersController {
     }
 
     @RequestMapping(value = "/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/edit-cron", method = RequestMethod.POST)
-    public String postEditCron(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @Valid @ModelAttribute("form") CronTriggerForm form, BindingResult result, Model model) throws SchedulerException, ParseException {
-        JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
-
-        if (job == null) {
-            return "redirect:" + configuration.getRoot() + "/jobs";
-        }
-
-        Trigger trigger = quartzScheduler.getTrigger(new TriggerKey(triggerName, triggerGroup));
-
-        if (trigger == null) {
-            return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
-        }
-
-        if (result.hasErrors()) {
-            model.addAttribute("trigger", trigger);
-            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
-
-            return "cron_trigger_form";
-        }
-
-        quartzScheduler.rescheduleJob(trigger.getKey(), form.getTrigger(trigger));
-
-        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
+    public String postEditCronTrigger(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @Valid @ModelAttribute("form") CronTriggerForm form, BindingResult result, Model model) throws SchedulerException, ParseException {
+        return postEditTrigger(group, name, triggerGroup, triggerName, form, model, result);
     }
 
     @RequestMapping(value = "/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/edit-simple", method = RequestMethod.POST)
-    public String postEditSimple(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @Valid @ModelAttribute("form") SimpleTriggerForm form, BindingResult result, Model model) throws SchedulerException, ParseException {
-        JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
-
-        if (job == null) {
-            return "redirect:" + configuration.getRoot() + "/jobs";
-        }
-
-        Trigger trigger = quartzScheduler.getTrigger(new TriggerKey(triggerName, triggerGroup));
-
-        if (trigger == null) {
-            return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
-        }
-
-        if (result.hasErrors()) {
-            model.addAttribute("trigger", trigger);
-            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
-
-            return "simple_trigger_form";
-        }
-
-        quartzScheduler.rescheduleJob(trigger.getKey(), form.getTrigger(trigger));
-
-        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
+    public String postEditSimpleTrigger(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @Valid @ModelAttribute("form") SimpleTriggerForm form, BindingResult result, Model model) throws SchedulerException, ParseException {
+        return postEditTrigger(group, name, triggerGroup, triggerName, form, model, result);
     }
 
     @RequestMapping("/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/delete")
@@ -247,6 +206,35 @@ public class TriggersController {
         }
 
         quartzScheduler.unscheduleJob(new TriggerKey(triggerName, triggerGroup));
+
+        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
+    }
+
+    private String postEditTrigger(String group, String name, String triggerGroup, String triggerName, TriggerForm form, Model model, BindingResult result) throws SchedulerException, ParseException {
+        JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
+
+        if (job == null) {
+            return "redirect:" + configuration.getRoot() + "/jobs";
+        }
+
+        Trigger trigger = quartzScheduler.getTrigger(new TriggerKey(triggerName, triggerGroup));
+
+        if (trigger == null) {
+            return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("trigger", trigger);
+            model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
+
+            if (trigger instanceof CronTrigger) {
+                return "cron_trigger_form";
+            } else {
+                return "simple_trigger_form";
+            }
+        }
+
+        quartzScheduler.rescheduleJob(trigger.getKey(), form.getTrigger(trigger));
 
         return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
     }

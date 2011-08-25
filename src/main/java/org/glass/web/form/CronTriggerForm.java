@@ -17,11 +17,7 @@
 package org.glass.web.form;
 
 import java.text.ParseException;
-import java.util.Date;
 
-import javax.validation.constraints.Future;
-
-import org.glass.SpringConfig;
 import org.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
@@ -29,23 +25,13 @@ import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
  */
-public class CronTriggerForm {
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    @Future
-    private Date startTime;
-
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    private Date endTime;
-
+public class CronTriggerForm extends TriggerFormSupport implements TriggerForm {
     @NotEmpty
-    private String cronExpression;
-
-    private String dataMap;
+    protected String cronExpression;
 
     public CronTriggerForm() {
     }
@@ -59,31 +45,14 @@ public class CronTriggerForm {
     }
 
     public Trigger getTrigger(Trigger trigger) throws ParseException {
-        if (startTime == null) {
-            startTime = new DateTime().plusSeconds(1).toDate();
-        }
+        fixParameters();
+
         return TriggerBuilder.newTrigger().forJob(trigger.getJobKey().getName(), trigger.getJobKey().getGroup())
                 .withIdentity(trigger.getKey().getName(), trigger.getKey().getGroup())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionIgnoreMisfires())
                 .startAt(startTime).endAt(endTime)
                 .usingJobData(JobDataMapUtils.fromProperties(dataMap))
                 .build();
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public String getCronExpression() {
@@ -94,11 +63,9 @@ public class CronTriggerForm {
         this.cronExpression = cronExpression;
     }
 
-    public String getDataMap() {
-        return dataMap;
-    }
-
-    public void setDataMap(String dataMap) {
-        this.dataMap = dataMap;
+    protected void fixParameters() {
+        if (startTime == null) {
+            startTime = new DateTime().plusSeconds(1).toDate();
+        }
     }
 }

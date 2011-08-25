@@ -50,8 +50,8 @@
 
     <repositories>
         <repository>
-            <id>com.springsource.repository.milstones</id>
-            <name>Spring milstones</name>
+            <id>com.springsource.repository.milestones</id>
+            <name>Spring milestones</name>
             <url>http://maven.springframework.org/milestone</url>
         </repository>
     </repositories>

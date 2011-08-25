@@ -17,26 +17,18 @@
 package org.glass.web.form;
 
 import java.text.ParseException;
-import java.util.Date;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import org.glass.SpringConfig;
 import org.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.DateTime;
 import org.quartz.JobDetail;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author damien bourdette
  */
-public class NewSimpleTriggerForm {
+public class NewSimpleTriggerForm extends SimpleTriggerForm {
     private String group;
 
     private String name;
@@ -46,22 +38,6 @@ public class NewSimpleTriggerForm {
 
     @NotEmpty
     private String triggerName;
-
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    @Future
-    private Date startTime;
-
-    @DateTimeFormat(pattern = SpringConfig.DATE_FORMAT)
-    private Date endTime;
-
-    @Min(-1)
-    private Integer repeatCount;
-
-    @NotNull
-    @Min(0)
-    private Integer intervalInMilliseconds = 1000;
-
-    private String dataMap;
 
     public NewSimpleTriggerForm() {
     }
@@ -74,17 +50,7 @@ public class NewSimpleTriggerForm {
     }
 
     public Trigger getTrigger() throws ParseException {
-        if (repeatCount == null) {
-            repeatCount = 0;
-        }
-
-        if (intervalInMilliseconds == null) {
-            intervalInMilliseconds = 1;
-        }
-
-        if (startTime == null) {
-            startTime = new DateTime().plusSeconds(1).toDate();
-        }
+        fixParameters();
 
         TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger().forJob(name.trim(), group.trim()).withIdentity(triggerName.trim(), triggerGroup.trim())
                 .startAt(startTime).endAt(endTime)
@@ -131,45 +97,5 @@ public class NewSimpleTriggerForm {
 
     public void setTriggerName(String triggerName) {
         this.triggerName = triggerName;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Integer getRepeatCount() {
-        return repeatCount;
-    }
-
-    public void setRepeatCount(Integer repeatCount) {
-        this.repeatCount = repeatCount;
-    }
-
-    public Integer getIntervalInMilliseconds() {
-        return intervalInMilliseconds;
-    }
-
-    public void setIntervalInMilliseconds(Integer intervalInMilliseconds) {
-        this.intervalInMilliseconds = intervalInMilliseconds;
-    }
-
-    public String getDataMap() {
-        return dataMap;
-    }
-
-    public void setDataMap(String dataMap) {
-        this.dataMap = dataMap;
     }
 }
