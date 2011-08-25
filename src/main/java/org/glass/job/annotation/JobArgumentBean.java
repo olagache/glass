@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.glass.util.Arrays;
 
 /**
  * Bean that can be used in jsp files and in json serialisations.
@@ -35,9 +36,6 @@ public class JobArgumentBean {
 
     @JsonProperty
     String description;
-
-    @JsonProperty
-    String defaultValue;
 
     @JsonProperty
     String[] sampleValues;
@@ -68,15 +66,14 @@ public class JobArgumentBean {
         this.name = name;
         required = argument.required();
         description = argument.description();
-        sampleValues = argument.sampleValues();
+        sampleValues = Arrays.copyOf(argument.sampleValues());
     }
 
-    public JobArgumentBean(String name, boolean required, String description, String defaultValue, String[] sampleValues) {
+    public JobArgumentBean(String name, boolean required, String description, String[] sampleValues) {
         this.name = name;
         this.required = required;
         this.description = description;
-        this.defaultValue = defaultValue;
-        this.sampleValues = sampleValues;
+        this.sampleValues = Arrays.copyOf(sampleValues);
     }
 
     public String getName() {
@@ -103,20 +100,12 @@ public class JobArgumentBean {
         this.description = description;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
     public String[] getSampleValues() {
-        return sampleValues;
+        return Arrays.copyOf(sampleValues);
     }
 
     public void setSampleValues(String[] sampleValues) {
-        this.sampleValues = sampleValues;
+        this.sampleValues = Arrays.copyOf(sampleValues);
     }
 
 }

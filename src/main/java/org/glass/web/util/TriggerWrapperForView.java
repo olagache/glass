@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.glass.job.util.JobDataMapUtils;
 import org.glass.job.util.TriggerUtils;
+import org.glass.util.Dates;
 import org.quartz.CronTrigger;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
@@ -100,11 +101,11 @@ public class TriggerWrapperForView {
     }
 
     public Date getStartTime() {
-        return startTime;
+        return Dates.copy(startTime);
     }
 
     public Date getEndTime() {
-        return endTime;
+        return Dates.copy(endTime);
     }
 
     public String getCronExpression() {

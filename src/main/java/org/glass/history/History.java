@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class History {
-    private List<HistoryLog> logs = new ArrayList<HistoryLog>();
+    private final List<HistoryLog> logs = new ArrayList<HistoryLog>();
 
     private static final int MAX_SIZE = 1000;
 

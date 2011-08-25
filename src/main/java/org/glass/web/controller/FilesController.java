@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * Serves all static files : css, images, js files...
+ *
  * @author damien bourdette
  */
 @Controller
-public class StaticController {
+public class FilesController {
 
     public static final int BUFFER_SIZE = 1024;
 

@@ -19,9 +19,9 @@ package org.glass.web.form;
 import java.text.ParseException;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.glass.job.util.JobDataMapUtils;
+import org.glass.util.Dates;
 import org.joda.time.DateTime;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
@@ -35,7 +35,6 @@ public class SimpleTriggerForm extends TriggerFormSupport implements TriggerForm
     @Min(-1)
     protected Integer repeatCount;
 
-    @NotNull
     @Min(0)
     protected Integer intervalInMilliseconds;
 
@@ -43,8 +42,8 @@ public class SimpleTriggerForm extends TriggerFormSupport implements TriggerForm
     }
 
     public SimpleTriggerForm(Trigger trigger) {
-        this.startTime = trigger.getStartTime();
-        this.endTime = trigger.getEndTime();
+        this.startTime = Dates.copy(trigger.getStartTime());
+        this.endTime = Dates.copy(trigger.getEndTime());
         this.dataMap = JobDataMapUtils.toProperties(trigger.getJobDataMap(), "\n");
         this.repeatCount = ((SimpleTrigger) trigger).getRepeatCount();
         this.intervalInMilliseconds = (int) ((SimpleTrigger) trigger).getRepeatInterval();
@@ -91,7 +90,7 @@ public class SimpleTriggerForm extends TriggerFormSupport implements TriggerForm
         }
 
         if (intervalInMilliseconds == null) {
-            intervalInMilliseconds = 0;
+            intervalInMilliseconds = 1000;
         }
 
         if (startTime == null) {

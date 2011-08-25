@@ -19,6 +19,7 @@ package org.glass.log;
 import java.util.Date;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.glass.util.Dates;
 
 /**
  * @author damien bourdette
@@ -54,7 +55,7 @@ public class Log {
     }
 
     public Date getDate() {
-        return date;
+        return Dates.copy(date);
     }
 
     public String getMessage() {

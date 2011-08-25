@@ -66,6 +66,7 @@
                         <td>repeat interval (ms)  :</td>
                         <td>
                             <input type="text" name="intervalInMilliseconds" value="$!format.html($status.value)" />
+                            &nbsp;leave blank for 1s
                             #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>

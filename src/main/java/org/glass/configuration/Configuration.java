@@ -92,9 +92,9 @@ public class Configuration {
     }
 
     public String getDriverDelegateClass() {
-        if ("oracle".equals(store)) {
+        if (store == Store.ORACLE) {
             return OracleDelegate.class.getName();
-        } else if ("mysql".equals(store)) {
+        } else if (store == Store.MYSQL) {
             return StdJDBCDelegate.class.getName();
         }
 

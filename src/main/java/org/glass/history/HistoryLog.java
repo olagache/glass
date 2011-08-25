@@ -20,6 +20,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.glass.job.util.JobDataMapUtils;
+import org.glass.util.Dates;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -68,12 +69,12 @@ public class HistoryLog {
         return log;
     }
 
-    public HistoryLog() {
+    private HistoryLog() {
 
     }
 
     public Date getDate() {
-        return date;
+        return Dates.copy(date);
     }
 
     public String getJobClass() {

@@ -21,6 +21,7 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 
 import org.glass.SpringConfig;
+import org.glass.util.Dates;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -39,19 +40,19 @@ public class TriggerFormSupport {
     protected String dataMap;
 
     public Date getStartTime() {
-        return startTime;
+        return Dates.copy(startTime);
     }
 
     public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+        this.startTime = Dates.copy(startTime);
     }
 
     public Date getEndTime() {
-        return endTime;
+        return Dates.copy(endTime);
     }
 
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+        this.endTime = Dates.copy(endTime);
     }
 
     public String getDataMap() {

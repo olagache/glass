@@ -19,6 +19,7 @@ package org.glass.web.form;
 import java.text.ParseException;
 
 import org.glass.job.util.JobDataMapUtils;
+import org.glass.util.Dates;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.quartz.CronScheduleBuilder;
@@ -37,8 +38,8 @@ public class CronTriggerForm extends TriggerFormSupport implements TriggerForm {
     }
 
     public CronTriggerForm(Trigger trigger) {
-        this.startTime = trigger.getStartTime();
-        this.endTime = trigger.getEndTime();
+        this.startTime = Dates.copy(trigger.getStartTime());
+        this.endTime = Dates.copy(trigger.getEndTime());
         this.dataMap = JobDataMapUtils.toProperties(trigger.getJobDataMap(), "\n");
         this.cronExpression = ((CronTrigger) trigger).getCronExpression();
 
