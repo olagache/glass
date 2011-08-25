@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.glass</groupId>
     <artifactId>glass</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0-beta4</version>
     <name>glass</name>
     <description>A web user interface for quartz</description>
     <packaging>${profile.packaging}</packaging>
@@ -38,8 +38,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/dbourdette/glass</url>
-        <connection>git@github.com:dbourdette/glass.git</connection>
+        <url>scm:git:git@github.com:dbourdette/glass.git</url>
+        <connection>scm:git:git@github.com:dbourdette/glass.git</connection>
+        <developerConnection>scm:git:git@github.com:dbourdette/glass.git</developerConnection>
     </scm>
 
     <developers>
@@ -75,19 +76,6 @@
             <url>http://maven.springframework.org/milestone</url>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>bees-plugins-snapshots</id>
-            <url>http://repository-cloudbees.forge.cloudbees.com/public-snapshot/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <reporting>
         <plugins>
@@ -176,9 +164,37 @@
             </plugin>
 
             <plugin>
-                <groupId>com.cloudbees</groupId>
-                <artifactId>bees-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <createChecksum>true</createChecksum>
+                </configuration>
             </plugin>
         </plugins>
     </build>
