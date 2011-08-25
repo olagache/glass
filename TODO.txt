@@ -72,6 +72,8 @@ v 0.1-beta5 - history and logs
 - "more" button on exception (up to non java and non quartz packages)
 - regroup items on history (start and stop for same job) (bases on what id ? object reference id ?)
 - logs and history in db for jdbc stores
+- varargs for Log (slf4j style : {} ?)
+- colored logs using log level in log page
 v 0.1-beta6 - selenium
 - selenium tests
 v 0.1-beta7 - documentation

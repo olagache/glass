@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,18 +29,60 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Logs {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Logs.class);
+
     private List<Log> logs = new ArrayList<Log>();
 
     private static final int MAX_SIZE = 10000;
 
     private static final int PAGE_SIZE = 100;
 
-    public synchronized void add(Log log) {
-        logs.add(log);
+    public void debug(String message) {
+        add(Log.message(LogLevel.DEBUG, message));
 
-        if (logs.size() > MAX_SIZE) {
-            logs.remove(0);
-        }
+        LOGGER.debug(message);
+    }
+
+    public void debug(String message, java.lang.Throwable throwable) {
+        add(Log.exception(LogLevel.DEBUG, message, throwable));
+
+        LOGGER.debug(message, throwable);
+    }
+
+    public void info(String message) {
+        add(Log.message(LogLevel.INFO, message));
+
+        LOGGER.info(message);
+    }
+
+    public void info(String message, java.lang.Throwable throwable) {
+        add(Log.exception(LogLevel.INFO, message, throwable));
+
+        LOGGER.info(message, throwable);
+    }
+
+    public void warn(String message) {
+        add(Log.message(LogLevel.WARN, message));
+
+        LOGGER.warn(message);
+    }
+
+    public void warn(String message, java.lang.Throwable throwable) {
+        add(Log.exception(LogLevel.WARN, message, throwable));
+
+        LOGGER.warn(message, throwable);
+    }
+
+    public void error(String message) {
+        add(Log.message(LogLevel.ERROR, message));
+
+        LOGGER.error(message);
+    }
+
+    public void error(String message, java.lang.Throwable throwable) {
+        add(Log.exception(LogLevel.ERROR, message, throwable));
+
+        LOGGER.error(message, throwable);
     }
 
     public synchronized List<Log> getLogs() {
@@ -53,5 +97,13 @@ public class Logs {
         Collections.reverse(page);
 
         return page;
+    }
+
+    private synchronized void add(Log log) {
+        logs.add(log);
+
+        if (logs.size() > MAX_SIZE) {
+            logs.remove(0);
+        }
     }
 }

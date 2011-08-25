@@ -12,6 +12,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Level</th>
                         <th>Date</th>
                         <th>Message</th>
                     </tr>
@@ -19,11 +20,12 @@
                 <tbody>
                     #foreach ($log in $logs)
                         <tr>
+                            <td style="text-align: center;">$format.html(${log.level})</td>
                             <td>$format.date(${log.date})</td>
                             <td>$format.html($log.message)</td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 #if ($utils.isNotEmpty($log.stackTrace))
                                      <pre>$format.html($log.stackTrace)</pre>
                                 #end

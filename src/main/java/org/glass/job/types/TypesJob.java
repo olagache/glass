@@ -20,7 +20,6 @@ import java.util.Date;
 
 import org.glass.job.annotation.JobArgument;
 import org.glass.job.util.Spring;
-import org.glass.log.Log;
 import org.glass.log.Logs;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -41,7 +40,7 @@ public class TypesJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         Logs logs = Spring.getBean(context, Logs.class);
 
-        logs.add(Log.info("longValue = " + longValue));
-        logs.add(Log.info("dateValue = " + dateValue));
+        logs.info("longValue = " + longValue);
+        logs.info("dateValue = " + dateValue);
     }
 }

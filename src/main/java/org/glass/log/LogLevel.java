@@ -16,22 +16,9 @@
 
 package org.glass.log;
 
-import javax.inject.Inject;
-
-import org.quartz.SchedulerException;
-import org.quartz.listeners.SchedulerListenerSupport;
-import org.springframework.stereotype.Component;
-
 /**
  * @author damien bourdette
  */
-@Component
-public class QuartzListenerForLogs extends SchedulerListenerSupport {
-    @Inject
-    private Logs logs;
-
-    @Override
-    public void schedulerError(String message, SchedulerException cause) {
-        logs.error(message, cause);
-    }
+public enum LogLevel {
+    DEBUG, INFO, WARN, ERROR;
 }

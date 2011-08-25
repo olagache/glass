@@ -25,6 +25,8 @@ import org.glass.util.Dates;
  * @author damien bourdette
  */
 public class Log {
+    private LogLevel level;
+
     private Date date;
 
     private String message;
@@ -35,23 +37,26 @@ public class Log {
 
     }
 
-    public static Log info(String message) {
+    public static Log message(LogLevel level, String message) {
         Log log = new Log();
 
         log.date = new Date();
+        log.level = level;
         log.message = message;
 
         return log;
     }
 
-    public static Log exception(String message, Exception e) {
-        Log log = new Log();
+    public static Log exception(LogLevel level, String message, Throwable e) {
+        Log log = message(level, message);
 
-        log.date = new Date();
-        log.message = message;
         log.stackTrace = ExceptionUtils.getFullStackTrace(e);
 
         return log;
+    }
+
+    public LogLevel getLevel() {
+        return level;
     }
 
     public Date getDate() {
