@@ -57,7 +57,7 @@ x remove commons logging and log4j
 x add findbugs plugin
 x kill code duplication
 x kill bugs reported in findBugs
-- update description when picking a job class on new job screen
+x update description when picking a job class on new job screen
 - proper logging facilities
 - repositories in settings.xml ?
 - publish source and javadoc to release repo

@@ -25,6 +25,8 @@ import org.glass.util.Arrays;
 
 /**
  * Bean that can be used in jsp files and in json serialisations.
+ *
+ * @author damien bourdette
  */
 public class JobArgumentBean {
 

@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2011 Damien Bourdette
  *
@@ -15,112 +14,61 @@
  * limitations under the License.
  */
 
-var SERVICE_URL = '/glass/jobs/arguments';
+var SERVICE_URL = '/glass/jobs/description';
 
 /**
- * Fills input with value if input has no value yet.
+ * Proposes a job name.
  */
-function proposeJobName(proposalElement, class) {
+function proposeJobName(class) {
     if (class == '' && class.indexOf('.') == -1) {
+        $('#nameProposal').text("");
+
         return;
     }
 
     var name = class.substring(class.lastIndexOf('.') + 1, class.length);
 
-    proposalElement.text("maybe " + name + " ?");
-}
-
-/* ************ */
-/* JobArguments */
-/* ************ */
-function JobArguments() {
-	this.arguments=null;
-	this.classname=null;
-}
-
-function JobArguments(classname) {
-	this.arguments=null;
-	this.classname=classname;
+    $('#nameProposal').text("maybe " + name + " ?");
 }
 
 /**
- * This function gets arguments list for a given class name.
- * See JobController Java code.
+ * Displays description and job arguments for given class
  */
-JobArguments.prototype.findByClassname = function(classname) {
-	console.log("getJobArguments("+classname+")");
-	if(classname==="null") {
-		this.classname=null;
-		return;
-	}
-	this.classname=classname;
-	this.arguments=null;
-	
-	var data = {};
-	data["className"]=classname;
+onJobSelected = function() {
+    var class = $("#clazz").val();
 
-	_this=this;
-	$.getJSON(SERVICE_URL, data, function(args) {
-		_this.arguments = args;
-		_this.log();
-	});
-}
+    proposeJobName(class);
 
-/**
- *
- */
-JobArguments.prototype.buildHtml = function(elementId) {
-	if(!elementId) {
-		return;
-	}
+    if (class == null) {
+        $("#arguments").empty();
 
-	if(this.arguments==null && this.classname==null) {
-		$("#"+elementId).empty();
-		return;
-	}
-	
-	if(this.arguments==null && this.classname!=null) {
-		_this = this;
-		$.getJSON(SERVICE_URL, {"className": this.classname}, function(args) {
-			_this.arguments = args;
-			var htmlBuilder="";
-			$(args).each(function(index, argument) {
-                htmlBuilder += "<tr>";
-				if(argument.required) {
-					htmlBuilder +='<td style="text-align: center;"><span style="font-weight:bold;" >'+argument.name+'*</span></td>';
-				}
-				else {
-					htmlBuilder += '<td style="text-align: center;">'+argument.name+"</td>";
-				}
-				htmlBuilder += "<td>"+argument.description+"</td>";
-				htmlBuilder += "<td>";
-				$(argument.sampleValues).each(function(i,sample) {
-					if(i>0) {
-						htmlBuilder += "<br>";
-					}
-					htmlBuilder += sample;
-				});
-				htmlBuilder += "</td>"
-                htmlBuilder+="</tr>";
-			});
+        return;
+    }
 
-			$("#"+elementId).html(htmlBuilder);
-		});
-	
-	}
-}
+    $.getJSON(SERVICE_URL, {"className": class}, function(job) {
+        $("#description").text(job.description);
 
+        var htmlBuilder = "";
+        $(job.arguments).each(function(index, argument) {
+            htmlBuilder += "<tr>";
+            if (argument.required) {
+                htmlBuilder += '<td style="text-align: center;"><span style="font-weight:bold;" >' + argument.name + '*</span></td>';
+            }
+            else {
+                htmlBuilder += '<td style="text-align: center;">' + argument.name + "</td>";
+            }
+            htmlBuilder += "<td>" + argument.description + "</td>";
+            htmlBuilder += "<td>";
+            $(argument.sampleValues).each(function(i, sample) {
+                if (i > 0) {
+                    htmlBuilder += "<br>";
+                }
+                htmlBuilder += sample;
+            });
+            htmlBuilder += "</td>"
+            htmlBuilder += "</tr>";
+        });
 
-/**
-*
-*/
-JobArguments.prototype.log = function() {
-	if(this.arguments) {
-		$(this.arguments).each(function(index, argument) {
-			console.log(index+".name:"+argument.name);
-			console.log(index+".description:"+argument.description);
-			console.log(index+".required:"+argument.required);
-			console.log(index+".sampleValues:"+argument.sampleValues);
-		});
-	}
+        $("#arguments").html(htmlBuilder);
+    });
 }

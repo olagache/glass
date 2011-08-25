@@ -33,7 +33,7 @@
                     <tr>
                         <td>class</td>
                         <td>
-                            <select name="clazz" onchange="javascript:var value = this[this.selectedIndex].value;new JobArguments(value).buildHtml('arguments-body-id');proposeJobName($('#nameProposal'), value);">
+                            <select id="clazz" name="clazz" onchange="javascript:onJobSelected();">
                                 <option label="------------------------------" value="" />
                                 #foreach ($value in $jobClasses)
                                     #if ($value == $status.value)
@@ -46,12 +46,10 @@
                              #if(${status.error}) <span class="error">${status.errorMessage}</span> #end
                         </td>
                     </tr>
-                    #if ($utils.isNotEmpty($jobDescription))
-                        <tr>
-                            <td>description</td>
-                            <td>$format.html($jobDescription)</td>
-                        </tr>
-                    #end
+                    <tr>
+                        <td>description</td>
+                        <td id="description">$!format.html($jobDescription)</td>
+                    </tr>
                     #springBind("form.dataMap")
                     <tr>
                         <td valign="top">data map</td>
@@ -60,7 +58,7 @@
                 </table>
                 <input type="submit" value="create job"/>
             </form>
-            <script type="text/javascript">proposeJobName($('#nameProposal'), '$!form.clazz')</script>
+            <script type="text/javascript">proposeJobName('$!form.clazz')</script>
         </div>
 
         #parse("org/glass/velocity/widgets/args.vm")

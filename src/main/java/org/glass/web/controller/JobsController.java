@@ -25,6 +25,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.glass.configuration.Configuration;
+import org.glass.job.annotation.JobBean;
 import org.glass.job.util.JobDataMapUtils;
 import org.glass.job.annotation.JobArgumentBean;
 import org.glass.web.form.JobForm;
@@ -96,7 +97,7 @@ public class JobsController {
         }
 
         model.addAttribute("job", job);
-        model.addAttribute("jobDescription", getJobDescription(job.getJobClass()));
+        model.addAttribute("jobDescription", JobBean.getDescription(job.getJobClass()));
         model.addAttribute("dataMap", JobDataMapUtils.toProperties(job.getJobDataMap(), "\n"));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
 
@@ -179,21 +180,21 @@ public class JobsController {
     }
 
     /**
-     * Get all possible arguments about a job class.
+     * Gets job description for a job class.
      * Used as a js service from pages.
      */
-    @RequestMapping("/jobs/arguments")
+    @RequestMapping("/jobs/description")
     @ResponseBody
-    public List<JobArgumentBean> getArguments(String className) {
+    public JobBean description(String className) {
         if (StringUtils.isEmpty(className)) {
             return null;
         }
+
         try {
-            return JobArgumentBean.fromClass(Class.forName(className));
+            return JobBean.fromClass(Class.forName(className));
         } catch (ClassNotFoundException e) {
             return null;
         }
-
     }
 
     private String form(Model model, NewJobForm form) {
@@ -208,7 +209,7 @@ public class JobsController {
         }
 
         model.addAttribute("jobClasses", jobClasses);
-        model.addAttribute("jobDescription", getJobDescription(form.getClazz()));
+        model.addAttribute("jobDescription", JobBean.getDescription(form.getClazz()));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(form.getClazz()));
         model.addAttribute("form", form);
 
@@ -217,26 +218,10 @@ public class JobsController {
 
     private String form(Model model, JobForm form, Class<?> jobClass) {
         model.addAttribute("jobClass", jobClass);
-        model.addAttribute("jobDescription", getJobDescription(jobClass));
+        model.addAttribute("jobDescription", JobBean.getDescription(jobClass));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(jobClass));
         model.addAttribute("form", form);
 
         return "job_form";
     }
-
-    private String getJobDescription(Class<?> jobClass) {
-        if (jobClass == null) {
-            return "";
-        }
-
-        org.glass.job.annotation.Job annotation = jobClass.getAnnotation(org.glass.job.annotation.Job.class);
-
-        if (annotation == null) {
-            return "";
-        }
-
-        return annotation.description();
-    }
-
-
 }

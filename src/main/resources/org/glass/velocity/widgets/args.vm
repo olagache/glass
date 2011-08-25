@@ -8,7 +8,7 @@
                 <th>Sample Values</th>
             </tr>
         </thead>
-        <tbody id="arguments-body-id">
+        <tbody id="arguments">
             #* If you change this code don't forget to change the javascript part also *#
             #foreach ($argument in $jobArguments)
                 <tr>
