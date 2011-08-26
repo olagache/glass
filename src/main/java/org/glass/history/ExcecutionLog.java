@@ -21,17 +21,22 @@ import java.util.Date;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.glass.job.util.JobDataMapUtils;
 import org.glass.util.Dates;
-import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
+ * Summary of a job execution stored as a log.
+ *
  * @author damien bourdette
  */
-public class HistoryLog {
-    private Date date;
+public class ExcecutionLog {
+    private Long id;
 
-    private HistoryLogType type;
+    private Date startDate;
+
+    private Date endDate;
+
+    private boolean ended;
 
     private String jobGroup;
 
@@ -47,42 +52,67 @@ public class HistoryLog {
 
     private String stackTrace;
 
-    public static HistoryLog onStart(JobExecutionContext context) {
-        HistoryLog log = onEvent(context);
+    private ExcecutionLog() {
 
-        log.type = HistoryLogType.START;
-        log.date = context.getFireTime();
+    }
+
+    /**
+     * Fill common attributes
+     */
+    public static ExcecutionLog fromContext(JobExecutionContext context) {
+        ExcecutionLog log = new ExcecutionLog();
+
+        log.startDate = context.getFireTime();
+        log.jobClass = context.getJobDetail().getJobClass().getName();
+        log.jobGroup = context.getJobDetail().getKey().getGroup();
+        log.jobName = context.getJobDetail().getKey().getName();
+        log.triggerGroup = context.getTrigger().getKey().getGroup();
+        log.triggerName = context.getTrigger().getKey().getName();
+        log.dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
 
         return log;
     }
 
-    public static HistoryLog onEnd(JobExecutionContext context, JobExecutionException exception) {
-        HistoryLog log = onEvent(context);
-
-        log.type = HistoryLogType.END;
-        log.date = new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate();
-
+    public void setStackTrace(JobExecutionException exception) {
         if (exception != null) {
-            log.stackTrace = ExceptionUtils.getFullStackTrace(exception);
+            stackTrace = ExceptionUtils.getFullStackTrace(exception);
         }
-
-        return log;
     }
 
-    private HistoryLog() {
-
+    public Long getId() {
+        return id;
     }
 
-    public Date getDate() {
-        return Dates.copy(date);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = Dates.copy(startDate);
+    }
+
+    public Date getStartDate() {
+        return Dates.copy(startDate);
+    }
+
+    public Date getEndDate() {
+        return Dates.copy(endDate);
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = Dates.copy(endDate);
     }
 
     public String getJobClass() {
         return jobClass;
-    }
-
-    public HistoryLogType getType() {
-        return type;
     }
 
     public String getJobGroup() {
@@ -131,36 +161,5 @@ public class HistoryLog {
 
     public void setStackTrace(String stackTrace) {
         this.stackTrace = stackTrace;
-    }
-
-    @Override
-    public String toString() {
-        return "HistoryLog{" +
-                "date=" + date +
-                ", type=" + type +
-                ", jobGroup='" + jobGroup + '\'' +
-                ", jobName='" + jobName + '\'' +
-                ", triggerGroup='" + triggerGroup + '\'' +
-                ", triggerName='" + triggerName + '\'' +
-                ", jobClass='" + jobClass + '\'' +
-                ", dataMap='" + dataMap + '\'' +
-                ", stackTrace='" + stackTrace + '\'' +
-                '}';
-    }
-
-    /**
-     * Fill common attributes
-     */
-    private static HistoryLog onEvent(JobExecutionContext context) {
-        HistoryLog log = new HistoryLog();
-
-        log.jobClass = context.getJobDetail().getJobClass().getName();
-        log.jobGroup = context.getJobDetail().getKey().getGroup();
-        log.jobName = context.getJobDetail().getKey().getName();
-        log.triggerGroup = context.getTrigger().getKey().getGroup();
-        log.triggerName = context.getTrigger().getKey().getName();
-        log.dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
-
-        return log;
     }
 }

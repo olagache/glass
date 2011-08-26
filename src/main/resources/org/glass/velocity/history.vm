@@ -6,14 +6,14 @@
 	</head>
 	<body>
 	    #parse("org/glass/velocity/widgets/menu.vm")
-		
+
 		<h1><span>Run history</span></h1>
         <div class="table">
             <table>
                 <thead>
                     <tr>
-                        <th>Type</th>
-                        <th>Date</th>
+                        <th>Start</th>
+                        <th>End</th>
                         <th>Job group / name</th>
                         <th>Trigger group / name</th>
                         <th>Job class</th>
@@ -22,8 +22,14 @@
                 <tbody>
                     #foreach ($log in $logs)
                         <tr>
-                            <td>$log.type</td>
-                            <td>$!format.date(${log.date})</td>
+                            <td style="text-align: center;">$!format.date(${log.startDate})</td>
+                            <td style="text-align: center;">
+                                #if ($log.ended)
+                                    $!format.date(${log.endDate})
+                                #else
+                                    <span style="color: red;">running</span>
+                                #end
+                            </td>
                             <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
                             <td>$!format.html($log.triggerGroup) / $format.html($log.triggerName)</td>
                             <td>$!log.jobClass</td>
