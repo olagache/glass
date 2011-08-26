@@ -65,7 +65,10 @@ x org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.cl
 v 0.1-beta5 - history and logs
 x regroup items on history (start and stop for same job)
 x history pagination
-- logs pagination
+x logs pagination
+x format stacktrace in logs
+- format stacktrace in history
+- replace all <pre> by code css class
 - fold exception and messages after a few lines
 - avoid overflow on the right of logs
 - "more" button on exception (up to non java and non quartz packages)
@@ -75,6 +78,7 @@ x history pagination
 - release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 - see only running jobs in history
 - better table formatting (center dates, status...)
+- trigger stays in list if he misfires
 v 0.1-beta6 - selenium
 - selenium tests
 v 0.1-beta7 - documentation

@@ -33,6 +33,8 @@ public class Log {
 
     private String stackTrace;
 
+    private String rootCause;
+
     private Log() {
 
     }
@@ -51,6 +53,7 @@ public class Log {
         Log log = message(level, message);
 
         log.stackTrace = ExceptionUtils.getFullStackTrace(e);
+        log.rootCause = ExceptionUtils.getMessage(ExceptionUtils.getRootCause(e));
 
         return log;
     }
@@ -69,5 +72,9 @@ public class Log {
 
     public String getStackTrace() {
         return stackTrace;
+    }
+
+    public String getRootCause() {
+        return rootCause;
     }
 }

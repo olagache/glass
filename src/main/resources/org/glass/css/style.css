@@ -205,3 +205,8 @@ span.error {
 .pages input {
     display: inline;
 }
+
+.code {
+    font-family: monospace;
+    margin: 1em 0px;
+}

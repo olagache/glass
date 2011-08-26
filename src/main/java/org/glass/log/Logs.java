@@ -37,8 +37,6 @@ public class Logs {
 
     private static final int MAX_SIZE = 10000;
 
-    private static final int PAGE_SIZE = 100;
-
     public void debug(String message) {
         add(Log.message(LogLevel.DEBUG, message));
 
