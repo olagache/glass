@@ -75,6 +75,10 @@ public class Page<E> {
     }
 
     public void setItems(List<E> items) {
+        if (items == null) {
+            throw new IllegalArgumentException("Items can not be null");
+        }
+
         this.items = new ArrayList<E>(items);
     }
 

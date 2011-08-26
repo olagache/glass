@@ -25,7 +25,7 @@ import java.util.List;
  * @author damien bourdette
  */
 public class Query {
-    public static final int DEFAULT_SIZE = 2;
+    public static final int DEFAULT_SIZE = 100;
 
     /**
      * 0 based page index

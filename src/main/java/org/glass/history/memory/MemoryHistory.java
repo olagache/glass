@@ -72,10 +72,11 @@ public class MemoryHistory implements History {
     public synchronized Page<ExcecutionLog> getLogs(Query query) {
         Page<ExcecutionLog> page = Page.fromQuery(query);
 
-        page.setItems(query.subList(logs));
-        page.setTotalCount(logs.size());
+        List<ExcecutionLog> subList = query.subList(logs);
+        Collections.reverse(subList);
 
-        Collections.reverse(page.getItems());
+        page.setItems(subList);
+        page.setTotalCount(logs.size());
 
         return page;
     }

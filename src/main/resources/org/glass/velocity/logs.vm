@@ -7,7 +7,9 @@
 	<body>
 	    #parse("org/glass/velocity/widgets/menu.vm")
 		
-		<h1><span>Logs</span></h1>
+		#parse("org/glass/velocity/widgets/pages.vm")
+
+        <h1><span>Logs</span></h1>
         <div class="table">
             <table>
                 <thead>
@@ -18,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    #foreach ($log in $logs)
+                    #foreach ($log in $page.items)
                         <tr>
                             <td style="text-align: center;">$format.html(${log.level})</td>
                             <td>$format.date(${log.date})</td>

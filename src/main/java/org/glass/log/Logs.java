@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.glass.util.Page;
+import org.glass.util.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -85,16 +87,14 @@ public class Logs {
         LOGGER.error(message, throwable);
     }
 
-    public synchronized List<Log> getLogs() {
-        List<Log> page = null;
+    public synchronized Page<Log> getLogs(Query query) {
+        Page<Log> page = Page.fromQuery(query);
 
-        if (logs.size() > PAGE_SIZE) {
-            page = new ArrayList<Log>(logs.subList(0, PAGE_SIZE));
-        } else {
-            page = new ArrayList<Log>(logs.subList(0, logs.size()));
-        }
+        List<Log> subList = query.subList(logs);
+        Collections.reverse(subList);
 
-        Collections.reverse(page);
+        page.setItems(subList);
+        page.setTotalCount(logs.size());
 
         return page;
     }
