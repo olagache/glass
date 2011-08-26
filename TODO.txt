@@ -64,7 +64,7 @@ x publish source and javadoc to release repo (use webdav for releases)
 x org/glass/velocity/new_job_form.vm [line 38, column 51] : Right side ($form.clazz) of '==' operation has null value (http://robertmarkbramprogrammer.blogspot.com/2010/10/left-side-xx-of-y-operation-has-null.html)
 v 0.1-beta5 - history and logs
 x regroup items on history (start and stop for same job)
-- history pagination
+x history pagination
 - logs pagination
 - fold exception and messages after a few lines
 - avoid overflow on the right of logs
@@ -94,6 +94,7 @@ v 0.2 - smooth
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
 - do not fail at startup when a job class no longer exists (admin screen whith relocate or delete old job ?)
+- read only access for some people (configured role in Principal ?)
 
 v 0.3 - stuff
 - groovy jobs (saved in db ? mongo ? memory ?) (http://groovy.codehaus.org/Embedding+Groovy)

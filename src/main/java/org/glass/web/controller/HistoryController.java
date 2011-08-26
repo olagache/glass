@@ -19,9 +19,11 @@ package org.glass.web.controller;
 import javax.inject.Inject;
 
 import org.glass.history.History;
+import org.glass.util.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author damien bourdette
@@ -32,8 +34,8 @@ public class HistoryController {
     protected History history;
 
     @RequestMapping("/history")
-    public String history(Model model) {
-        model.addAttribute("logs", history.getLogs());
+    public String history(@RequestParam(defaultValue = "0") int index, Model model) {
+        model.addAttribute("page", history.getLogs(Query.oneBasedIndex(index)));
 
         return "history";
     }

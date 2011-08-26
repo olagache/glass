@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.glass.history.ExcecutionLog;
 import org.glass.history.History;
+import org.glass.util.Page;
+import org.glass.util.Query;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -33,8 +35,6 @@ public class MemoryHistory implements History {
     private final List<ExcecutionLog> logs = new ArrayList<ExcecutionLog>();
 
     private static final int MAX_SIZE = 1000;
-
-    private static final int PAGE_SIZE = 100;
 
     private static Long identifier = 0l;
 
@@ -69,16 +69,13 @@ public class MemoryHistory implements History {
     }
 
     @Override
-    public synchronized List<ExcecutionLog> getLogs() {
-        List<ExcecutionLog> page = null;
+    public synchronized Page<ExcecutionLog> getLogs(Query query) {
+        Page<ExcecutionLog> page = Page.fromQuery(query);
 
-        if (logs.size() > PAGE_SIZE) {
-            page = new ArrayList<ExcecutionLog>(logs.subList(0, PAGE_SIZE));
-        } else {
-            page = new ArrayList<ExcecutionLog>(logs.subList(0, logs.size()));
-        }
+        page.setItems(query.subList(logs));
+        page.setTotalCount(logs.size());
 
-        Collections.reverse(page);
+        Collections.reverse(page.getItems());
 
         return page;
     }

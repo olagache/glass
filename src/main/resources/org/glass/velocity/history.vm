@@ -7,6 +7,8 @@
 	<body>
 	    #parse("org/glass/velocity/widgets/menu.vm")
 
+        #parse("org/glass/velocity/widgets/pages.vm")
+
 		<h1><span>Run history</span></h1>
         <div class="table">
             <table>
@@ -20,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    #foreach ($log in $logs)
+                    #foreach ($log in $page.items)
                         <tr>
                             <td style="text-align: center;">$!format.date(${log.startDate})</td>
                             <td style="text-align: center;">

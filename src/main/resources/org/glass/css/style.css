@@ -15,16 +15,16 @@
  */
 
 body {
-    font-size:12px;
+    font-size: 12px;
 }
 
 h1 {
-	font-size: 16px;
+    font-size: 16px;
     width: 100%;
     background-color: #F2F2F2;
-    border-top:1px #B5B5B5 solid;
-    border-right:1px #B5B5B5 solid;
-    border-left:1px #B5B5B5 solid;
+    border-top: 1px #B5B5B5 solid;
+    border-right: 1px #B5B5B5 solid;
+    border-left: 1px #B5B5B5 solid;
     border-radius: 5px 5px 0 0;
     line-height: 25px;
     margin-bottom: 0px;
@@ -35,12 +35,12 @@ h1 span {
 }
 
 h2 {
-	font-size: 14px;
+    font-size: 14px;
     width: 100%;
     background-color: #F2F2F2;
-    border-top:1px #B5B5B5 solid;
-    border-right:1px #B5B5B5 solid;
-    border-left:1px #B5B5B5 solid;
+    border-top: 1px #B5B5B5 solid;
+    border-right: 1px #B5B5B5 solid;
+    border-left: 1px #B5B5B5 solid;
     border-radius: 5px 5px 0 0;
     line-height: 25px;
     margin-bottom: 0px;
@@ -51,20 +51,20 @@ h2 span {
 }
 
 a {
-	outline : 0;
-	text-decoration:underline;
+    outline: 0;
+    text-decoration: underline;
     color: black;
 }
 
 a img {
-	border:0;
+    border: 0;
 }
 
 div.menu {
     font-size: 14px;
     width: 100%;
     background-color: #F2F2F2;
-    border:1px #B5B5B5 solid;
+    border: 1px #B5B5B5 solid;
     border-radius: 5px;
     height: 50px;
 }
@@ -76,7 +76,7 @@ div.menu .title {
 }
 
 div.menu ul.items {
-    list-style-type:none;
+    list-style-type: none;
     margin: 0;
     padding: 0;
     display: inline;
@@ -87,7 +87,7 @@ div.menu ul.items li {
 }
 
 div.menu ul.jobs {
-    list-style-type:none;
+    list-style-type: none;
     margin: 5px;
     padding: 0;
     display: inline;
@@ -108,11 +108,11 @@ div.menu .standby {
 }
 
 div.actions {
-    font-size:14px;
+    font-size: 14px;
     width: 100%;
     background-color: #F2F2F2;
-    border-right:1px #B5B5B5 solid;
-    border-left:1px #B5B5B5 solid;
+    border-right: 1px #B5B5B5 solid;
+    border-left: 1px #B5B5B5 solid;
     padding-bottom: 5px;
 }
 
@@ -121,17 +121,17 @@ div.actions a:first-child {
 }
 
 div.table {
-    font-size:12px;
+    font-size: 12px;
     width: 100%;
     background-color: #F2F2F2;
-    border-bottom:1px #B5B5B5 solid;
-    border-right:1px #B5B5B5 solid;
-    border-left:1px #B5B5B5 solid;
+    border-bottom: 1px #B5B5B5 solid;
+    border-right: 1px #B5B5B5 solid;
+    border-left: 1px #B5B5B5 solid;
     border-radius: 0 0 5px 5px;
 }
 
 div.table table {
-    font-size:12px;
+    font-size: 12px;
     width: 100%;
     border-collapse: collapse;
 }
@@ -157,29 +157,51 @@ div.table img {
 }
 
 table.dashboard {
-	border-collapse: collapse;
-	margin : 5px;
-	padding: 5px;
-	width: 99%;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 5px;
+    width: 99%;
 }
 
 table.dashboard tr {
-	border: 1px solid;
-	padding: 0 2;
-	text-align: center;
-	font-size: 12px;
-	font-family:Verdana,Arial,Helvetica,sans-serif,monospace;
+    border: 1px solid;
+    padding: 0 2;
+    text-align: center;
+    font-size: 12px;
+    font-family: Verdana, Arial, Helvetica, sans-serif, monospace;
 }
 
 table.dashboard td {
-	border: 1px solid;
-	padding: 0 2;
+    border: 1px solid;
+    padding: 0 2;
 }
 
-table.dashboard th{
+table.dashboard th {
 
 }
 
 span.error {
-    color:red;
+    color: red;
+}
+
+.pages {
+    font-size: 12px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #F2F2F2;
+    border: 1px #B5B5B5 solid;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.pages a {
+    display: inline;
+}
+
+.pages form {
+    display: inline;
+}
+
+.pages input {
+    display: inline;
 }
