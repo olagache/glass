@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     #foreach ($log in $page.items)
-                        <tr>
+                        <tr class="$log.level">
                             <td style="text-align: center;">$format.html(${log.level})</td>
                             <td>$format.date(${log.date})</td>
                             <td>$format.html($log.message)</td>

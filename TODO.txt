@@ -73,7 +73,9 @@ x fold exception and messages after a few lines
 x avoid overflow on the right of logs
 x "see stacktrace" button on exceptions
 x varargs for Log using slf4j style : {}
-- colored logs using log level in log page
+x colored logs using log level in log page
+- "see stacktrace" button on exceptions in execution history
+- colored logs in execution history page
 - job group and name in logs ?
 - logs and history in db for jdbc stores
 - release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
