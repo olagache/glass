@@ -30,8 +30,9 @@
                             <td colspan="3">
                                 #if ($utils.isNotEmpty($log.stackTrace))
                                     <span class="code">$format.html($log.rootCause)</span>
-                                    <br/><br/>
-                                    <span class="code">$format.stacktrace($log.stackTrace)</span>
+                                    <a href="#" onclick="swapStacktrace(this, $('#$utils.hash($log)'))">see stacktrace</a>
+                                    <br/>
+                                    <span id="$utils.hash($log)" class="code" style="display:none">$format.stacktrace($log.stackTrace)</span>
                                 #end
                             </td>
                         </tr>

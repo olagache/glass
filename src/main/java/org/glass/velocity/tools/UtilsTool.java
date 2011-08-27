@@ -68,4 +68,12 @@ public class UtilsTool {
             builder.append(value + unit + " ");
         }
     }
+
+    public String hash(Object object) {
+        if (object == null) {
+            return "";
+        }
+
+        return object.getClass().getSimpleName() + "-" + System.identityHashCode(object);
+    }
 }
