@@ -39,10 +39,9 @@
                         <tr>
                             <td colspan="5">
                                 #if ($utils.isNotEmpty($log.stackTrace))
-                                    <pre>$!format.html($log.stackTrace)</pre>
-                                #end
-                                #if ($utils.isNotEmpty($log.stackTrace))
-                                    <pre>$format.html($log.stackTrace)</pre>
+                                    <span class="code">$format.html($log.rootCause)</span>
+                                    <br/><br/>
+                                    <span class="code">$format.stacktrace($log.stackTrace)</span>
                                 #end
                             </td>
                         </tr>
