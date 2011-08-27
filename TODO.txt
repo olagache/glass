@@ -79,11 +79,10 @@ x link history and logs
 - show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
 - see only running jobs in history
 - job group and name in logs ?
-- logs and history in db for jdbc stores
-- release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 - better table formatting (center dates, status...)
+- logs and history in db for jdbc stores
 - trigger stays in list if he misfires and produces no run history
-- when job is missing, better display a message (flashscope ?) than redirect
+- release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 v 0.1-beta6 - selenium
 - selenium tests
 v 0.1-beta7 - documentation
@@ -102,6 +101,7 @@ v 0.2 - smooth
 - better logging options
 - date fields with jquery + link "now +5 seconds"
 - add flashscope for info messages after a redirect (job created, interrupted...)
+- when job is missing, better display a message (flashscope ?) than redirect
 - do not fail at startup when a job class no longer exists (admin screen whith relocate or delete old job ?)
 - read only access for some people (configured role in Principal ?)
 
