@@ -42,7 +42,7 @@ public class DummyJob implements InterruptableJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        Spring.getBean(context, Logs.class).info("Running dummy job for " + duration + " seconds");
+        Spring.getBean(context, Logs.class).info("Running dummy job for {} seconds", duration);
 
         try {
             Thread.sleep(duration * 1000);

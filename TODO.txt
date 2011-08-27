@@ -72,7 +72,7 @@ x replace all <pre> by code css class
 x fold exception and messages after a few lines
 x avoid overflow on the right of logs
 x "see stacktrace" button on exceptions
-- varargs for Log (slf4j style : {} ?)
+x varargs for Log using slf4j style : {}
 - colored logs using log level in log page
 - job group and name in logs ?
 - logs and history in db for jdbc stores

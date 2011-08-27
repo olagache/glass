@@ -24,6 +24,7 @@ import org.glass.util.Page;
 import org.glass.util.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -43,6 +44,12 @@ public class Logs {
         LOGGER.debug(message);
     }
 
+    public void debug(String format, Object... args) {
+        add(Log.message(LogLevel.DEBUG, format(format, args)));
+
+        LOGGER.debug(format, args);
+    }
+
     public void debug(String message, java.lang.Throwable throwable) {
         add(Log.exception(LogLevel.DEBUG, message, throwable));
 
@@ -53,6 +60,12 @@ public class Logs {
         add(Log.message(LogLevel.INFO, message));
 
         LOGGER.info(message);
+    }
+
+    public void info(String format, Object... args) {
+        add(Log.message(LogLevel.INFO, format(format, args)));
+
+        LOGGER.info(format, args);
     }
 
     public void info(String message, java.lang.Throwable throwable) {
@@ -67,6 +80,12 @@ public class Logs {
         LOGGER.warn(message);
     }
 
+    public void warn(String format, Object... args) {
+        add(Log.message(LogLevel.WARN, format(format, args)));
+
+        LOGGER.warn(format, args);
+    }
+
     public void warn(String message, java.lang.Throwable throwable) {
         add(Log.exception(LogLevel.WARN, message, throwable));
 
@@ -77,6 +96,12 @@ public class Logs {
         add(Log.message(LogLevel.ERROR, message));
 
         LOGGER.error(message);
+    }
+
+    public void error(String format, Object... args) {
+        add(Log.message(LogLevel.ERROR, format(format, args)));
+
+        LOGGER.error(format, args);
     }
 
     public void error(String message, java.lang.Throwable throwable) {
@@ -103,5 +128,9 @@ public class Logs {
         if (logs.size() > MAX_SIZE) {
             logs.remove(0);
         }
+    }
+
+    private String format(String format, Object... args) {
+        return MessageFormatter.arrayFormat(format, args).getMessage();
     }
 }

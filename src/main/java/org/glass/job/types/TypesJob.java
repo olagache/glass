@@ -40,7 +40,7 @@ public class TypesJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         Logs logs = Spring.getBean(context, Logs.class);
 
-        logs.info("longValue = " + longValue);
-        logs.info("dateValue = " + dateValue);
+        logs.info("longValue = {}", longValue);
+        logs.info("dateValue = {}", dateValue);
     }
 }
