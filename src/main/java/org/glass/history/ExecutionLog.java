@@ -27,7 +27,9 @@ import org.quartz.JobExecutionContext;
  *
  * @author damien bourdette
  */
-public class ExcecutionLog {
+public class ExecutionLog {
+    private static final String KEY_IN_CONTEXT = "__GLASS_JOB_EXECUTION_CONTEXT";
+
     private Long id;
 
     private Date startDate;
@@ -50,25 +52,35 @@ public class ExcecutionLog {
 
     private boolean success;
 
-    private ExcecutionLog() {
+    /**
+     * Gets currently ExecutionLog stored in context's data map.
+     */
+    public static ExecutionLog getFromContext(JobExecutionContext context) {
+        return (ExecutionLog) context.get(KEY_IN_CONTEXT);
+    }
+
+    public ExecutionLog() {
 
     }
 
     /**
-     * Fill common attributes
+     * Fill common attributes with properties from context.
      */
-    public static ExcecutionLog fromContext(JobExecutionContext context) {
-        ExcecutionLog log = new ExcecutionLog();
+    public void fillWithContext(JobExecutionContext context) {
+        startDate = context.getFireTime();
+        jobClass = context.getJobDetail().getJobClass().getName();
+        jobGroup = context.getJobDetail().getKey().getGroup();
+        jobName = context.getJobDetail().getKey().getName();
+        triggerGroup = context.getTrigger().getKey().getGroup();
+        triggerName = context.getTrigger().getKey().getName();
+        dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
+    }
 
-        log.startDate = context.getFireTime();
-        log.jobClass = context.getJobDetail().getJobClass().getName();
-        log.jobGroup = context.getJobDetail().getKey().getGroup();
-        log.jobName = context.getJobDetail().getKey().getName();
-        log.triggerGroup = context.getTrigger().getKey().getGroup();
-        log.triggerName = context.getTrigger().getKey().getName();
-        log.dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
-
-        return log;
+    /**
+     * Sets this ExecutionLog in context as a value in its data map.
+     */
+    public void setInContext(JobExecutionContext context) {
+        context.put(KEY_IN_CONTEXT, this);
     }
 
     public Long getId() {
@@ -105,6 +117,10 @@ public class ExcecutionLog {
 
     public String getJobClass() {
         return jobClass;
+    }
+
+    public void setJobClass(String jobClass) {
+        this.jobClass = jobClass;
     }
 
     public String getJobGroup() {
@@ -153,5 +169,22 @@ public class ExcecutionLog {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    @Override
+    public String toString() {
+        return "ExecutionLog{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", ended=" + ended +
+                ", jobGroup='" + jobGroup + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", triggerGroup='" + triggerGroup + '\'' +
+                ", triggerName='" + triggerName + '\'' +
+                ", jobClass='" + jobClass + '\'' +
+                ", dataMap='" + dataMap + '\'' +
+                ", success=" + success +
+                '}';
     }
 }

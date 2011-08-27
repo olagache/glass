@@ -22,14 +22,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- * History service to store ExcecutionLog
+ * History service to store ExecutionLog
  *
  * @author damien bourdette
  */
 public interface History {
-    public void jobStarts(JobExecutionContext context);
+    public ExecutionLog jobStarts(JobExecutionContext context);
 
-    public void jobEnds(JobExecutionContext context, JobExecutionException exception);
+    public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception);
 
-    public Page<ExcecutionLog> getLogs(Query query);
+    public Page<ExecutionLog> getLogs(Query query);
 }

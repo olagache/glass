@@ -42,12 +42,16 @@ public class QuartzListenerForHistory extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
-        history.jobStarts(context);
+        ExecutionLog log = history.jobStarts(context);
+
+        log.setInContext(context);
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
-        history.jobEnds(context, exception);
+        ExecutionLog log = ExecutionLog.getFromContext(context);
+
+        history.jobEnds(log, context, exception);
 
         if (exception != null) {
             logs.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);

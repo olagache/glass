@@ -75,6 +75,7 @@ x "see stacktrace" button on exceptions
 x varargs for Log using slf4j style : {}
 x colored logs using log level in log page
 x see datamap in run history
+x link history and logs
 - show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
 - see only running jobs in history
 - job group and name in logs ?
@@ -82,6 +83,7 @@ x see datamap in run history
 - release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 - better table formatting (center dates, status...)
 - trigger stays in list if he misfires and produces no run history
+- when job is missing, better display a message (flashscope ?) than redirect
 v 0.1-beta6 - selenium
 - selenium tests
 v 0.1-beta7 - documentation

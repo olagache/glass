@@ -20,8 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.glass.history.ExecutionLog;
+import org.glass.job.util.Spring;
 import org.glass.util.Page;
 import org.glass.util.Query;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
@@ -34,92 +38,124 @@ import org.springframework.stereotype.Service;
 public class Logs {
     private static final Logger LOGGER = LoggerFactory.getLogger(Logs.class);
 
-    private List<Log> logs = new ArrayList<Log>();
-
     private static final int MAX_SIZE = 10000;
 
+    private List<Log> logs = new ArrayList<Log>();
+
+    private ThreadLocal<JobExecutionContext> localContext = new ThreadLocal<JobExecutionContext>();
+
+    public static Logs getLogs(JobExecutionContext context) throws JobExecutionException {
+        Logs logs = Spring.getBean(context, Logs.class);
+
+        logs.localContext.set(context);
+
+        return logs;
+    }
+
     public void debug(String message) {
-        add(Log.message(LogLevel.DEBUG, message));
+        log(LogLevel.DEBUG, message);
 
         LOGGER.debug(message);
     }
 
     public void debug(String format, Object... args) {
-        add(Log.message(LogLevel.DEBUG, format(format, args)));
+        log(LogLevel.DEBUG, format(format, args));
 
         LOGGER.debug(format, args);
     }
 
-    public void debug(String message, java.lang.Throwable throwable) {
-        add(Log.exception(LogLevel.DEBUG, message, throwable));
+    public void debug(String message, Throwable throwable) {
+        log(LogLevel.DEBUG, message, throwable);
 
         LOGGER.debug(message, throwable);
     }
 
     public void info(String message) {
-        add(Log.message(LogLevel.INFO, message));
+        log(LogLevel.INFO, message);
 
         LOGGER.info(message);
     }
 
     public void info(String format, Object... args) {
-        add(Log.message(LogLevel.INFO, format(format, args)));
+        log(LogLevel.INFO, format(format, args));
 
         LOGGER.info(format, args);
     }
 
-    public void info(String message, java.lang.Throwable throwable) {
-        add(Log.exception(LogLevel.INFO, message, throwable));
+    public void info(String message, Throwable throwable) {
+        log(LogLevel.INFO, message, throwable);
 
         LOGGER.info(message, throwable);
     }
 
     public void warn(String message) {
-        add(Log.message(LogLevel.WARN, message));
+        log(LogLevel.WARN, message);
 
         LOGGER.warn(message);
     }
 
     public void warn(String format, Object... args) {
-        add(Log.message(LogLevel.WARN, format(format, args)));
+        log(LogLevel.WARN, format(format, args));
 
         LOGGER.warn(format, args);
     }
 
-    public void warn(String message, java.lang.Throwable throwable) {
-        add(Log.exception(LogLevel.WARN, message, throwable));
+    public void warn(String message, Throwable throwable) {
+        log(LogLevel.WARN, message, throwable);
 
         LOGGER.warn(message, throwable);
     }
 
     public void error(String message) {
-        add(Log.message(LogLevel.ERROR, message));
+        log(LogLevel.ERROR, message);
 
         LOGGER.error(message);
     }
 
     public void error(String format, Object... args) {
-        add(Log.message(LogLevel.ERROR, format(format, args)));
+        log(LogLevel.ERROR, format(format, args));
 
         LOGGER.error(format, args);
     }
 
-    public void error(String message, java.lang.Throwable throwable) {
-        add(Log.exception(LogLevel.ERROR, message, throwable));
+    public void error(String message, Throwable throwable) {
+        log(LogLevel.ERROR, message, throwable);
 
         LOGGER.error(message, throwable);
     }
 
+    public synchronized Page<Log> getLogs(Long executionId, Query query) {
+        List<Log> matchingLogs = new ArrayList<Log>();
+
+        for (Log log : logs) {
+            if (executionId.equals(log.getExecutionId())) {
+                matchingLogs.add(log);
+            }
+        }
+
+        return getLogs(matchingLogs, query);
+    }
+
     public synchronized Page<Log> getLogs(Query query) {
-        Page<Log> page = Page.fromQuery(query);
+        return getLogs(logs, query);
+    }
 
-        List<Log> subList = query.subList(logs);
-        Collections.reverse(subList);
+    private void log(LogLevel level, String message) {
+        JobExecutionContext context = localContext.get();
 
-        page.setItems(subList);
-        page.setTotalCount(logs.size());
+        add(Log.message(ExecutionLog.getFromContext(context), level, message));
+    }
 
-        return page;
+    private void log(LogLevel level, String format, Object... args) {
+        JobExecutionContext context = localContext.get();
+
+        add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
+    } 
+
+    private void log(LogLevel level, String message, Throwable throwable) {
+        JobExecutionContext context = localContext.get();
+
+        add(Log.exception(ExecutionLog.getFromContext(context), level, message, throwable));
     }
 
     private synchronized void add(Log log) {
@@ -132,5 +168,17 @@ public class Logs {
 
     private String format(String format, Object... args) {
         return MessageFormatter.arrayFormat(format, args).getMessage();
+    }
+
+    private Page<Log> getLogs(List<Log> matchingLogs, Query query) {
+        Page<Log> page = Page.fromQuery(query);
+
+        List<Log> subList = query.subList(matchingLogs);
+        Collections.reverse(subList);
+
+        page.setItems(subList);
+        page.setTotalCount(matchingLogs.size());
+
+        return page;
     }
 }
