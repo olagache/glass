@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td colspan="9">
-                                    <span class="code">$format.html($trigger.dataMap)</span>
+                                    <span class="code">$format.dataMap($trigger.dataMap)</span>
                                 </td>
                             </tr>
                         #end

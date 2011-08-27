@@ -18,11 +18,9 @@ package org.glass.history;
 
 import java.util.Date;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.glass.job.util.JobDataMapUtils;
 import org.glass.util.Dates;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 /**
  * Summary of a job execution stored as a log.
@@ -50,7 +48,7 @@ public class ExcecutionLog {
 
     private String dataMap;
 
-    private String stackTrace;
+    private boolean success;
 
     private ExcecutionLog() {
 
@@ -71,12 +69,6 @@ public class ExcecutionLog {
         log.dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
 
         return log;
-    }
-
-    public void setStackTrace(JobExecutionException exception) {
-        if (exception != null) {
-            stackTrace = ExceptionUtils.getFullStackTrace(exception);
-        }
     }
 
     public Long getId() {
@@ -155,11 +147,11 @@ public class ExcecutionLog {
         this.dataMap = dataMap;
     }
 
-    public String getStackTrace() {
-        return stackTrace;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setStackTrace(String stackTrace) {
-        this.stackTrace = stackTrace;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

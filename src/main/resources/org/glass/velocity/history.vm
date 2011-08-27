@@ -23,11 +23,18 @@
                 </thead>
                 <tbody>
                     #foreach ($log in $page.items)
-                        <tr>
+                        #if ($log.ended && !$log.success)
+                            <tr class="ERROR">
+                        #else
+                            <tr>
+                        #end
                             <td style="text-align: center;">$!format.date(${log.startDate})</td>
                             <td style="text-align: center;">
                                 #if ($log.ended)
                                     $!format.date(${log.endDate})
+                                    #if (!$log.success)
+                                       <span style="color: red;">failed</span>
+                                    #end
                                 #else
                                     <span style="color: red;">running</span>
                                 #end
@@ -38,11 +45,7 @@
                         </tr>
                         <tr>
                             <td colspan="5">
-                                #if ($utils.isNotEmpty($log.stackTrace))
-                                    <span class="code">$format.html($log.rootCause)</span>
-                                    <br/><br/>
-                                    <span class="code">$format.stacktrace($log.stackTrace)</span>
-                                #end
+                                <span class="code">$format.dataMap($log.dataMap)</span>
                             </td>
                         </tr>
                     #end

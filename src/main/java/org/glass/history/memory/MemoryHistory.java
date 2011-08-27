@@ -63,9 +63,9 @@ public class MemoryHistory implements History {
             return;
         }
 
-        log.setStackTrace(exception);
         log.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
         log.setEnded(true);
+        log.setSuccess(exception == null);
     }
 
     @Override
