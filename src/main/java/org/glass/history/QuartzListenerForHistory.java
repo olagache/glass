@@ -18,6 +18,7 @@ package org.glass.history;
 
 import javax.inject.Inject;
 
+import org.glass.log.Logs;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
@@ -31,18 +32,29 @@ public class QuartzListenerForHistory extends JobListenerSupport {
     @Inject
     private History history;
 
+    @Inject
+    private Logs logs;
+
     @Override
     public String getName() {
         return QuartzListenerForHistory.class.getName();
     }
 
     @Override
-    public void jobToBeExecuted(JobExecutionContext jobExecutionContext) {
-        history.jobStarts(jobExecutionContext);
+    public void jobToBeExecuted(JobExecutionContext context) {
+        ExecutionLog log = history.jobStarts(context);
+
+        log.setInContext(context);
     }
 
     @Override
-    public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException exception) {
-        history.jobEnds(jobExecutionContext, exception);
+    public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
+        ExecutionLog log = ExecutionLog.getFromContext(context);
+
+        history.jobEnds(log, context, exception);
+
+        if (exception != null) {
+            logs.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
+        }
     }
 }

@@ -49,6 +49,18 @@ public class FormatTool {
         return StringEscapeUtils.escapeHtml(object.toString());
     }
 
+    public String dataMap(Object object) {
+        if (object == null) {
+            return null;
+        }
+
+        String html = html(object);
+
+        html = StringUtils.replace(html, "\n", "<br/>");
+
+        return html;
+    }
+
     public String stacktrace(Object object) {
         if (object == null) {
             return null;

@@ -22,6 +22,7 @@ import org.glass.log.Logs;
 import org.glass.util.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,8 +35,16 @@ public class LogsController {
     protected Logs logs;
 
     @RequestMapping("/logs")
-    public String history(@RequestParam(defaultValue = "0") int index, Model model) {
+    public String logs(@RequestParam(defaultValue = "0") int index, Model model) {
         model.addAttribute("page", logs.getLogs(Query.oneBasedIndex(index)));
+
+        return "logs";
+    }
+
+    @RequestMapping("/logs/{executionId}")
+    public String logs(@PathVariable Long executionId, @RequestParam(defaultValue = "0") int index, Model model) {
+        model.addAttribute("executionId", executionId);
+        model.addAttribute("page", logs.getLogs(executionId, Query.oneBasedIndex(index)));
 
         return "logs";
     }

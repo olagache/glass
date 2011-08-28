@@ -19,12 +19,15 @@ package org.glass.log;
 import java.util.Date;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.glass.history.ExecutionLog;
 import org.glass.util.Dates;
 
 /**
  * @author damien bourdette
  */
 public class Log {
+    private Long executionId;
+
     private LogLevel level;
 
     private Date date;
@@ -39,8 +42,12 @@ public class Log {
 
     }
 
-    public static Log message(LogLevel level, String message) {
+    public static Log message(ExecutionLog executionLog, LogLevel level, String message) {
         Log log = new Log();
+
+        if (executionLog != null) {
+            log.executionId = executionLog.getId();
+        }
 
         log.date = new Date();
         log.level = level;
@@ -49,13 +56,17 @@ public class Log {
         return log;
     }
 
-    public static Log exception(LogLevel level, String message, Throwable e) {
-        Log log = message(level, message);
+    public static Log exception(ExecutionLog executionLog, LogLevel level, String message, Throwable e) {
+        Log log = message(executionLog, level, message);
 
         log.stackTrace = ExceptionUtils.getFullStackTrace(e);
         log.rootCause = ExceptionUtils.getMessage(ExceptionUtils.getRootCause(e));
 
         return log;
+    }
+
+    public Long getExecutionId() {
+        return executionId;
     }
 
     public LogLevel getLevel() {

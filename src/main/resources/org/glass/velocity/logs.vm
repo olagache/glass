@@ -6,32 +6,42 @@
 	</head>
 	<body>
 	    #parse("org/glass/velocity/widgets/menu.vm")
-		
-		#parse("org/glass/velocity/widgets/pages.vm")
 
-        <h1><span>Logs</span></h1>
+        #parse("org/glass/velocity/widgets/pages.vm")
+
+        <h1>
+            <span>
+                Logs
+                #if ("$!executionId" != "")
+                    for execution id $executionId
+                #end
+            </span>
+        </h1>
         <div class="table">
             <table>
                 <thead>
                     <tr>
                         <th>Level</th>
+                        <th>Execution id</th>
                         <th>Date</th>
                         <th>Message</th>
                     </tr>
                 </thead>
                 <tbody>
                     #foreach ($log in $page.items)
-                        <tr>
+                        <tr class="$log.level">
                             <td style="text-align: center;">$format.html(${log.level})</td>
+                            <td>$!{log.executionId}</td>
                             <td>$format.date(${log.date})</td>
                             <td>$format.html($log.message)</td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 #if ($utils.isNotEmpty($log.stackTrace))
                                     <span class="code">$format.html($log.rootCause)</span>
-                                    <br/><br/>
-                                    <span class="code">$format.stacktrace($log.stackTrace)</span>
+                                    <a href="#" onclick="swapStacktrace(this, $('#$utils.hash($log)'))">see stacktrace</a>
+                                    <br/>
+                                    <span id="$utils.hash($log)" class="code" style="display:none">$format.stacktrace($log.stackTrace)</span>
                                 #end
                             </td>
                         </tr>

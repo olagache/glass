@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.glass.history.ExcecutionLog;
+import org.glass.history.ExecutionLog;
 import org.glass.history.History;
 import org.glass.util.Page;
 import org.glass.util.Query;
@@ -32,47 +32,38 @@ import org.quartz.JobExecutionException;
  * @author damien bourdette
  */
 public class MemoryHistory implements History {
-    private final List<ExcecutionLog> logs = new ArrayList<ExcecutionLog>();
+    private final List<ExecutionLog> logs = new ArrayList<ExecutionLog>();
 
     private static final int MAX_SIZE = 1000;
 
     private static Long identifier = 0l;
 
-    private static final String ID_KEY_IN_CONTEXT = "__GLASS_EXECUTION_ID_KEY_IN_CONTEXT";
-
     @Override
-    public synchronized void jobStarts(JobExecutionContext context) {
-        ExcecutionLog log = ExcecutionLog.fromContext(context);
-
+    public synchronized ExecutionLog jobStarts(JobExecutionContext context) {
         identifier++;
 
-        log.setId(identifier);
+        ExecutionLog log = new ExecutionLog();
 
-        context.put(ID_KEY_IN_CONTEXT, identifier);
+        log.setId(identifier);
+        log.fillWithContext(context);
 
         addLog(log);
+
+        return log;
     }
 
     @Override
-    public synchronized void jobEnds(JobExecutionContext context, JobExecutionException exception) {
-        Long id = (Long) context.get(ID_KEY_IN_CONTEXT);
-
-        ExcecutionLog log = findLog(id);
-
-        if (log == null) {
-            return;
-        }
-
-        log.setStackTrace(exception);
+    public synchronized void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
         log.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
         log.setEnded(true);
+        log.setSuccess(exception == null);
     }
 
     @Override
-    public synchronized Page<ExcecutionLog> getLogs(Query query) {
-        Page<ExcecutionLog> page = Page.fromQuery(query);
+    public synchronized Page<ExecutionLog> getLogs(Query query) {
+        Page<ExecutionLog> page = Page.fromQuery(query);
 
-        List<ExcecutionLog> subList = query.subList(logs);
+        List<ExecutionLog> subList = query.subList(logs);
         Collections.reverse(subList);
 
         page.setItems(subList);
@@ -81,17 +72,7 @@ public class MemoryHistory implements History {
         return page;
     }
 
-    private ExcecutionLog findLog(Long id) {
-        for (ExcecutionLog log : logs) {
-            if (id.equals(log.getId())) {
-                return log;
-            }
-        }
-
-        return null;
-    }
-
-    private void addLog(ExcecutionLog log) {
+    private void addLog(ExecutionLog log) {
        logs.add(log);
 
         if (logs.size() > MAX_SIZE) {

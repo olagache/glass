@@ -72,3 +72,14 @@ onJobSelected = function() {
         $("#arguments").html(htmlBuilder);
     });
 }
+
+swapStacktrace = function(link, target) {
+    if (link.text == "see stacktrace") {
+        target.show(1000);
+        $(link).text("hide stacktrace");
+    } else {
+        target.hide(1000);
+        $(link).text("see stacktrace");
+    }
+}
+

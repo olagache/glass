@@ -210,3 +210,27 @@ span.error {
     font-family: monospace;
     margin: 1em 0px;
 }
+
+tr.DEBUG td:first-child, tr.INFO td:first-child  {
+    background: -moz-linear-gradient(left, #f4f184 0%, #f2f2f2 40px);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #f4f184), color-stop(40px, #f2f2f2));
+    background: -webkit-linear-gradient(left, #f4f184 0%, #f2f2f2 40px);
+    background: -o-linear-gradient(left, #f4f184 0%, #f2f2f2 40px);
+    background: -ms-linear-gradient(left, #f4f184 0%, #f2f2f2 40px);
+}
+
+tr.WARN td:first-child  {
+    background: -moz-linear-gradient(left, #EFC983 0%, #f2f2f2 60px);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #EFC983), color-stop(60px, #f2f2f2));
+    background: -webkit-linear-gradient(left, #EFC983 0%, #f2f2f2 60px);
+    background: -o-linear-gradient(left, #EFC983 0%, #f2f2f2 60px);
+    background: -ms-linear-gradient(left, #EFC983 0%, #f2f2f2 60px);
+}
+
+tr.ERROR td:first-child  {
+    background: -moz-linear-gradient(left, #F28585 0%, #f2f2f2 100px);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #F28585), color-stop(100px, #f2f2f2));
+    background: -webkit-linear-gradient(left, #F28585 0%, #f2f2f2 100px);
+    background: -o-linear-gradient(left, #F28585 0%, #f2f2f2 100px);
+    background: -ms-linear-gradient(left, #F28585 0%, #f2f2f2 100px);
+}
