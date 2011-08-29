@@ -25,7 +25,9 @@ import javax.sql.DataSource;
 
 import org.apache.velocity.exception.VelocityException;
 import org.glass.configuration.Configuration;
+import org.glass.history.History;
 import org.glass.history.QuartzListenerForHistory;
+import org.glass.history.memory.MemoryHistory;
 import org.glass.job.GlassJobFactory;
 import org.glass.log.QuartzListenerForLogs;
 import org.quartz.Scheduler;
@@ -113,6 +115,11 @@ public class SpringConfig {
         scheduler.start();
 
         return scheduler;
+    }
+
+    @Bean
+    public History history() {
+        return new MemoryHistory();
     }
 
     @Bean

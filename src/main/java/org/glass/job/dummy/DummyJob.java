@@ -18,7 +18,6 @@ package org.glass.job.dummy;
 
 import org.glass.job.annotation.Job;
 import org.glass.job.annotation.JobArgument;
-import org.glass.job.util.Spring;
 import org.glass.log.Logs;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
@@ -42,7 +41,7 @@ public class DummyJob implements InterruptableJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        Spring.getBean(context, Logs.class).info("Running dummy job for " + duration + " seconds");
+        Logs.getLogs(context).info("Running dummy job for {} seconds", duration);
 
         try {
             Thread.sleep(duration * 1000);

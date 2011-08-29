@@ -14,11 +14,31 @@
  * limitations under the License.
  */
 
-package org.glass.history;
+package org.glass.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author damien bourdette
  */
-public enum HistoryLogType {
-    START, END;
+public class PageTest {
+    @Test
+    public void count() {
+        Query query = Query.oneBasedIndex(1).withSize(10);
+
+        List<Long> longs = new ArrayList<Long>();
+        for (int i = 1; i <= 45; i++) {
+            longs.add(Long.valueOf(i));
+        }
+
+        Page page = Page.fromQuery(query);
+        page.setItems(query.subList(longs));
+        page.setTotalCount(45);
+
+        Assert.assertEquals("There should be 5 pages", 5, page.getCount());
+    }
 }

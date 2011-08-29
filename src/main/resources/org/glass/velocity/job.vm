@@ -36,7 +36,7 @@
                     <tr>
                         <td>Data map</td>
                         <td>
-                            <pre>$format.html($dataMap)</pre>
+                            <span class="code">$format.dataMap($dataMap)</span>
                         </td>
                     </tr>
                 </tbody>
@@ -85,7 +85,7 @@
                         </tr>
                         <tr>
                             <td colspan="8">
-                                <pre>$!esc.hmtl($trigger.dataMap)</pre>
+                                <span class="code">$!format.dataMap($trigger.dataMap)</span>
                             </td>
                         </tr>
                     #end

@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.glass.SpringConfig;
 
 /**
@@ -46,5 +47,30 @@ public class FormatTool {
         }
 
         return StringEscapeUtils.escapeHtml(object.toString());
+    }
+
+    public String dataMap(Object object) {
+        if (object == null) {
+            return null;
+        }
+
+        String html = html(object);
+
+        html = StringUtils.replace(html, "\n", "<br/>");
+
+        return html;
+    }
+
+    public String stacktrace(Object object) {
+        if (object == null) {
+            return null;
+        }
+
+        String html = html(object);
+
+        html = StringUtils.replace(html, "\n", "<br/>");
+        html = StringUtils.replace(html, "\t", "&nbsp;&nbsp;&nbsp;");
+
+        return html;
     }
 }
