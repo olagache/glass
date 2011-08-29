@@ -86,6 +86,7 @@ x be able to keep logs and history in memory but having jobs in db
 - build and deploy glass-test project using snapshot repo
 - logs and history in db for jdbc stores (mysql)
 v 0.1-beta6 - selenium
+- version number in footer
 - better table formatting (center dates, status...)
 - query form for history page (job, trigger...)
 - query form for logs page (job, trigger...)

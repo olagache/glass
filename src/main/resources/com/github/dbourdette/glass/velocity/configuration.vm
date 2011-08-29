@@ -22,6 +22,10 @@
                         <td>${configuration.store}</td>
                     </tr>
                     <tr>
+                        <td>log store</td>
+                        <td>${configuration.logStore}</td>
+                    </tr>
+                    <tr>
                         <td>table prefix</td>
                         <td>${configuration.tablePrefix}</td>
                     </tr>
