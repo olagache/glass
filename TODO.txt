@@ -81,9 +81,11 @@ x job group and name in logs ?
 x history links in job screen (from job and triggers)
 x logs and history in db for jdbc stores (oracle)
 x logLevel parameter for all jobs (default is WARN)
+x org.glass -> com.github.dbourdette.glass
+- be able to keep logs and history in memory but having jobs in db
+- logs and history in db for jdbc stores (mysql)
 v 0.1-beta6 - selenium
 - better table formatting (center dates, status...)
-- logs and history in db for jdbc stores (mysql)
 - query form for history page (job, trigger...)
 - query form for logs page (job, trigger...)
 - trigger stays in list if he misfires and produces no run history
