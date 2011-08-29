@@ -166,26 +166,26 @@ CREATE TABLE glass_locks
     PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
-create index idx_chrn_j_req_recovery on glass_job_details(SCHED_NAME,REQUESTS_RECOVERY);
-create index idx_chrn_j_grp on glass_job_details(SCHED_NAME,JOB_GROUP);
+create index idx_glas_j_req_recovery on glass_job_details(SCHED_NAME,REQUESTS_RECOVERY);
+create index idx_glas_j_grp on glass_job_details(SCHED_NAME,JOB_GROUP);
 
-create index idx_chrn_t_j on glass_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_chrn_t_jg on glass_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_chrn_t_c on glass_triggers(SCHED_NAME,CALENDAR_NAME);
-create index idx_chrn_t_g on glass_triggers(SCHED_NAME,TRIGGER_GROUP);
-create index idx_chrn_t_state on glass_triggers(SCHED_NAME,TRIGGER_STATE);
-create index idx_chrn_t_n_state on glass_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_chrn_t_n_g_state on glass_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_chrn_t_next_fire_time on glass_triggers(SCHED_NAME,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_st on glass_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
-create index idx_chrn_t_nft_st_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
-create index idx_chrn_t_nft_st_misfire_grp on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_glas_t_j on glass_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_glas_t_jg on glass_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_glas_t_c on glass_triggers(SCHED_NAME,CALENDAR_NAME);
+create index idx_glas_t_g on glass_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_glas_t_state on glass_triggers(SCHED_NAME,TRIGGER_STATE);
+create index idx_glas_t_n_state on glass_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_glas_t_n_g_state on glass_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_glas_t_next_fire_time on glass_triggers(SCHED_NAME,NEXT_FIRE_TIME);
+create index idx_glas_t_nft_st on glass_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+create index idx_glas_t_nft_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+create index idx_glas_t_nft_st_misfire on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+create index idx_glas_t_nft_st_misfire_grp on glass_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
 
-create index idx_chrn_ft_trig_inst_name on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME);
-create index idx_chrn_ft_inst_job_req_rcvry on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
-create index idx_chrn_ft_j_g on glass_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_chrn_ft_jg on glass_fired_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_chrn_ft_t_g on glass_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
-create index idx_chrn_ft_tg on glass_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_glas_ft_trig_inst_name on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME);
+create index idx_glas_ft_inst_job_req_rcvry on glass_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+create index idx_glas_ft_j_g on glass_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_glas_ft_jg on glass_fired_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_glas_ft_t_g on glass_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+create index idx_glas_ft_tg on glass_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
 

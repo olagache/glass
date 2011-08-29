@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <td colspan="7">
-                                <span class="code">$format.dataMap($log.dataMap)</span>
+                                <span class="code">$!format.dataMap($log.dataMap)</span>
                             </td>
                         </tr>
                     #end

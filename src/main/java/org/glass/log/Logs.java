@@ -16,10 +16,6 @@
 
 package org.glass.log;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.glass.history.ExecutionLog;
 import org.glass.job.util.Spring;
 import org.glass.util.Page;
@@ -29,20 +25,20 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.stereotype.Service;
 
 /**
  * @author damien bourdette
  */
-@Service
 public class Logs {
     private static final Logger LOGGER = LoggerFactory.getLogger(Logs.class);
 
-    private static final int MAX_SIZE = 10000;
-
-    private List<Log> logs = new ArrayList<Log>();
-
     private ThreadLocal<JobExecutionContext> localContext = new ThreadLocal<JobExecutionContext>();
+
+    private LogsStore logsStore;
+
+    public Logs(LogsStore logsStore) {
+        this.logsStore = logsStore;
+    }
 
     public static Logs getLogs(JobExecutionContext context) throws JobExecutionException {
         Logs logs = Spring.getBean(context, Logs.class);
@@ -124,61 +120,33 @@ public class Logs {
         LOGGER.error(message, throwable);
     }
 
-    public synchronized Page<Log> getLogs(Long executionId, Query query) {
-        List<Log> matchingLogs = new ArrayList<Log>();
-
-        for (Log log : logs) {
-            if (executionId.equals(log.getExecutionId())) {
-                matchingLogs.add(log);
-            }
-        }
-
-        return getLogs(matchingLogs, query);
+    public Page<Log> getLogs(Long executionId, Query query) {
+        return logsStore.getLogs(executionId, query);
     }
 
-    public synchronized Page<Log> getLogs(Query query) {
-        return getLogs(logs, query);
+    public Page<Log> getLogs(Query query) {
+        return logsStore.getLogs(query);
     }
 
     private void log(LogLevel level, String message) {
         JobExecutionContext context = localContext.get();
 
-        add(Log.message(ExecutionLog.getFromContext(context), level, message));
+        logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, message));
     }
 
     private void log(LogLevel level, String format, Object... args) {
         JobExecutionContext context = localContext.get();
 
-        add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
-    } 
+        logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
+    }
 
     private void log(LogLevel level, String message, Throwable throwable) {
         JobExecutionContext context = localContext.get();
 
-        add(Log.exception(ExecutionLog.getFromContext(context), level, message, throwable));
-    }
-
-    private synchronized void add(Log log) {
-        logs.add(log);
-
-        if (logs.size() > MAX_SIZE) {
-            logs.remove(0);
-        }
+        logsStore.add(Log.exception(ExecutionLog.getFromContext(context), level, message, throwable));
     }
 
     private String format(String format, Object... args) {
         return MessageFormatter.arrayFormat(format, args).getMessage();
-    }
-
-    private Page<Log> getLogs(List<Log> matchingLogs, Query query) {
-        Page<Log> page = Page.fromQuery(query);
-
-        List<Log> subList = query.subList(matchingLogs);
-        Collections.reverse(subList);
-
-        page.setItems(subList);
-        page.setTotalCount(matchingLogs.size());
-
-        return page;
     }
 }

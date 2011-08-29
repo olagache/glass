@@ -77,6 +77,26 @@ public class Query {
         return new ArrayList<T>(list.subList(start, end));
     }
 
+    public String applySqlLimit(String sql) {
+        StringBuilder builder = new StringBuilder();
+
+        if (getStart() != 0) {
+            builder.append("select * from ( select row_.*, rownum rownum_ from ( ");
+        } else {
+            builder.append("select * from ( ");
+        }
+
+        builder.append(sql);
+
+        if (getStart() != 0) {
+            builder.append(" ) row_ where rownum <= " + getEnd() + ") where rownum_ > " + + getStart());
+        } else {
+            builder.append(" ) where rownum <= " + getEnd());
+        }
+
+        return builder.toString();
+    }
+
     public int getIndex() {
         return index;
     }

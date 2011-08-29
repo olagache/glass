@@ -79,10 +79,11 @@ x link history and logs
 x show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
 x job group and name in logs ?
 x history links in job screen (from job and triggers)
-- logs and history in db for jdbc stores
+x logs and history in db for jdbc stores (oracle)
 - better table formatting (center dates, status...)
 - logLevel (?) parameter for all jobs (default is WARN)
 v 0.1-beta6 - selenium
+- logs and history in db for jdbc stores (mysql)
 - query form for history page (job, trigger...)
 - query form for logs page (job, trigger...)
 - trigger stays in list if he misfires and produces no run history

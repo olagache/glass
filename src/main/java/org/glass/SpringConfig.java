@@ -27,9 +27,13 @@ import org.apache.velocity.exception.VelocityException;
 import org.glass.configuration.Configuration;
 import org.glass.history.History;
 import org.glass.history.QuartzListenerForHistory;
+import org.glass.history.jdbc.JdbcHistory;
 import org.glass.history.memory.MemoryHistory;
 import org.glass.job.GlassJobFactory;
+import org.glass.log.Logs;
 import org.glass.log.QuartzListenerForLogs;
+import org.glass.log.jdbc.JdbcLogsStore;
+import org.glass.log.memory.MemoryLogsStore;
 import org.quartz.Scheduler;
 import org.quartz.simpl.RAMJobStore;
 import org.quartz.simpl.SimpleThreadPool;
@@ -59,14 +63,16 @@ public class SpringConfig {
     private QuartzListenerForLogs quartzListenerForLogs;
 
     @Inject
-    private Configuration configuration;
-
-    @Inject
     private GlassJobFactory glassJobFactory;
 
     @Bean
+    public Configuration configuration() throws Exception {
+        return new Configuration();
+    }
+
+    @Bean
     public DataSource dataSource() throws Exception {
-        if (configuration.isInMemory()) {
+        if (configuration().isInMemory()) {
             return null;
         }
 
@@ -93,14 +99,14 @@ public class SpringConfig {
         properties.setProperty("org.quartz.threadPool.threadCount", "15");
         properties.setProperty("org.quartz.threadPool.threadPriority", "4");
 
-        if (configuration.isInMemory()) {
+        if (configuration().isInMemory()) {
             properties.setProperty("org.quartz.jobStore.class", RAMJobStore.class.getName());
         } else {
             factory.setDataSource(dataSource());
 
-            properties.setProperty("org.quartz.jobStore.tablePrefix", configuration.getTablePrefix());
+            properties.setProperty("org.quartz.jobStore.tablePrefix", configuration().getTablePrefix());
             properties.setProperty("org.quartz.jobStore.isClustered", "false");
-            properties.setProperty("org.quartz.jobStore.driverDelegateClass", configuration.getDriverDelegateClass());
+            properties.setProperty("org.quartz.jobStore.driverDelegateClass", configuration().getDriverDelegateClass());
         }
 
         factory.setQuartzProperties(properties);
@@ -118,8 +124,21 @@ public class SpringConfig {
     }
 
     @Bean
-    public History history() {
-        return new MemoryHistory();
+    public History history() throws Exception {
+        if (configuration().isInMemory()) {
+            return new MemoryHistory();
+        } else {
+            return new JdbcHistory(dataSource(), configuration());
+        }
+    }
+
+    @Bean
+    public Logs logs() throws Exception {
+        if (configuration().isInMemory()) {
+            return new Logs(new MemoryLogsStore());
+        } else {
+            return new Logs(new JdbcLogsStore(dataSource(), configuration()));
+        }
     }
 
     @Bean

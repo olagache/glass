@@ -48,7 +48,7 @@ public class Log {
 
     private String rootCause;
 
-    private Log() {
+    public Log() {
 
     }
 
@@ -122,5 +122,49 @@ public class Log {
 
     public String getTriggerName() {
         return triggerName;
+    }
+
+    public void setExecutionId(Long executionId) {
+        this.executionId = executionId;
+    }
+
+    public void setLevel(LogLevel level) {
+        this.level = level;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setJobClass(String jobClass) {
+        this.jobClass = jobClass;
+    }
+
+    public void setJobGroup(String jobGroup) {
+        this.jobGroup = jobGroup;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
+    public void setTriggerGroup(String triggerGroup) {
+        this.triggerGroup = triggerGroup;
+    }
+
+    public void setTriggerName(String triggerName) {
+        this.triggerName = triggerName;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
+
+    public void setRootCause(String rootCause) {
+        this.rootCause = rootCause;
     }
 }
