@@ -20,13 +20,14 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
-import com.github.dbourdette.glass.job.GlassJobFactory;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
 import org.quartz.impl.jdbcjobstore.oracle.OracleDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.github.dbourdette.glass.job.GlassJobFactory;
 
 /**
  * Reads parameters from ServletContext and provides easy access to application configuration.
@@ -46,6 +47,8 @@ public class Configuration {
     private ServletContext servletContext;
 
     private Store store = Store.MEMORY;
+
+    private LogStore logStore = LogStore.MEMORY;
 
     private String tablePrefix = DEFAULT_TABLE_PREFIX;
 
@@ -76,11 +79,15 @@ public class Configuration {
         value = servletContext.getInitParameter("glass/job.injectionType");
         if (StringUtils.isNotEmpty(value)) { injectionType = InjectionType.valueOf(value); }
 
+        value = servletContext.getInitParameter("glass/log.store");
+        if (StringUtils.isNotEmpty(value)) { logStore = LogStore.valueOf(value); }
+
         LOG.info("Using store " + store);
         LOG.info("Using store tablePrefix " + tablePrefix);
         LOG.info("Using job basePackage " + jobBasePackage);
         LOG.info("Using job dateFormat " + dateFormat);
         LOG.info("Using job injectionType " + injectionType);
+        LOG.info("Using log store " + logStore);
     }
 
     public String getRoot() {
@@ -103,6 +110,10 @@ public class Configuration {
 
     public Store getStore() {
         return store;
+    }
+
+    public LogStore getLogStore() {
+        return logStore;
     }
 
     public String getTablePrefix() {

@@ -39,6 +39,7 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import com.github.dbourdette.glass.configuration.Configuration;
+import com.github.dbourdette.glass.configuration.LogStore;
 import com.github.dbourdette.glass.history.History;
 import com.github.dbourdette.glass.history.QuartzListenerForHistory;
 import com.github.dbourdette.glass.history.jdbc.JdbcHistory;
@@ -126,7 +127,7 @@ public class SpringConfig {
 
     @Bean
     public History history() throws Exception {
-        if (configuration().isInMemory()) {
+        if (configuration().getLogStore() == LogStore.MEMORY) {
             return new MemoryHistory();
         } else {
             return new JdbcHistory(dataSource(), configuration());
@@ -135,7 +136,7 @@ public class SpringConfig {
 
     @Bean
     public Logs logs() throws Exception {
-        if (configuration().isInMemory()) {
+        if (configuration().getLogStore() == LogStore.MEMORY) {
             return new Logs(new MemoryLogsStore());
         } else {
             return new Logs(new JdbcLogsStore(dataSource(), configuration()));
