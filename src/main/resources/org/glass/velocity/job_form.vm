@@ -16,6 +16,14 @@
                         <td>jobClass</td>
                         <td>$format.html($jobClass.name)</td>
                     </tr>
+                    <tr>
+                        <td>Disallow concurrent execution</td>
+                        <td id="disallowConcurrentExecution">$jobBean.disallowConcurrentExecution</td>
+                    </tr>
+                    <tr>
+                        <td>Persist job data after execution</td>
+                        <td id="persistJobDataAfterExecution">$jobBean.persistJobDataAfterExecution</td>
+                    </tr>
                     #if ($utils.isNotEmpty($jobDescription))
                         <tr>
                             <td>description</td>

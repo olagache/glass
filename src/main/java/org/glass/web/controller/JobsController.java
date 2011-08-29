@@ -97,9 +97,9 @@ public class JobsController {
         }
 
         model.addAttribute("job", job);
-        model.addAttribute("jobDescription", JobBean.getDescription(job.getJobClass()));
-        model.addAttribute("dataMap", JobDataMapUtils.toProperties(job.getJobDataMap(), "\n"));
+        model.addAttribute("jobBean", JobBean.fromClass(job.getJobClass()));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
+        model.addAttribute("dataMap", JobDataMapUtils.toProperties(job.getJobDataMap(), "\n"));
 
         List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
         List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(job.getKey());
@@ -209,7 +209,7 @@ public class JobsController {
         }
 
         model.addAttribute("jobClasses", jobClasses);
-        model.addAttribute("jobDescription", JobBean.getDescription(form.getClazz()));
+        model.addAttribute("jobBean", JobBean.fromClass(form.getClazz()));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(form.getClazz()));
         model.addAttribute("form", form);
 
@@ -218,7 +218,7 @@ public class JobsController {
 
     private String form(Model model, JobForm form, Class<?> jobClass) {
         model.addAttribute("jobClass", jobClass);
-        model.addAttribute("jobDescription", JobBean.getDescription(jobClass));
+        model.addAttribute("jobBean", JobBean.fromClass(jobClass));
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(jobClass));
         model.addAttribute("form", form);
 

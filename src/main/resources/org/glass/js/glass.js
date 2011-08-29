@@ -47,6 +47,8 @@ onJobSelected = function() {
 
     $.getJSON(SERVICE_URL, {"className": class}, function(job) {
         $("#description").text(job.description);
+        $("#disallowConcurrentExecution").text(job.disallowConcurrentExecution);
+        $("#persistJobDataAfterExecution").text(job.persistJobDataAfterExecution);
 
         var htmlBuilder = "";
         $(job.arguments).each(function(index, argument) {

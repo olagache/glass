@@ -30,8 +30,16 @@
                         <td>$format.html($job.jobClass.name)</td>
                     </tr>
                     <tr>
+                        <td>Disallow concurrent execution</td>
+                        <td>$jobBean.disallowConcurrentExecution</td>
+                    </tr>
+                    <tr>
+                        <td>Persist job data after execution</td>
+                        <td>$jobBean.persistJobDataAfterExecution</td>
+                    </tr>
+                    <tr>
                         <td>Description</td>
-                        <td>$format.html($jobDescription)</td>
+                        <td>$format.html($jobBean.description)</td>
                     </tr>
                     <tr>
                         <td>Data map</td>

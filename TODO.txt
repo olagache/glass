@@ -76,7 +76,7 @@ x varargs for Log using slf4j style : {}
 x colored logs using log level in log page
 x see datamap in run history
 x link history and logs
-- show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
+x show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
 - see only running jobs in history
 - job group and name in logs ?
 - better table formatting (center dates, status...)

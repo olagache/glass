@@ -16,9 +16,12 @@
 
 package org.glass.job.annotation;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.PersistJobDataAfterExecution;
 
 /**
  * Bean that can be used in jsp files and in json serialisations.
@@ -30,23 +33,27 @@ public class JobBean {
     private String description;
 
     @JsonProperty
+    private boolean disallowConcurrentExecution;
+
+    @JsonProperty
+    private boolean persistJobDataAfterExecution;
+
+    @JsonProperty
     private List<JobArgumentBean> arguments;
 
     public static JobBean fromClass(Class<?> jobClass) {
         JobBean jobBean = new JobBean();
 
         jobBean.description = getDescription(jobClass);
+        jobBean.disallowConcurrentExecution = isDisallowConcurrentExecution(jobClass);
+        jobBean.persistJobDataAfterExecution = isPersistJobDataAfterExecution(jobClass);
         jobBean.arguments = JobArgumentBean.fromClass(jobClass);
 
         return jobBean;
     }
 
     public static String getDescription(Class<?> jobClass) {
-        if (jobClass == null) {
-            return "";
-        }
-
-        Job annotation = jobClass.getAnnotation(Job.class);
+        Job annotation = getAnnotation(jobClass, Job.class);
 
         if (annotation == null) {
             return "";
@@ -55,11 +62,31 @@ public class JobBean {
         return annotation.description();
     }
 
+    public static boolean isDisallowConcurrentExecution(Class<?> jobClass) {
+        return getAnnotation(jobClass, DisallowConcurrentExecution.class) == null ? false : true;
+    }
+
+    public static boolean isPersistJobDataAfterExecution(Class<?> jobClass) {
+        return getAnnotation(jobClass, PersistJobDataAfterExecution.class) == null ? false : true;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isDisallowConcurrentExecution() {
+        return disallowConcurrentExecution;
+    }
+
+    public boolean isPersistJobDataAfterExecution() {
+        return persistJobDataAfterExecution;
+    }
+
+    private static <T extends Annotation> T getAnnotation(Class<?> jobClass, Class<T> annotationClass) {
+        if (jobClass == null) {
+            return null;
+        }
+
+        return jobClass.getAnnotation(annotationClass);
     }
 }

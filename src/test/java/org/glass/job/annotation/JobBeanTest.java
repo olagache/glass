@@ -14,21 +14,28 @@
  * limitations under the License.
  */
 
-package org.glass.job;
+package org.glass.job.annotation;
 
-import org.glass.job.util.TriggerUtils;
+import org.glass.job.dummy.DummyJob;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author damien bourdette
  */
-public class TriggerUtilsTest {
+public class JobBeanTest {
     @Test
-    public void getPlanification() {
-        Assert.assertEquals("repeat 10 times every 100ms", TriggerUtils.getPlanification(10, 100));
-        Assert.assertEquals("repeat forever every 100ms", TriggerUtils.getPlanification(-1, 100));
-        Assert.assertEquals("execute once", TriggerUtils.getPlanification(0, 100));
-        Assert.assertEquals("repeat one time in 100ms", TriggerUtils.getPlanification(1, 100));
+    public void getDescription() {
+        Assert.assertEquals("Description is not correct", "Dummy job for testing purposes", JobBean.getDescription(DummyJob.class));
+    }
+
+    @Test
+    public void isDisallowConcurrentExecution() {
+        Assert.assertEquals("DummyJob do not allow concurent execution", true, JobBean.isDisallowConcurrentExecution(DummyJob.class));
+    }
+
+    @Test
+    public void isPersistJobDataAfterExecution() {
+        Assert.assertEquals("DummyJob do not persist data after execution", false, JobBean.isPersistJobDataAfterExecution(DummyJob.class));
     }
 }

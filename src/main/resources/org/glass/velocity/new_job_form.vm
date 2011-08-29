@@ -48,7 +48,15 @@
                     </tr>
                     <tr>
                         <td>description</td>
-                        <td id="description">$!format.html($jobDescription)</td>
+                        <td id="description">$!format.html($jobBean.description)</td>
+                    </tr>
+                    <tr>
+                        <td>Disallow concurrent execution</td>
+                        <td id="disallowConcurrentExecution">$jobBean.disallowConcurrentExecution</td>
+                    </tr>
+                    <tr>
+                        <td>Persist job data after execution</td>
+                        <td id="persistJobDataAfterExecution">$jobBean.persistJobDataAfterExecution</td>
                     </tr>
                     #springBind("form.dataMap")
                     <tr>
