@@ -80,9 +80,9 @@ x show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job
 x job group and name in logs ?
 x history links in job screen (from job and triggers)
 x logs and history in db for jdbc stores (oracle)
-- better table formatting (center dates, status...)
-- logLevel (?) parameter for all jobs (default is WARN)
+x logLevel parameter for all jobs (default is WARN)
 v 0.1-beta6 - selenium
+- better table formatting (center dates, status...)
 - logs and history in db for jdbc stores (mysql)
 - query form for history page (job, trigger...)
 - query form for logs page (job, trigger...)

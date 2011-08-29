@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.glass.log.LogLevel;
 import org.glass.util.Arrays;
 
 /**
@@ -29,6 +30,8 @@ import org.glass.util.Arrays;
  * @author damien bourdette
  */
 public class JobArgumentBean {
+
+    public static final String LOG_LEVEL_ARGUMENT = "logLevel";
 
     @JsonProperty
     String name;
@@ -56,6 +59,9 @@ public class JobArgumentBean {
                 jobArguments.add(new JobArgumentBean(field.getName(), argument));
             }
         }
+
+        jobArguments.add(new JobArgumentBean(LOG_LEVEL_ARGUMENT, false, "Log level used for this job.",
+                new String[] {LogLevel.DEBUG.name(), LogLevel.INFO.name(), LogLevel.WARN.name(), LogLevel.ERROR.name() }));
 
         return jobArguments;
     }

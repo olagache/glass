@@ -16,7 +16,9 @@
 
 package org.glass.log;
 
+import org.apache.commons.lang.StringUtils;
 import org.glass.history.ExecutionLog;
+import org.glass.job.annotation.JobArgumentBean;
 import org.glass.job.util.Spring;
 import org.glass.util.Page;
 import org.glass.util.Query;
@@ -27,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
 /**
+ * Sends logs to log store and through slf4j.
+ *
  * @author damien bourdette
  */
 public class Logs {
@@ -131,13 +135,21 @@ public class Logs {
     private void log(LogLevel level, String message) {
         JobExecutionContext context = localContext.get();
 
-        logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, message));
+        LogLevel logLevelFromContext = getLogLevelFromContext(context);
+
+        if (level.ordinal() >= logLevelFromContext.ordinal()) {
+            logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, message));
+        }
     }
 
     private void log(LogLevel level, String format, Object... args) {
         JobExecutionContext context = localContext.get();
 
-        logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
+        LogLevel logLevelFromContext = getLogLevelFromContext(context);
+
+        if (level.ordinal() >= logLevelFromContext.ordinal()) {
+            logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
+        }
     }
 
     private void log(LogLevel level, String message, Throwable throwable) {
@@ -148,5 +160,21 @@ public class Logs {
 
     private String format(String format, Object... args) {
         return MessageFormatter.arrayFormat(format, args).getMessage();
+    }
+
+    private LogLevel getLogLevelFromContext(JobExecutionContext context) {
+        String value = context.getMergedJobDataMap().getString(JobArgumentBean.LOG_LEVEL_ARGUMENT);
+
+        if (StringUtils.isEmpty(value)) {
+            return LogLevel.WARN;
+        }
+
+        try {
+            return LogLevel.valueOf(value);
+        } catch (Exception e) {
+            LOGGER.warn("{} has an incorrect value ({}) for job, defaulting to WARN", JobArgumentBean.LOG_LEVEL_ARGUMENT, value);
+
+            return LogLevel.WARN;
+        }
     }
 }
