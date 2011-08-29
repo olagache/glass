@@ -32,6 +32,16 @@ public class Log {
 
     private Date date;
 
+    private String jobClass;
+
+    private String jobGroup;
+
+    private String jobName;
+
+    private String triggerGroup;
+
+    private String triggerName;
+
     private String message;
 
     private String stackTrace;
@@ -47,6 +57,11 @@ public class Log {
 
         if (executionLog != null) {
             log.executionId = executionLog.getId();
+            log.jobClass = executionLog.getJobClass();
+            log.jobName = executionLog.getJobName();
+            log.jobGroup = executionLog.getJobGroup();
+            log.triggerGroup = executionLog.getTriggerGroup();
+            log.triggerName = executionLog.getTriggerName();
         }
 
         log.date = new Date();
@@ -87,5 +102,25 @@ public class Log {
 
     public String getRootCause() {
         return rootCause;
+    }
+
+    public String getJobClass() {
+        return jobClass;
+    }
+
+    public String getJobGroup() {
+        return jobGroup;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public String getTriggerGroup() {
+        return triggerGroup;
+    }
+
+    public String getTriggerName() {
+        return triggerName;
     }
 }

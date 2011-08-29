@@ -23,6 +23,8 @@
                     <tr>
                         <th>Level</th>
                         <th>Execution id</th>
+                        <th>Job group / name</th>
+                        <th>Trigger group / name</th>
                         <th>Date</th>
                         <th>Message</th>
                     </tr>
@@ -32,6 +34,8 @@
                         <tr class="$log.level">
                             <td style="text-align: center;">$format.html(${log.level})</td>
                             <td>$!{log.executionId}</td>
+                            <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
+                            <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
                             <td>$format.date(${log.date})</td>
                             <td>$format.html($log.message)</td>
                         </tr>
