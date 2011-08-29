@@ -22,6 +22,7 @@ import org.glass.history.History;
 import org.glass.util.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,6 +37,13 @@ public class HistoryController {
     @RequestMapping("/history")
     public String history(@RequestParam(defaultValue = "0") int index, Model model) {
         model.addAttribute("page", history.getLogs(Query.oneBasedIndex(index)));
+
+        return "history";
+    }
+
+    @RequestMapping("/history/{jobGroup}/{jobName}")
+    public String history(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "0") int index,  Model model) {
+        model.addAttribute("page", history.getLogs(jobGroup, jobName, Query.oneBasedIndex(index)));
 
         return "history";
     }

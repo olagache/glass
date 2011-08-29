@@ -61,22 +61,39 @@ public class MemoryHistory implements History {
 
     @Override
     public synchronized Page<ExecutionLog> getLogs(Query query) {
-        Page<ExecutionLog> page = Page.fromQuery(query);
+        return getLogs(logs, query);
+    }
 
-        List<ExecutionLog> subList = query.subList(logs);
-        Collections.reverse(subList);
+    @Override
+    public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query) {
+        List<ExecutionLog> matchingLogs = new ArrayList<ExecutionLog>();
 
-        page.setItems(subList);
-        page.setTotalCount(logs.size());
+        for (ExecutionLog log : logs) {
+            if (jobGroup.equals(log.getJobGroup()) && jobName.equals(log.getJobName())) {
+                matchingLogs.add(log);
+            }
+        }
 
-        return page;
+        return getLogs(matchingLogs, query);
     }
 
     private void addLog(ExecutionLog log) {
-       logs.add(log);
+        logs.add(log);
 
         if (logs.size() > MAX_SIZE) {
             logs.remove(0);
         }
+    }
+
+    private Page<ExecutionLog> getLogs(List<ExecutionLog> matchingLogs, Query query) {
+        Page<ExecutionLog> page = Page.fromQuery(query);
+
+        List<ExecutionLog> subList = query.subList(matchingLogs);
+        Collections.reverse(subList);
+
+        page.setItems(subList);
+        page.setTotalCount(matchingLogs.size());
+
+        return page;
     }
 }

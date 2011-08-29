@@ -78,12 +78,13 @@ x see datamap in run history
 x link history and logs
 x show @DisallowConcurrentExecution and @PersistJobDataAfterExecution in new job and job pages
 x job group and name in logs ?
-- better table formatting (center dates, status...)
+x history links in job screen (from job and triggers)
 - logs and history in db for jdbc stores
-- query form for history page (job, trigger...)
-- history links in job screen (from job and triggers)
+- better table formatting (center dates, status...)
 - logLevel (?) parameter for all jobs (default is WARN)
 v 0.1-beta6 - selenium
+- query form for history page (job, trigger...)
+- query form for logs page (job, trigger...)
 - trigger stays in list if he misfires and produces no run history
 - release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 - see only running jobs in history

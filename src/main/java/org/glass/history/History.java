@@ -32,4 +32,6 @@ public interface History {
     public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception);
 
     public Page<ExecutionLog> getLogs(Query query);
+
+    public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query);
 }
