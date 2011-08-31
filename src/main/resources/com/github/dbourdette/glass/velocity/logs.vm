@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		#parse("com/github/dbourdette/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+	    #parse("com/github/dbourdette/glass/velocity/widgets/menu.vm")
+
+        #parse("com/github/dbourdette/glass/velocity/widgets/pages.vm")
+
+        <h1>
+            <span>
+                Logs
+                #if ("$!executionId" != "")
+                    for execution id $executionId
+                #end
+            </span>
+        </h1>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Execution id</th>
+                        <th>Job group / name</th>
+                        <th>Trigger group / name</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach ($log in $page.items)
+                        <tr class="$log.level">
+                            <td style="text-align: center;">$format.html(${log.level})</td>
+                            <td>$!{log.executionId}</td>
+                            <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
+                            <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
+                            <td>$format.date(${log.date})</td>
+                            <td>$format.html($log.message)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                #if ($utils.isNotEmpty($log.stackTrace))
+                                    <span class="code">$format.html($log.rootCause)</span>
+                                    <a href="#" onclick="swapStacktrace(this, $('#$utils.hash($log)'))">see stacktrace</a>
+                                    <br/>
+                                    <span id="$utils.hash($log)" class="code" style="display:none">$format.stacktrace($log.stackTrace)</span>
+                                #end
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+	</body>
+</html>
