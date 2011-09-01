@@ -56,5 +56,9 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="pages">
+            <a href="${root}/history/clear">clear logs</a>
+        </div>
 	</body>
 </html>
