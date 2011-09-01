@@ -31,7 +31,7 @@
 
     <context-param>
         <param-name>glass/job.basePackage</param-name>
-        <param-value>org.glass.job</param-value>
+        <param-value>com.github.dbourdette.glass.job</param-value>
     </context-param>
 
     <context-param>
