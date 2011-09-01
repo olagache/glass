@@ -19,6 +19,14 @@
         </h1>
         <div class="table">
             <table>
+                <colgroup>
+                    <col class="small">
+                    <col class="small">
+                    <col class="medium">
+                    <col class="medium">
+                    <col class="medium">
+                    <col>
+                </colgroup>
                 <thead>
                     <tr>
                         <th>Level</th>
@@ -33,16 +41,16 @@
                     #foreach ($log in $page.items)
                         <tr class="$log.level">
                             <td style="text-align: center;">$format.html(${log.level})</td>
-                            <td>$!{log.executionId}</td>
-                            <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
-                            <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
-                            <td>$format.date(${log.date})</td>
+                            <td style="text-align: center;">$!{log.executionId}</td>
+                            <td style="text-align: center;"><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
+                            <td style="text-align: center;">$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
+                            <td style="text-align: center;">$format.date(${log.date})</td>
                             <td>$format.html($log.message)</td>
                         </tr>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 #if ($utils.isNotEmpty($log.stackTrace))
-                                    <span class="code">$format.html($log.rootCause)</span>
+                                    <span class="code">$!format.html($log.rootCause)</span>
                                     <a href="#" onclick="swapStacktrace(this, $('#$utils.hash($log)'))">see stacktrace</a>
                                     <br/>
                                     <span id="$utils.hash($log)" class="code" style="display:none">$format.stacktrace($log.stackTrace)</span>
@@ -52,6 +60,10 @@
                     #end
                 </tbody>
             </table>
+        </div>
+
+        <div class="pages">
+            <a href="${root}/logs/clear">clear logs</a>
         </div>
 	</body>
 </html>

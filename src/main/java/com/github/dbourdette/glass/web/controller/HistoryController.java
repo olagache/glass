@@ -18,6 +18,7 @@ package com.github.dbourdette.glass.web.controller;
 
 import javax.inject.Inject;
 
+import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.history.History;
 import com.github.dbourdette.glass.util.Query;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,9 @@ public class HistoryController {
     @Inject
     protected History history;
 
+    @Inject
+    protected Configuration configuration;
+
     @RequestMapping("/history")
     public String history(@RequestParam(defaultValue = "0") int index, Model model) {
         model.addAttribute("page", history.getLogs(Query.oneBasedIndex(index)));
@@ -46,5 +50,12 @@ public class HistoryController {
         model.addAttribute("page", history.getLogs(jobGroup, jobName, Query.oneBasedIndex(index)));
 
         return "history";
+    }
+
+    @RequestMapping("/history/clear")
+    public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
+        history.clear();
+
+        return "redirect:" + configuration.getRoot() + "/history";
     }
 }

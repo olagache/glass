@@ -20,13 +20,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
 import com.github.dbourdette.glass.history.ExecutionLog;
 import com.github.dbourdette.glass.history.History;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
-import org.joda.time.DateTime;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 /**
  * @author damien bourdette
@@ -65,7 +66,7 @@ public class MemoryHistory implements History {
     }
 
     @Override
-    public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query) {
+    public synchronized Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query) {
         List<ExecutionLog> matchingLogs = new ArrayList<ExecutionLog>();
 
         for (ExecutionLog log : logs) {
@@ -75,6 +76,11 @@ public class MemoryHistory implements History {
         }
 
         return getLogs(matchingLogs, query);
+    }
+
+    @Override
+    public synchronized void clear() {
+        logs.clear();
     }
 
     private void addLog(ExecutionLog log) {

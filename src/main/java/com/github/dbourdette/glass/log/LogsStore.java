@@ -28,4 +28,6 @@ public interface LogsStore {
     public Page<Log> getLogs(Long executionId, Query query);
 
     public Page<Log> getLogs(Query query);
+
+    public void clear();
 }

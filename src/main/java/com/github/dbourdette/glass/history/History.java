@@ -16,10 +16,11 @@
 
 package com.github.dbourdette.glass.history;
 
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * History service to store ExecutionLog
@@ -34,4 +35,6 @@ public interface History {
     public Page<ExecutionLog> getLogs(Query query);
 
     public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query);
+
+    public void clear();
 }
