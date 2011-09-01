@@ -60,6 +60,11 @@ public class MemoryLogsStore implements LogsStore {
         }
     }
 
+    @Override
+    public synchronized void clear() {
+        logs.clear();
+    }
+
     private Page<Log> getLogs(List<Log> matchingLogs, Query query) {
         Page<Log> page = Page.fromQuery(query);
 

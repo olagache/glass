@@ -53,5 +53,8 @@
                 </tbody>
             </table>
         </div>
+        <div class="pages">
+            <a href="${root}/logs/clear">clear logs</a>
+        </div>
 	</body>
 </html>

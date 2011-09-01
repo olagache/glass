@@ -17,16 +17,17 @@
 package com.github.dbourdette.glass.log;
 
 import org.apache.commons.lang.StringUtils;
-import com.github.dbourdette.glass.history.ExecutionLog;
-import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
-import com.github.dbourdette.glass.job.util.Spring;
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
+
+import com.github.dbourdette.glass.history.ExecutionLog;
+import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
+import com.github.dbourdette.glass.job.util.Spring;
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * Sends logs to log store and through slf4j.
@@ -130,6 +131,10 @@ public class Logs {
 
     public Page<Log> getLogs(Query query) {
         return logsStore.getLogs(query);
+    }
+
+    public void clear() {
+        logsStore.clear();
     }
 
     private void log(LogLevel level, String message) {
