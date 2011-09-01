@@ -86,7 +86,7 @@ x be able to keep logs and history in memory but having jobs in db
 x build and deploy glass-test project using snapshot repo
 v 0.1-beta6 - bugs
 x log message : CLOB
-- reference : template = com/github/dbourdette/glass/velocity/logs.vm [line 45,column 56] : $format.html($log.rootCause) is not a valid reference.
+x reference : template = com/github/dbourdette/glass/velocity/logs.vm [line 45,column 56] : $format.html($log.rootCause) is not a valid reference.
 - clear logs button in logs
 - clear history button in logs
 - stacktrace with wrong colspan in logs (and somewhere else ?)
