@@ -84,7 +84,12 @@ x logLevel parameter for all jobs (default is WARN)
 x org.glass -> com.github.dbourdette.glass
 x be able to keep logs and history in memory but having jobs in db
 x build and deploy glass-test project using snapshot repo
-v 0.1-beta6 - selenium
+v 0.1-beta6 - bugs
+x log message : CLOB
+- reference : template = com/github/dbourdette/glass/velocity/logs.vm [line 45,column 56] : $format.html($log.rootCause) is not a valid reference.
+- clear logs button in logs
+- clear history button in logs
+- stacktrace with wrong colspan in logs (and somewhere else ?)
 - better table formatting (center dates, status...)
 - version number in footer
 - logs and history in db for jdbc stores (mysql)
@@ -93,10 +98,11 @@ v 0.1-beta6 - selenium
 - trigger stays in list if he misfires and produces no run history
 - release using http://www.sonatype.com/people/2009/09/maven-tips-and-tricks-using-github/ then publish to cloudbeeswith webdav ?
 - see only running jobs in history
-- selenium tests
 v 0.1-beta7 - documentation
 - documentation on gh-pages
 - include a NOTICE for apache licence
+v 0.1-beta7 - selenium
+- selenium tests
 
 v 0.2 - smooth
 - remove apache commons lang
