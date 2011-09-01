@@ -45,7 +45,7 @@
                                 #end
                             </td>
                             <td>$!log.jobClass</td>
-                            <td><a href="$root/logs/$log.id">logs</a></td>
+                            <td style="text-align: center;"><a href="$root/logs/$log.id">logs</a></td>
                         </tr>
                         <tr>
                             <td colspan="7">

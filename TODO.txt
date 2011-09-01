@@ -90,7 +90,7 @@ x reference : template = com/github/dbourdette/glass/velocity/logs.vm [line 45,c
 x stacktrace with wrong colspan in logs (and somewhere else ?)
 x clear logs button in logs
 x clear history button in logs
-- better table formatting (center dates, status...)
+x better table formatting (center dates, status...)
 - version number in footer
 - logs and history in db for jdbc stores (mysql)
 - query form for history page (job, trigger...)
@@ -101,7 +101,7 @@ x clear history button in logs
 v 0.1-beta7 - documentation
 - documentation on gh-pages
 - include a NOTICE for apache licence
-v 0.1-beta7 - selenium
+v 0.1-beta8 - selenium
 - selenium tests
 
 v 0.2 - smooth
