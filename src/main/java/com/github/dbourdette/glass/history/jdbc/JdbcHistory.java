@@ -23,11 +23,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.history.ExecutionLog;
-import com.github.dbourdette.glass.history.History;
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -35,6 +30,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+
+import com.github.dbourdette.glass.configuration.Configuration;
+import com.github.dbourdette.glass.history.ExecutionLog;
+import com.github.dbourdette.glass.history.History;
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
@@ -50,7 +51,7 @@ public class JdbcHistory implements History {
     }
 
     @Override
-    public synchronized ExecutionLog jobStarts(JobExecutionContext context) {
+    public ExecutionLog jobStarts(JobExecutionContext context) {
         ExecutionLog log = new ExecutionLog();
 
         log.fillWithContext(context);
@@ -78,7 +79,7 @@ public class JdbcHistory implements History {
     }
 
     @Override
-    public synchronized void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
+    public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
         String sql = "update " + configuration.getTablePrefix() + "execution_log" +
                 " set endDate = :endDate, ended = :ended, success = :success where id = :id";
 
@@ -92,7 +93,7 @@ public class JdbcHistory implements History {
     }
 
     @Override
-    public synchronized Page<ExecutionLog> getLogs(Query query) {
+    public Page<ExecutionLog> getLogs(Query query) {
         String sql = "from " + configuration.getTablePrefix() + "execution_log";
 
         return getLogs(sql, new MapSqlParameterSource(), query);
@@ -107,6 +108,13 @@ public class JdbcHistory implements History {
                 .addValue("jobName", jobName);
 
         return getLogs(sql, source, query);
+    }
+
+    @Override
+    public synchronized void clear() {
+        String sql = "truncate " + configuration.getTablePrefix() + "log";
+
+        jdbcTemplate.getJdbcOperations().execute(sql);
     }
 
     private Page<ExecutionLog> getLogs(String sqlBase, SqlParameterSource params, Query query) {

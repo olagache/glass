@@ -18,13 +18,15 @@ package com.github.dbourdette.glass.web.controller;
 
 import javax.inject.Inject;
 
-import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.util.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.github.dbourdette.glass.configuration.Configuration;
+import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
@@ -33,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LogsController {
     @Inject
     protected Logs logs;
+
+    @Inject
+    protected Configuration configuration;
 
     @RequestMapping("/logs")
     public String logs(@RequestParam(defaultValue = "0") int index, Model model) {
@@ -47,5 +52,12 @@ public class LogsController {
         model.addAttribute("page", logs.getLogs(executionId, Query.oneBasedIndex(index)));
 
         return "logs";
+    }
+
+    @RequestMapping("/logs/clear")
+    public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
+        logs.clear();
+
+        return "redirect:" + configuration.getRoot() + "/logs";
     }
 }

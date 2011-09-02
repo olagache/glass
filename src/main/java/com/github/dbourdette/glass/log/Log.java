@@ -18,7 +18,9 @@ package com.github.dbourdette.glass.log;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+
 import com.github.dbourdette.glass.history.ExecutionLog;
 import com.github.dbourdette.glass.util.Dates;
 
@@ -76,6 +78,14 @@ public class Log {
 
         log.stackTrace = ExceptionUtils.getFullStackTrace(e);
         log.rootCause = ExceptionUtils.getMessage(ExceptionUtils.getRootCause(e));
+
+        if (StringUtils.isEmpty(log.rootCause)) {
+            log.rootCause = ExceptionUtils.getMessage(e);
+        }
+
+        if (StringUtils.isEmpty(log.rootCause)) {
+            log.rootCause = "no message";
+        }
 
         return log;
     }

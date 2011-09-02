@@ -22,16 +22,17 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.log.Log;
 import com.github.dbourdette.glass.log.LogLevel;
 import com.github.dbourdette.glass.log.LogsStore;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 /**
  * @author damien bourdette
@@ -82,6 +83,13 @@ public class JdbcLogsStore implements LogsStore {
         SqlParameterSource source = new MapSqlParameterSource().addValue("executionId", executionId);
 
         return getLogs(sql, source, query);
+    }
+
+    @Override
+    public synchronized void clear() {
+        String sql = "truncate " + configuration.getTablePrefix() + "log";
+
+        jdbcTemplate.getJdbcOperations().execute(sql);
     }
 
     private Page<Log> getLogs(String sqlBase, SqlParameterSource params, Query query) {

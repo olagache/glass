@@ -30,7 +30,7 @@ CREATE TABLE glass_log
     jobName VARCHAR(200) NOT NULL,
     triggerGroup VARCHAR(200) NOT NULL,
     triggerName VARCHAR(200) NOT NULL,
-    message VARCHAR(255),
+    message CLOB,
     stackTrace CLOB,
     rootCause VARCHAR(500)
 );
