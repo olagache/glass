@@ -1,0 +1,4 @@
+application.name=${project.name}
+application.version=${project.version}
+compilation.date=${project.timestamp}
+compilation.user=${user.name}
