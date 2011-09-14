@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import com.github.dbourdette.glass.configuration.Configuration;
+import com.github.dbourdette.glass.configuration.Version;
 import com.github.dbourdette.glass.tools.FormatTool;
 import com.github.dbourdette.glass.tools.UtilsTool;
 import org.quartz.Scheduler;
@@ -38,6 +39,9 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
 
     @Inject
     private Configuration configuration;
+
+    @Inject
+    private Version version;
 
     private UtilsTool utilsTool = new UtilsTool();
 
@@ -59,5 +63,6 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
         model.addAttribute("root", configuration.getRoot());
         model.addAttribute("utils", utilsTool);
         model.addAttribute("format", formatTool);
+        model.addAttribute("version", version);
     }
 }

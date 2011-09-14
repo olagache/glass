@@ -203,7 +203,7 @@
                 <inherited>true</inherited>
                 <configuration>
                     <propertyName>project.timestamp</propertyName>
-                    <timestampPattern>yyyy-MM-dd_HH:mm.ss</timestampPattern>
+                    <timestampPattern>yyyyMMdd_HHmmss</timestampPattern>
                 </configuration>
                 <executions>
                     <execution>
