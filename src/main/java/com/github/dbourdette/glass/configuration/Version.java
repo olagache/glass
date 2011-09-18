@@ -16,19 +16,19 @@
 
 package com.github.dbourdette.glass.configuration;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author olivier lagache
@@ -43,35 +43,24 @@ public class Version {
     private static final Logger LOG = LoggerFactory.getLogger(Version.class);
 
     private String applicationVersion;
+
     private Date compilationDate;
 
     @PostConstruct
-    public void initialize() {
+    public void initialize() throws IOException, ParseException {
         Properties properties = new Properties();
+
         InputStream propertyStream = getClass().getResourceAsStream("/version.txt");
+        properties.load(propertyStream);
+        propertyStream.close();
 
-        if (propertyStream == null) {
-            return;
+        applicationVersion = properties.getProperty(APPLICATION_VERSION_NAME);
+
+        String compilationDateAsString = properties.getProperty(COMPILATION_DATE_NAME);
+
+        if (StringUtils.isNotEmpty(compilationDateAsString)) {
+            compilationDate = new SimpleDateFormat(COMPILATION_DATE_FORMAT).parse(compilationDateAsString);
         }
-
-        try {
-            properties.load(propertyStream);
-
-            applicationVersion = properties.getProperty(APPLICATION_VERSION_NAME);
-
-            String compilationDateAsString = properties.getProperty(COMPILATION_DATE_NAME);
-            if (StringUtils.isNotEmpty(compilationDateAsString)) {
-                SimpleDateFormat sdf = new SimpleDateFormat(COMPILATION_DATE_FORMAT);
-                compilationDate = sdf.parse(compilationDateAsString);
-            }
-
-            propertyStream.close();
-        } catch (IOException e) {
-            LOG.warn("Enable to find version.txt file !");
-        } catch (ParseException e) {
-            LOG.warn("Enable to parse date from version.txt file !");
-        }
-
     }
 
     public Date getCompilationDate() {
