@@ -41,6 +41,8 @@ import com.github.dbourdette.glass.util.Query;
  * @author damien bourdette
  */
 public class JdbcHistory implements History {
+    private static final String TABLE_SUFFIX = "execution_log";
+
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private Configuration configuration;
@@ -80,8 +82,7 @@ public class JdbcHistory implements History {
 
     @Override
     public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
-        String sql = "update " + configuration.getTablePrefix() + "execution_log" +
-                " set endDate = :endDate, ended = :ended, success = :success where id = :id";
+        String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, success = :success where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("endDate", new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate())
@@ -94,7 +95,7 @@ public class JdbcHistory implements History {
 
     @Override
     public Page<ExecutionLog> getLogs(Query query) {
-        String sql = "from " + configuration.getTablePrefix() + "execution_log";
+        String sql = "from " + getTableName();
 
         return getLogs(sql, new MapSqlParameterSource(), query);
     }
@@ -112,7 +113,7 @@ public class JdbcHistory implements History {
 
     @Override
     public synchronized void clear() {
-        String sql = "truncate " + configuration.getTablePrefix() + "log";
+        String sql = "truncate table " + getTableName();
 
         jdbcTemplate.getJdbcOperations().execute(sql);
     }
@@ -153,5 +154,9 @@ public class JdbcHistory implements History {
 
     private Long nextId() {
         return jdbcTemplate.queryForLong("select " + configuration.getTablePrefix() + "sequence.nextval from dual", new HashMap<String, Object>());
+    }
+
+    private String getTableName() {
+        return configuration.getTablePrefix() + TABLE_SUFFIX;
     }
 }

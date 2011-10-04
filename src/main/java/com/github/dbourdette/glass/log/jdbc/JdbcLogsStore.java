@@ -38,6 +38,8 @@ import com.github.dbourdette.glass.util.Query;
  * @author damien bourdette
  */
 public class JdbcLogsStore implements LogsStore {
+    private static final String TABLE_SUFFIX = "log";
+
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private Configuration configuration;
@@ -49,7 +51,7 @@ public class JdbcLogsStore implements LogsStore {
 
     @Override
     public void add(Log log) {
-        String sql = "insert into " + configuration.getTablePrefix() + "log" +
+        String sql = "insert into " + getTableName() +
                 " (id, executionId, logLevel, logDate, jobClass, jobGroup, jobName, triggerGroup, triggerName, message, stackTrace, rootCause)" +
                 " values (" + configuration.getTablePrefix() + "sequence.nextval, :executionId, :logLevel, :logDate, :jobClass, :jobGroup, :jobName, :triggerGroup, :triggerName, :message, :stackTrace, :rootCause)";
 
@@ -71,7 +73,7 @@ public class JdbcLogsStore implements LogsStore {
 
     @Override
     public Page<Log> getLogs(Query query) {
-        String sql = "from " + configuration.getTablePrefix() + "log";
+        String sql = "from " + getTableName();
 
         return getLogs(sql, new MapSqlParameterSource(), query);
     }
@@ -87,7 +89,7 @@ public class JdbcLogsStore implements LogsStore {
 
     @Override
     public synchronized void clear() {
-        String sql = "truncate " + configuration.getTablePrefix() + "log";
+        String sql = "truncate table " + getTableName();
 
         jdbcTemplate.getJdbcOperations().execute(sql);
     }
@@ -124,5 +126,9 @@ public class JdbcLogsStore implements LogsStore {
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));
 
         return page;
+    }
+
+    private String getTableName() {
+        return configuration.getTablePrefix() + TABLE_SUFFIX;
     }
 }
