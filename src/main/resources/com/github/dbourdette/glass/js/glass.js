@@ -19,14 +19,14 @@ var SERVICE_URL = '/glass/jobs/description';
 /**
  * Proposes a job name.
  */
-function proposeJobName(class) {
-    if (class == '' && class.indexOf('.') == -1) {
+function proposeJobName(clazz) {
+    if (clazz == '' && clazz.indexOf('.') == -1) {
         $('#nameProposal').text("");
 
         return;
     }
 
-    var name = class.substring(class.lastIndexOf('.') + 1, class.length);
+    var name = clazz.substring(clazz.lastIndexOf('.') + 1, clazz.length);
 
     $('#nameProposal').text("maybe " + name + " ?");
 }
@@ -35,17 +35,17 @@ function proposeJobName(class) {
  * Displays description and job arguments for given class
  */
 onJobSelected = function() {
-    var class = $("#clazz").val();
+    var clazz = $("#clazz").val();
 
-    proposeJobName(class);
+    proposeJobName(clazz);
 
-    if (class == null) {
+    if (clazz == null) {
         $("#arguments").empty();
 
         return;
     }
 
-    $.getJSON(SERVICE_URL, {"className": class}, function(job) {
+    $.getJSON(SERVICE_URL, {"className": clazz}, function(job) {
         $("#description").text(job.description);
         $("#disallowConcurrentExecution").text(job.disallowConcurrentExecution);
         $("#persistJobDataAfterExecution").text(job.persistJobDataAfterExecution);
