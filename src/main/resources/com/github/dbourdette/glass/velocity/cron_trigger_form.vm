@@ -66,5 +66,7 @@
         #parse("com/github/dbourdette/glass/velocity/widgets/args.vm")
 
         #parse("com/github/dbourdette/glass/velocity/widgets/cron_doc.vm")
+
+        #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")
     </body>
 </html>

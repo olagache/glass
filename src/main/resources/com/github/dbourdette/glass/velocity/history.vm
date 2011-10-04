@@ -60,5 +60,7 @@
         <div class="pages">
             <a href="${root}/history/clear">clear logs</a>
         </div>
+
+        #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")
 	</body>
 </html>

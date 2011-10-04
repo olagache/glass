@@ -32,5 +32,7 @@
                 </tbody>
             </table>
         </div>
+
+        #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")
 	</body>
 </html>

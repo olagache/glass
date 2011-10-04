@@ -1,7 +1,12 @@
+# --- Eclipse Files
 .project
 .classpath
 .settings
+# --- Maven
 target
+# --- IntelliJ IDEA
 bin
 *.iml
 *.log
+# --- JREBEL
+*.error
