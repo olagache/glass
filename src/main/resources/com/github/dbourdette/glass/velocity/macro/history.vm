@@ -1,0 +1,49 @@
+#macro (history $title $items)
+    <h1><span>$title</span></h1>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Execution id</th>
+                    <th>Job group / name</th>
+                    <th>Trigger group / name</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Job class</th>
+                    <th>Logs</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach ($log in $items)
+                    #if ($log.ended && !$log.success)
+                        <tr class="ERROR">
+                    #else
+                        <tr>
+                    #end
+                        <td style="text-align: center;">${log.id}</td>
+                        <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
+                        <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
+                        <td style="text-align: center;">$!format.date(${log.startDate})</td>
+                        <td style="text-align: center;">
+                            #if ($log.ended)
+                                $!format.date(${log.endDate})
+                                #if (!$log.success)
+                                   <span style="color: red;">failed</span>
+                                #end
+                            #else
+                                <span style="color: red;">running</span>
+                            #end
+                        </td>
+                        <td>$!log.jobClass</td>
+                        <td style="text-align: center;"><a href="$root/logs/$log.id">logs</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">
+                            <span class="code">$!format.dataMap($log.dataMap)</span>
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+#end

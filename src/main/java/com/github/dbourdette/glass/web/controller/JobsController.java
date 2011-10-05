@@ -25,9 +25,12 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import com.github.dbourdette.glass.configuration.Configuration;
+import com.github.dbourdette.glass.history.History;
 import com.github.dbourdette.glass.job.annotation.JobBean;
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
+import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.util.Query;
 import com.github.dbourdette.glass.web.form.JobForm;
 import com.github.dbourdette.glass.web.form.NewJobForm;
 import com.github.dbourdette.glass.web.util.JobPathScanner;
@@ -64,6 +67,12 @@ public class JobsController {
 
     @Inject
     protected JobPathScanner jobPathScanner;
+
+    @Inject
+    protected History history;
+
+    @Inject
+    protected Logs logs;
 
     @RequestMapping("/jobs")
     public String jobs(Model model) throws SchedulerException {
@@ -105,6 +114,8 @@ public class JobsController {
         List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(job.getKey());
 
         model.addAttribute("triggers", TriggerWrapperForView.fromList(triggers, runningJobs));
+
+        model.addAttribute("history", history.getLogs(group, name, Query.index(0).withSize(5)));
 
         return "job";
     }

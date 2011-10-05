@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+#parse("com/github/dbourdette/glass/velocity/macro/macros.vm")
+
 <html>
 	<head>
 		#parse("com/github/dbourdette/glass/velocity/widgets/head.vm")
@@ -100,6 +102,8 @@
                 </tbody>
             </table>
         </div>
+
+        #history("Recent run history" $history.items)
 
         #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")
 	</body>
