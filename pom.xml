@@ -38,9 +38,9 @@
     </licenses>
 
     <scm>
-        <url>scm:git:git@github.com:dbourdette/glass.git</url>
-        <connection>scm:git:git@github.com:dbourdette/glass.git</connection>
-        <developerConnection>scm:git:git@github.com:dbourdette/glass.git</developerConnection>
+        <url>scm:git:git://github.com/dbourdette/glass.git</url>
+        <connection>scm:git:git://github.com/dbourdette/glass.git</connection>
+        <developerConnection>scm:git:git://github.com/dbourdette/glass.git</developerConnection>
     </scm>
 
     <developers>
