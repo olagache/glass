@@ -16,16 +16,17 @@
 
 package com.github.dbourdette.glass.configuration;
 
-import junit.framework.TestCase;
+import java.text.SimpleDateFormat;
+
+import javax.inject.Inject;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.inject.Inject;
-import java.text.SimpleDateFormat;
+import junit.framework.TestCase;
 
 
 /**
@@ -40,7 +41,6 @@ public class VersionTest extends TestCase {
 
     @Inject
     private Version version;
-
 
     @Test
     public void testGetCompilationDate() throws Exception {
