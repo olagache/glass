@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-var SERVICE_URL = '/glass/jobs/description';
+var SERVICE_URL = '/glass/jsapi/jobs/description';
+var LOGS_SERVICE_URL = '/glass/jsapi/logs';
 
 /**
  * Proposes a job name.
@@ -75,13 +76,38 @@ onJobSelected = function() {
     });
 }
 
-swapStacktrace = function(link, target) {
-    if (link.text == "see stacktrace") {
-        target.show(1000);
-        $(link).text("hide stacktrace");
-    } else {
-        target.hide(1000);
-        $(link).text("see stacktrace");
-    }
+showLogs = function(executionId) {
+    $.getJSON(LOGS_SERVICE_URL, {"executionId": executionId}, function(logs) {
+        $("#logs-" + executionId + "-link").hide();
+        $("#logs-" + executionId).show(500);
+
+        var htmlBuilder = "";
+
+        $(logs).each(function(index, log) {
+            htmlBuilder += log.formattedDate;
+            htmlBuilder += " ";
+            htmlBuilder += "<span class=\"" + log.level + "\">" + log.level + "</span>";
+            htmlBuilder += " ";
+            htmlBuilder += log.message;
+
+            if (log.stackTrace != null) {
+                htmlBuilder += " ";
+                htmlBuilder += "<a href=\"#\" onclick=\"viewStackTrace(" + executionId + ")\">view stacktrace</a>";
+                htmlBuilder += "<span id=\"logs-" + executionId + "-stacktrace\" style=\"display:none;\">" + log.formattedStackTrace + "</span>";
+            }
+
+            htmlBuilder += "<br>";
+        });
+
+        $("#logs-" + executionId).html(htmlBuilder);
+    });
+}
+
+viewStackTrace = function(executionId) {
+    var stackTrace = $("#logs-" + executionId + "-stacktrace").html();
+
+    var popup = window.open('','stacktrace-' + executionId, 'width=800,height=800');
+
+    popup.document.documentElement.innerHTML = stackTrace;
 }
 

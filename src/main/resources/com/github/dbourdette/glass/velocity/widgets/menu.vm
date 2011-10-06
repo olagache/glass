@@ -7,7 +7,6 @@
         <li><a href="$root/jobs/new">add job</a></li>
     </ul>
     <ul class="jobs">
-        <li><a href="$root/history">run history</a></li>
         <li><a href="$root/logs">logs</a></li>
         <li><a href="$root/configuration">configuration</a></li>
     </ul>

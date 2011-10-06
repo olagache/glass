@@ -18,10 +18,12 @@ package com.github.dbourdette.glass.log;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 import com.github.dbourdette.glass.history.ExecutionLog;
+import com.github.dbourdette.glass.tools.FormatTool;
 import com.github.dbourdette.glass.util.Dates;
 
 /**
@@ -102,12 +104,25 @@ public class Log {
         return Dates.copy(date);
     }
 
+    public String getFormattedDate() {
+        return FormatTool.formatDate(date);
+    }
+
     public String getMessage() {
         return message;
     }
 
     public String getStackTrace() {
         return stackTrace;
+    }
+
+    public String getFormattedStackTrace() {
+        String html = StringEscapeUtils.escapeHtml(stackTrace);
+
+        html = StringUtils.replace(html, "\n", "<br/>");
+        html = StringUtils.replace(html, "\t", "&nbsp;&nbsp;&nbsp;");
+
+        return html;
     }
 
     public String getRootCause() {

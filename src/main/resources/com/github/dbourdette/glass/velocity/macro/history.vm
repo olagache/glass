@@ -4,13 +4,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Execution id</th>
                     <th>Job group / name</th>
                     <th>Trigger group / name</th>
                     <th>Start</th>
                     <th>End</th>
                     <th>Job class</th>
-                    <th>Logs</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +18,6 @@
                     #else
                         <tr>
                     #end
-                        <td style="text-align: center;">${log.id}</td>
                         <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
                         <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
                         <td style="text-align: center;">$!format.date(${log.startDate})</td>
@@ -35,11 +32,18 @@
                             #end
                         </td>
                         <td>$!log.jobClass</td>
-                        <td style="text-align: center;"><a href="$root/logs/$log.id">logs</a></td>
                     </tr>
                     <tr>
                         <td colspan="7">
-                            <span class="code">$!format.dataMap($log.dataMap)</span>
+                            <div class="innertab-title">arguments</div>
+                            <div class="code innertab-content">$!format.dataMap($log.dataMap)</div>
+                            <div class="innertab-title">logs</div>
+                            <div class="innertab-content">
+                                <a href="#" id="logs-${log.id}-link" onclick="showLogs('$log.id');">view logs</a>
+                                <div id="logs-$log.id" style="display:none">
+                                    reading logs...
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 #end

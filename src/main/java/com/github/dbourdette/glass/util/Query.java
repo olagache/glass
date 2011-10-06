@@ -57,6 +57,10 @@ public class Query {
         return index(index - 1);
     }
 
+    public static Query firstPage() {
+        return index(0);
+    }
+
     public Query withSize(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("size must be stricly positive");

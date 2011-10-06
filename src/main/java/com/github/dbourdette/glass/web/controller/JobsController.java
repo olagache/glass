@@ -190,24 +190,6 @@ public class JobsController {
         return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
     }
 
-    /**
-     * Gets job description for a job class.
-     * Used as a js service from pages.
-     */
-    @RequestMapping("/jobs/description")
-    @ResponseBody
-    public JobBean description(String className) {
-        if (StringUtils.isEmpty(className)) {
-            return null;
-        }
-
-        try {
-            return JobBean.fromClass(Class.forName(className));
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
-    }
-
     private String form(Model model, NewJobForm form) {
         List<Class<?>> jobClasses = new ArrayList<Class<?>>();
 
