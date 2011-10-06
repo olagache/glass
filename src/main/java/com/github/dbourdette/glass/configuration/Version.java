@@ -50,7 +50,7 @@ public class Version {
     public void initialize() throws IOException, ParseException {
         Properties properties = new Properties();
 
-        InputStream propertyStream = getClass().getResourceAsStream("/version.txt");
+        InputStream propertyStream = getClass().getResourceAsStream("/glass-version.txt");
         properties.load(propertyStream);
         propertyStream.close();
 
