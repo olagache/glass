@@ -14,7 +14,7 @@
         #history("Run history" $page.items)
 
         <div class="pages">
-            <a href="${root}/history/clear">clear history</a>
+            <a href="${root}/logs/clear">clear history</a>
         </div>
 
         #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")
