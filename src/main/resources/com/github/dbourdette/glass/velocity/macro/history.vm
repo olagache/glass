@@ -1,5 +1,5 @@
-#macro (history $title $items)
-    <h1><span>$title</span></h1>
+#macro (history $heading $title $items)
+    <$heading><span>$title</span></$heading>
     <div class="table">
         <table>
             <thead>
