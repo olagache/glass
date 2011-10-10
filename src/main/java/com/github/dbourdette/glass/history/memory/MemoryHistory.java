@@ -54,10 +54,10 @@ public class MemoryHistory implements History {
     }
 
     @Override
-    public synchronized void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
+    public synchronized void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success) {
         log.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
         log.setEnded(true);
-        log.setSuccess(exception == null);
+        log.setSuccess(success);
     }
 
     @Override

@@ -17,7 +17,6 @@
 package com.github.dbourdette.glass.history;
 
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
@@ -30,7 +29,7 @@ import com.github.dbourdette.glass.util.Query;
 public interface History {
     public ExecutionLog jobStarts(JobExecutionContext context);
 
-    public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception);
+    public void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success);
 
     public Page<ExecutionLog> getLogs(Query query);
 

@@ -16,6 +16,8 @@
 
 package com.github.dbourdette.glass.log;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -123,6 +125,10 @@ public class Logs {
         log(LogLevel.ERROR, message, throwable);
 
         LOGGER.error(message, throwable);
+    }
+
+    public List<Log> getLogs(Long executionId) {
+        return logsStore.getLogs(executionId);
     }
 
     public Page<Log> getLogs(Long executionId, Query query) {

@@ -16,14 +16,15 @@
 
 package com.github.dbourdette.glass.job.dummy;
 
-import com.github.dbourdette.glass.job.annotation.Job;
-import com.github.dbourdette.glass.job.annotation.JobArgument;
-import com.github.dbourdette.glass.log.Logs;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
+
+import com.github.dbourdette.glass.job.annotation.Job;
+import com.github.dbourdette.glass.job.annotation.JobArgument;
+import com.github.dbourdette.glass.log.Logs;
 
 /**
  * A dummy quartz job for testing purposes.

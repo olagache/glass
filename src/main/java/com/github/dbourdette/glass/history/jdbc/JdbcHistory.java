@@ -81,13 +81,13 @@ public class JdbcHistory implements History {
     }
 
     @Override
-    public void jobEnds(ExecutionLog log, JobExecutionContext context, JobExecutionException exception) {
+    public void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success) {
         String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, success = :success where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("endDate", new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate())
                 .addValue("ended", true)
-                .addValue("success", exception == null)
+                .addValue("success", success)
                 .addValue("id", log.getId());
 
         jdbcTemplate.update(sql, params);

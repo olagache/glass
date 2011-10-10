@@ -16,6 +16,8 @@
 
 package com.github.dbourdette.glass.log;
 
+import java.util.List;
+
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
@@ -28,6 +30,8 @@ public interface LogsStore {
     public Page<Log> getLogs(Long executionId, Query query);
 
     public Page<Log> getLogs(Query query);
+
+    public List<Log> getLogs(Long executionId);
 
     public void clear();
 }

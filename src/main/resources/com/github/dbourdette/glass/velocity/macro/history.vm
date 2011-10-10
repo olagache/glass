@@ -13,13 +13,17 @@
             </thead>
             <tbody>
                 #foreach ($log in $items)
-                    #if ($log.ended && !$log.success)
-                        <tr class="ERROR">
-                    #else
-                        <tr>
-                    #end
-                        <td><a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">$format.html($log.jobGroup) / $format.html($log.jobName)</a></td>
-                        <td>$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
+                    <tr>
+                        <td style="text-align: center">
+                            <a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">
+                                #if ($log.ended && !$log.success)
+                                    <span class="ERROR">$format.html($log.jobGroup) / $format.html($log.jobName)</span>
+                                #else
+                                    $format.html($log.jobGroup) / $format.html($log.jobName)
+                                #end
+                            </a>
+                        </td>
+                        <td style="text-align: center">$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
                         <td style="text-align: center;">$!format.date(${log.startDate})</td>
                         <td style="text-align: center;">
                             #if ($log.ended)

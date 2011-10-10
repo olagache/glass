@@ -88,6 +88,15 @@ public class JdbcLogsStore implements LogsStore {
     }
 
     @Override
+    public List<Log> getLogs(Long executionId) {
+        String sql = "from " + configuration.getTablePrefix() + "log where executionId = :executionId";
+
+        SqlParameterSource source = new MapSqlParameterSource().addValue("executionId", executionId);
+
+        return getLogs(sql, source);
+    }
+
+    @Override
     public synchronized void clear() {
         String sql = "truncate table " + getTableName();
 
@@ -100,21 +109,7 @@ public class JdbcLogsStore implements LogsStore {
         List<Log> logs = jdbcTemplate.query(sql, params, new RowMapper<Log>() {
             @Override
             public Log mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Log log = new Log();
-
-                log.setExecutionId(rs.getLong("executionId"));
-                log.setLevel(LogLevel.valueOf(rs.getString("logLevel")));
-                log.setDate(rs.getTimestamp("logDate"));
-                log.setJobClass(rs.getString("jobClass"));
-                log.setJobGroup(rs.getString("jobGroup"));
-                log.setJobName(rs.getString("jobName"));
-                log.setTriggerGroup(rs.getString("triggerGroup"));
-                log.setTriggerName(rs.getString("triggerName"));
-                log.setMessage(rs.getString("message"));
-                log.setStackTrace(rs.getString("stackTrace"));
-                log.setRootCause(rs.getString("rootCause"));
-
-                return log;
+                return mapRow(rs, rowNum);
             }
         });
 
@@ -126,6 +121,35 @@ public class JdbcLogsStore implements LogsStore {
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));
 
         return page;
+    }
+
+    private List<Log> getLogs(String sqlBase, SqlParameterSource params) {
+        String sql = "select * " + sqlBase + " order by logDate desc";
+
+        return jdbcTemplate.query(sql, params, new RowMapper<Log>() {
+            @Override
+            public Log mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return mapRow(rs, rowNum);
+            }
+        });
+    }
+
+    private Log mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Log log = new Log();
+
+        log.setExecutionId(rs.getLong("executionId"));
+        log.setLevel(LogLevel.valueOf(rs.getString("logLevel")));
+        log.setDate(rs.getTimestamp("logDate"));
+        log.setJobClass(rs.getString("jobClass"));
+        log.setJobGroup(rs.getString("jobGroup"));
+        log.setJobName(rs.getString("jobName"));
+        log.setTriggerGroup(rs.getString("triggerGroup"));
+        log.setTriggerName(rs.getString("triggerName"));
+        log.setMessage(rs.getString("message"));
+        log.setStackTrace(rs.getString("stackTrace"));
+        log.setRootCause(rs.getString("rootCause"));
+
+        return log;
     }
 
     private String getTableName() {
