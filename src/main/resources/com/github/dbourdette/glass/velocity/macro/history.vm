@@ -39,7 +39,7 @@
                             <div class="code innertab-content">$!format.dataMap($log.dataMap)</div>
                             <div class="innertab-title">logs</div>
                             <div class="innertab-content">
-                                <a href="#" id="logs-${log.id}-link" onclick="showLogs('$log.id');">view logs</a>
+                                <a href="#logs-${log.id}-link" id="logs-${log.id}-link" onclick="showLogs('$log.id');return false;">view logs</a>
                                 <div id="logs-$log.id" style="display:none">
                                     reading logs...
                                 </div>
