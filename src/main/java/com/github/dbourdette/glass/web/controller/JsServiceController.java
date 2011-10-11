@@ -16,18 +16,19 @@
 
 package com.github.dbourdette.glass.web.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.dbourdette.glass.job.annotation.JobBean;
-import com.github.dbourdette.glass.log.log.Log;
 import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
@@ -55,9 +56,9 @@ public class JsServiceController {
         }
     }
 
-    @RequestMapping("/jsapi/logs")
+    @RequestMapping("/jsapi/traces")
     @ResponseBody
-    public List<Log> logs(Long executionId) {
-        return logs.getLogs(executionId);
+    public Page<Log> traces(@RequestParam Long executionId, @RequestParam(defaultValue = "1") Integer page) {
+        return logs.getLogs(executionId, Query.oneBasedIndex(page).withSize(LogsController.PAGE_SIZE));
     }
 }

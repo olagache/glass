@@ -44,6 +44,11 @@ public class DummyJob implements InterruptableJob {
 
         Logs.getLogs(context).info("Running dummy job for {} seconds", duration);
 
+        for (int i = 0; i < 500; i++) {
+            Logs.getLogs(context).error("Running dummy job for {} seconds", duration);
+            Logs.getLogs(context).error("Running dummy job for seconds", new IllegalArgumentException("youhou " + i));
+        }
+
         try {
             Thread.sleep(duration * 1000);
         } catch (InterruptedException e) {

@@ -23,10 +23,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
@@ -34,6 +37,8 @@ import com.github.dbourdette.glass.util.Query;
  */
 @Controller
 public class LogsController {
+    public static final int PAGE_SIZE = 100;
+
     @Inject
     protected Executions executions;
 
@@ -51,7 +56,7 @@ public class LogsController {
     }
 
     @RequestMapping("/logs/{jobGroup}/{jobName}")
-    public String logs(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "0") int index, Model model) {
+    public String logs(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "1") int index, Model model) {
         model.addAttribute("page", executions.find(jobGroup, jobName, Query.oneBasedIndex(index)));
 
         return "logs";
@@ -63,5 +68,12 @@ public class LogsController {
         executions.clear();
 
         return "redirect:" + configuration.getRoot() + "/logs";
+    }
+
+    @RequestMapping("/traces/{executionId}")
+    public String traces(@PathVariable Long executionId, @RequestParam(defaultValue = "1") Integer index, Model model) {
+        model.addAttribute("page", logs.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
+
+        return "traces";
     }
 }

@@ -17,7 +17,6 @@
 package com.github.dbourdette.glass.log.log.memory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.github.dbourdette.glass.log.log.Log;
@@ -52,19 +51,6 @@ public class MemoryLogsStore implements LogsStore {
     }
 
     @Override
-    public synchronized List<Log> getLogs(Long executionId) {
-        List<Log> matchingLogs = new ArrayList<Log>();
-
-        for (Log log : logs) {
-            if (executionId.equals(log.getExecutionId())) {
-                matchingLogs.add(log);
-            }
-        }
-
-        return matchingLogs;
-    }
-
-    @Override
     public synchronized void add(Log log) {
         logs.add(log);
 
@@ -81,10 +67,7 @@ public class MemoryLogsStore implements LogsStore {
     private Page<Log> getLogs(List<Log> matchingLogs, Query query) {
         Page<Log> page = Page.fromQuery(query);
 
-        List<Log> subList = query.subList(matchingLogs);
-        Collections.reverse(subList);
-
-        page.setItems(subList);
+        page.setItems(query.subList(matchingLogs));
         page.setTotalCount(matchingLogs.size());
 
         return page;

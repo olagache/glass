@@ -31,7 +31,5 @@ public interface LogsStore {
 
     public Page<Log> getLogs(Query query);
 
-    public List<Log> getLogs(Long executionId);
-
     public void clear();
 }

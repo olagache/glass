@@ -15,7 +15,7 @@
  */
 
 var SERVICE_URL = '/glass/jsapi/jobs/description';
-var LOGS_SERVICE_URL = '/glass/jsapi/logs';
+var LOGS_SERVICE_URL = '/glass/jsapi/traces';
 
 /**
  * Proposes a job name.
@@ -77,13 +77,13 @@ onJobSelected = function() {
 }
 
 showLogs = function(executionId) {
-    $.getJSON(LOGS_SERVICE_URL, {"executionId": executionId}, function(logs) {
+    $.getJSON(LOGS_SERVICE_URL, {"executionId": executionId}, function(page) {
         $("#logs-" + executionId + "-link").hide();
-        $("#logs-" + executionId).show(500);
+        $("#logs-" + executionId).show();
 
         var htmlBuilder = "";
 
-        $(logs).each(function(index, log) {
+        $(page.items).each(function(index, log) {
             htmlBuilder += log.formattedDate;
             htmlBuilder += " ";
             htmlBuilder += "<span class=\"" + log.level + "\">" + log.level + "</span>";
@@ -92,22 +92,30 @@ showLogs = function(executionId) {
 
             if (log.stackTrace != null) {
                 htmlBuilder += " ";
-                htmlBuilder += "<a href=\"#\" onclick=\"viewStackTrace(" + executionId + ")\">view stacktrace</a>";
-                htmlBuilder += "<span id=\"logs-" + executionId + "-stacktrace\" style=\"display:none;\">" + log.formattedStackTrace + "</span>";
+                htmlBuilder += "<a href=\"#\" onclick=\"viewStackTrace(" + executionId + "," + index + ");return false;\">view stacktrace</a>";
+                htmlBuilder += "<span id=\"logs-" + executionId + "-" + index + "-stacktrace\" style=\"display:none;\">" + log.formattedStackTrace + "</span>";
             }
 
             htmlBuilder += "<br>";
         });
 
+        if (page.items.length < page.totalCount) {
+            htmlBuilder += "...<br><a href=\"#\" onclick=\"viewLogs(" + executionId + ", 1);return false;\">view all</a>";
+        }
+
         $("#logs-" + executionId).html(htmlBuilder);
     });
 }
 
-viewStackTrace = function(executionId) {
-    var stackTrace = $("#logs-" + executionId + "-stacktrace").html();
+viewStackTrace = function(executionId, index) {
+    var stackTrace = $("#logs-" + executionId + "-" + index + "-stacktrace").html();
 
-    var popup = window.open('','stacktrace-' + executionId, 'width=800,height=800');
+    var popup = window.open('','stacktrace-' + executionId + "-" + index, 'width=1200,height=800');
 
     popup.document.documentElement.innerHTML = stackTrace;
+}
+
+viewLogs = function(executionId, pageIndex) {
+    window.open('/glass/traces/' + executionId,'logs-' + executionId, 'width=1200,height=800');
 }
 

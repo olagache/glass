@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+#parse("com/github/dbourdette/glass/velocity/macro/macros.vm")
+
+<html>
+	<head>
+		#parse("com/github/dbourdette/glass/velocity/widgets/head.vm")
+	</head>
+	<body>
+	    #parse("com/github/dbourdette/glass/velocity/widgets/pages.vm")
+
+        #foreach ($trace in $page.items)
+            $trace.formattedDate <span class="$trace.level">$trace.level</span> $trace.message
+
+            #if ($trace.stackTrace)
+               <a href="#" onclick="viewStackTrace($trace.executionId, $velocityCount);return false;">view stacktrace</a>
+                <span id="logs-${trace.executionId}-${velocityCount}-stacktrace" style="display:none;">$trace.formattedStackTrace</span>
+            #end
+
+            <br>
+        #end
+	</body>
+</html>

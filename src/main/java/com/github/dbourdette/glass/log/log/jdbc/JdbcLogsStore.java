@@ -88,15 +88,6 @@ public class JdbcLogsStore implements LogsStore {
     }
 
     @Override
-    public List<Log> getLogs(Long executionId) {
-        String sql = "from " + configuration.getTablePrefix() + "log where executionId = :executionId";
-
-        SqlParameterSource source = new MapSqlParameterSource().addValue("executionId", executionId);
-
-        return getLogs(sql, source);
-    }
-
-    @Override
     public synchronized void clear() {
         String sql = "truncate table " + getTableName();
 

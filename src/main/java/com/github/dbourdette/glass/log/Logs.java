@@ -132,10 +132,6 @@ public class Logs {
         LOGGER.error(message, throwable);
     }
 
-    public List<Log> getLogs(Long executionId) {
-        return logsStore.getLogs(executionId);
-    }
-
     public Page<Log> getLogs(Long executionId, Query query) {
         return logsStore.getLogs(executionId, query);
     }
