@@ -18,12 +18,12 @@ package com.github.dbourdette.glass.job.types;
 
 import java.util.Date;
 
-import com.github.dbourdette.glass.job.annotation.JobArgument;
-import com.github.dbourdette.glass.log.trace.Traces;
-
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import com.github.dbourdette.glass.job.annotation.JobArgument;
+import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
  * @author damien bourdette
@@ -36,11 +36,11 @@ public class TypesJob implements Job {
     @JobArgument(description = "test for date value")
     private Date dateValue;
 
+    private Traces traces;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        Traces logs = Traces.getLogs(context);
-
-        logs.info("longValue = {}", longValue);
-        logs.info("dateValue = {}", dateValue);
+        traces.info("longValue = {}", longValue);
+        traces.info("dateValue = {}", dateValue);
     }
 }

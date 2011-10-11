@@ -81,7 +81,6 @@ public class GlassJobFactory implements JobFactory {
             accessor = new BeanWrapperImpl(job);
         }
 
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(configuration.getDateFormat());
         CustomDateEditor customDateEditor = new CustomDateEditor(simpleDateFormat, true);
         accessor.registerCustomEditor(Date.class, customDateEditor);

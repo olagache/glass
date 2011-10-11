@@ -38,16 +38,13 @@ public class DummyJob implements InterruptableJob {
 
     private Thread runningThread;
 
+    private Traces traces;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        Traces.getLogs(context).info("Running dummy job for {} seconds", duration);
-
-        for (int i = 0; i < 500; i++) {
-            Traces.getLogs(context).error("Running dummy job for {} seconds", duration);
-            Traces.getLogs(context).error("Running dummy job for seconds", new IllegalArgumentException("youhou " + i));
-        }
+        traces.error("Running dummy job for {} seconds", duration);
 
         try {
             Thread.sleep(duration * 1000);

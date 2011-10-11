@@ -16,12 +16,16 @@
 
 package com.github.dbourdette.glass.log.execution;
 
+import java.lang.reflect.Field;
+
 import javax.inject.Inject;
 
+import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 
 import com.github.dbourdette.glass.log.trace.Traces;
 
@@ -43,9 +47,24 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
+        traces.setContext(context);
+
         Execution execution = executions.jobStarts(context);
 
         execution.setInContext(context);
+
+        final Job job = context.getJobInstance();
+
+        ReflectionUtils.doWithFields(job.getClass(), new ReflectionUtils.FieldCallback() {
+            @Override
+            public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
+                if (field.getType().isAssignableFrom(Traces.class)) {
+                    ReflectionUtils.makeAccessible(field);
+
+                    ReflectionUtils.setField(field, job, traces);
+                }
+            }
+        });
     }
 
     @Override
@@ -59,5 +78,7 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
         }
 
         executions.jobEnds(execution, context);
+
+        traces.setContext(null);
     }
 }

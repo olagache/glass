@@ -23,9 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
-import com.github.dbourdette.glass.log.execution.Execution;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
-import com.github.dbourdette.glass.job.util.Spring;
+import com.github.dbourdette.glass.log.execution.Execution;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
@@ -47,12 +46,8 @@ public class Traces {
         this.traceStore = traceStore;
     }
 
-    public static Traces getLogs(JobExecutionContext context) throws JobExecutionException {
-        Traces traces = Spring.getBean(context, Traces.class);
-
-        traces.localContext.set(context);
-
-        return traces;
+    public void setContext(JobExecutionContext context) {
+        localContext.set(context);
     }
 
     public void debug(String message) {

@@ -135,7 +135,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public Traces logs() throws Exception {
+    public Traces traces() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
             return new Traces(new MemoryTraceStore());
         } else {

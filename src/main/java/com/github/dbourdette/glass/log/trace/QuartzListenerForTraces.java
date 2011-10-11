@@ -20,6 +20,8 @@ import javax.inject.Inject;
 
 import org.quartz.SchedulerException;
 import org.quartz.listeners.SchedulerListenerSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,11 +29,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class QuartzListenerForTraces extends SchedulerListenerSupport {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Traces.class);
+
     @Inject
     private Traces traces;
 
     @Override
     public void schedulerError(String message, SchedulerException cause) {
-        traces.error(message, cause);
+        LOGGER.error(message, cause);
     }
 }
