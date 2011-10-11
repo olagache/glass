@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.history.History;
+import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.log.Logs;
 import com.github.dbourdette.glass.util.Query;
 
@@ -35,7 +35,7 @@ import com.github.dbourdette.glass.util.Query;
 @Controller
 public class LogsController {
     @Inject
-    protected History history;
+    protected Executions executions;
 
     @Inject
     protected Logs logs;
@@ -45,14 +45,14 @@ public class LogsController {
 
     @RequestMapping("/logs")
     public String logs(@RequestParam(defaultValue = "0") int index, Model model) {
-        model.addAttribute("page", history.getLogs(Query.oneBasedIndex(index)));
+        model.addAttribute("page", executions.find(Query.oneBasedIndex(index)));
 
         return "logs";
     }
 
     @RequestMapping("/logs/{jobGroup}/{jobName}")
     public String logs(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "0") int index, Model model) {
-        model.addAttribute("page", history.getLogs(jobGroup, jobName, Query.oneBasedIndex(index)));
+        model.addAttribute("page", executions.find(jobGroup, jobName, Query.oneBasedIndex(index)));
 
         return "logs";
     }
@@ -60,7 +60,7 @@ public class LogsController {
     @RequestMapping("/logs/clear")
     public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
         logs.clear();
-        history.clear();
+        executions.clear();
 
         return "redirect:" + configuration.getRoot() + "/logs";
     }

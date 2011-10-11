@@ -25,9 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
-import com.github.dbourdette.glass.history.ExecutionLog;
+import com.github.dbourdette.glass.log.execution.Execution;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
 import com.github.dbourdette.glass.job.util.Spring;
+import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.log.log.LogLevel;
+import com.github.dbourdette.glass.log.log.LogsStore;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
@@ -38,6 +41,8 @@ import com.github.dbourdette.glass.util.Query;
  */
 public class Logs {
     private static final Logger LOGGER = LoggerFactory.getLogger(Logs.class);
+
+    private static final String[] EMPTY_ARGS = new String[]{};
 
     private ThreadLocal<JobExecutionContext> localContext = new ThreadLocal<JobExecutionContext>();
 
@@ -144,13 +149,7 @@ public class Logs {
     }
 
     private void log(LogLevel level, String message) {
-        JobExecutionContext context = localContext.get();
-
-        LogLevel logLevelFromContext = getLogLevelFromContext(context);
-
-        if (level.ordinal() >= logLevelFromContext.ordinal()) {
-            logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, message));
-        }
+        log(level, message, EMPTY_ARGS);
     }
 
     private void log(LogLevel level, String format, Object... args) {
@@ -159,17 +158,33 @@ public class Logs {
         LogLevel logLevelFromContext = getLogLevelFromContext(context);
 
         if (level.ordinal() >= logLevelFromContext.ordinal()) {
-            logsStore.add(Log.message(ExecutionLog.getFromContext(context), level, format(format, args)));
+            logsStore.add(Log.message(Execution.getFromContext(context), level, format(format, args)));
+        }
+
+        if (level.ordinal() >= LogLevel.WARN.ordinal()) {
+            Execution.failed(context);
         }
     }
 
     private void log(LogLevel level, String message, Throwable throwable) {
         JobExecutionContext context = localContext.get();
 
-        logsStore.add(Log.exception(ExecutionLog.getFromContext(context), level, message, throwable));
+        LogLevel logLevelFromContext = getLogLevelFromContext(context);
+
+        if (level.ordinal() >= logLevelFromContext.ordinal()) {
+            logsStore.add(Log.exception(Execution.getFromContext(context), level, message, throwable));
+        }
+
+        if (level.ordinal() >= LogLevel.WARN.ordinal()) {
+            Execution.failed(context);
+        }
     }
 
     private String format(String format, Object... args) {
+        if (args.length == 0) {
+            return format;
+        }
+
         return MessageFormatter.arrayFormat(format, args).getMessage();
     }
 

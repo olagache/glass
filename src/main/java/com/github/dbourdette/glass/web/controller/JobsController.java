@@ -23,9 +23,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import org.apache.commons.lang.StringUtils;
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.history.History;
+import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.job.annotation.JobBean;
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
@@ -48,7 +47,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
@@ -69,7 +67,7 @@ public class JobsController {
     protected JobPathScanner jobPathScanner;
 
     @Inject
-    protected History history;
+    protected Executions executions;
 
     @Inject
     protected Logs logs;
@@ -115,7 +113,7 @@ public class JobsController {
 
         model.addAttribute("triggers", TriggerWrapperForView.fromList(triggers, runningJobs));
 
-        model.addAttribute("history", history.getLogs(group, name, Query.index(0).withSize(5)));
+        model.addAttribute("history", executions.find(group, name, Query.index(0).withSize(5)));
 
         return "job";
     }

@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log;
+package com.github.dbourdette.glass.log.log;
 
-import java.util.List;
+import javax.inject.Inject;
 
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
+import org.quartz.SchedulerException;
+import org.quartz.listeners.SchedulerListenerSupport;
+import org.springframework.stereotype.Component;
+
+import com.github.dbourdette.glass.log.Logs;
 
 /**
  * @author damien bourdette
  */
-public interface LogsStore {
-    public void add(Log log);
+@Component
+public class QuartzListenerForLogs extends SchedulerListenerSupport {
+    @Inject
+    private Logs logs;
 
-    public Page<Log> getLogs(Long executionId, Query query);
-
-    public Page<Log> getLogs(Query query);
-
-    public List<Log> getLogs(Long executionId);
-
-    public void clear();
+    @Override
+    public void schedulerError(String message, SchedulerException cause) {
+        logs.error(message, cause);
+    }
 }

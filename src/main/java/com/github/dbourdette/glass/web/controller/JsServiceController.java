@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.dbourdette.glass.job.annotation.JobBean;
-import com.github.dbourdette.glass.log.Log;
+import com.github.dbourdette.glass.log.log.Log;
 import com.github.dbourdette.glass.log.Logs;
 
 /**

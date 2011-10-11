@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.memory;
+package com.github.dbourdette.glass.log.log.memory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.github.dbourdette.glass.log.Log;
-import com.github.dbourdette.glass.log.LogsStore;
+import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.log.log.LogsStore;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 

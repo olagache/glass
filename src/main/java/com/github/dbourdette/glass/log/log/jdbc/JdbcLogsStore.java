@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.jdbc;
+package com.github.dbourdette.glass.log.log.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,9 +28,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.log.Log;
-import com.github.dbourdette.glass.log.LogLevel;
-import com.github.dbourdette.glass.log.LogsStore;
+import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.log.log.LogLevel;
+import com.github.dbourdette.glass.log.log.LogsStore;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 

@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log;
+package com.github.dbourdette.glass.log.execution;
 
-import javax.inject.Inject;
+import org.quartz.JobExecutionContext;
 
-import org.quartz.SchedulerException;
-import org.quartz.listeners.SchedulerListenerSupport;
-import org.springframework.stereotype.Component;
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
+ * Executions service to store Execution objects
+ *
  * @author damien bourdette
  */
-@Component
-public class QuartzListenerForLogs extends SchedulerListenerSupport {
-    @Inject
-    private Logs logs;
+public interface Executions {
+    public Execution jobStarts(JobExecutionContext context);
 
-    @Override
-    public void schedulerError(String message, SchedulerException cause) {
-        logs.error(message, cause);
-    }
+    public void jobEnds(Execution log, JobExecutionContext context);
+
+    public Page<Execution> find(Query query);
+
+    public Page<Execution> find(String jobGroup, String jobName, Query query);
+
+    public void clear();
 }

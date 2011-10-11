@@ -11,10 +11,10 @@
 
         #parse("com/github/dbourdette/glass/velocity/widgets/pages.vm")
 
-        #history("h1" "Run history" $page.items)
+        #history("h1" "Execution history" $page.items)
 
         <div class="pages">
-            <a href="${root}/logs/clear">clear history</a>
+            <a href="${root}/logs/clear">clear logs</a>
         </div>
 
         #parse("com/github/dbourdette/glass/velocity/widgets/footer.vm")

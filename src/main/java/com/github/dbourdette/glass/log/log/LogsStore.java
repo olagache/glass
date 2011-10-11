@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log;
+package com.github.dbourdette.glass.log.log;
+
+import java.util.List;
+
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public enum LogLevel {
-    DEBUG, INFO, WARN, ERROR;
+public interface LogsStore {
+    public void add(Log log);
+
+    public Page<Log> getLogs(Long executionId, Query query);
+
+    public Page<Log> getLogs(Query query);
+
+    public List<Log> getLogs(Long executionId);
+
+    public void clear();
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import com.github.dbourdette.glass.log.LogLevel;
+import com.github.dbourdette.glass.log.log.LogLevel;
 import com.github.dbourdette.glass.util.Arrays;
 
 /**

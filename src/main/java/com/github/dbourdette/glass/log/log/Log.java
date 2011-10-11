@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log;
+package com.github.dbourdette.glass.log.log;
 
 import java.util.Date;
 
@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import com.github.dbourdette.glass.history.ExecutionLog;
+import com.github.dbourdette.glass.log.execution.Execution;
 import com.github.dbourdette.glass.tools.FormatTool;
 import com.github.dbourdette.glass.util.Dates;
 
@@ -56,7 +56,7 @@ public class Log {
 
     }
 
-    public static Log message(ExecutionLog executionLog, LogLevel level, String message) {
+    public static Log message(Execution executionLog, LogLevel level, String message) {
         Log log = new Log();
 
         if (executionLog != null) {
@@ -75,7 +75,7 @@ public class Log {
         return log;
     }
 
-    public static Log exception(ExecutionLog executionLog, LogLevel level, String message, Throwable e) {
+    public static Log exception(Execution executionLog, LogLevel level, String message, Throwable e) {
         Log log = message(executionLog, level, message);
 
         log.stackTrace = ExceptionUtils.getFullStackTrace(e);

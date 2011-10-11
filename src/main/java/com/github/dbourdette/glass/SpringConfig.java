@@ -40,15 +40,13 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.configuration.LogStore;
-import com.github.dbourdette.glass.history.History;
-import com.github.dbourdette.glass.history.QuartzListenerForHistory;
-import com.github.dbourdette.glass.history.jdbc.JdbcHistory;
-import com.github.dbourdette.glass.history.memory.MemoryHistory;
+import com.github.dbourdette.glass.log.execution.Executions;
+import com.github.dbourdette.glass.log.execution.QuartzListenerForExecutions;
+import com.github.dbourdette.glass.log.execution.jdbc.JdbcExecutions;
+import com.github.dbourdette.glass.log.execution.memory.MemoryExecutions;
 import com.github.dbourdette.glass.job.GlassJobFactory;
 import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.log.QuartzListenerForLogs;
-import com.github.dbourdette.glass.log.jdbc.JdbcLogsStore;
-import com.github.dbourdette.glass.log.memory.MemoryLogsStore;
+import com.github.dbourdette.glass.log.log.QuartzListenerForLogs;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc
@@ -59,7 +57,7 @@ public class SpringConfig {
     public static final String APPLICATION_CONTEXT_KEY = "applicationContext";
 
     @Inject
-    private QuartzListenerForHistory quartzListenerForHistory;
+    private QuartzListenerForExecutions quartzListenerForExecutions;
 
     @Inject
     private QuartzListenerForLogs quartzListenerForLogs;
@@ -117,7 +115,7 @@ public class SpringConfig {
 
         Scheduler scheduler = factory.getObject();
 
-        scheduler.getListenerManager().addJobListener(quartzListenerForHistory);
+        scheduler.getListenerManager().addJobListener(quartzListenerForExecutions);
         scheduler.getListenerManager().addSchedulerListener(quartzListenerForLogs);
 
         scheduler.start();
@@ -126,20 +124,20 @@ public class SpringConfig {
     }
 
     @Bean
-    public History history() throws Exception {
+    public Executions executions() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
-            return new MemoryHistory();
+            return new MemoryExecutions();
         } else {
-            return new JdbcHistory(dataSource(), configuration());
+            return new JdbcExecutions(dataSource(), configuration());
         }
     }
 
     @Bean
     public Logs logs() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
-            return new Logs(new MemoryLogsStore());
+            return new Logs(new com.github.dbourdette.glass.log.log.memory.MemoryLogsStore());
         } else {
-            return new Logs(new JdbcLogsStore(dataSource(), configuration()));
+            return new Logs(new com.github.dbourdette.glass.log.log.jdbc.JdbcLogsStore(dataSource(), configuration()));
         }
     }
 

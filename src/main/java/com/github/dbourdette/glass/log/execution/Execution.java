@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.history;
+package com.github.dbourdette.glass.log.execution;
 
 import java.util.Date;
 
+import org.quartz.JobExecutionContext;
+
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.util.Dates;
-import org.quartz.JobExecutionContext;
 
 /**
  * Summary of a job execution stored as a log.
  *
  * @author damien bourdette
  */
-public class ExecutionLog {
+public class Execution {
     private static final String KEY_IN_CONTEXT = "__GLASS_JOB_EXECUTION_CONTEXT";
 
     private Long id;
@@ -50,16 +51,20 @@ public class ExecutionLog {
 
     private String dataMap;
 
-    private boolean success;
+    private boolean success = true;
 
     /**
      * Gets currently ExecutionLog stored in context's data map.
      */
-    public static ExecutionLog getFromContext(JobExecutionContext context) {
-        return (ExecutionLog) context.get(KEY_IN_CONTEXT);
+    public static Execution getFromContext(JobExecutionContext context) {
+        return (Execution) context.get(KEY_IN_CONTEXT);
     }
 
-    public ExecutionLog() {
+    public static void failed(JobExecutionContext context) {
+        ((Execution) context.get(KEY_IN_CONTEXT)).setSuccess(false);
+    }
+
+    public Execution() {
 
     }
 

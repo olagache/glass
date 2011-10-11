@@ -14,26 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.history;
-
-import org.quartz.JobExecutionContext;
-
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
+package com.github.dbourdette.glass.log.log;
 
 /**
- * History service to store ExecutionLog
- *
  * @author damien bourdette
  */
-public interface History {
-    public ExecutionLog jobStarts(JobExecutionContext context);
-
-    public void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success);
-
-    public Page<ExecutionLog> getLogs(Query query);
-
-    public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query);
-
-    public void clear();
+public enum LogLevel {
+    DEBUG, INFO, WARN, ERROR;
 }

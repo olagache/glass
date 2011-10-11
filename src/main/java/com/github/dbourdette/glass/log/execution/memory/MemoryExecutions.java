@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.history.memory;
+package com.github.dbourdette.glass.log.execution.memory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,28 +22,27 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
-import com.github.dbourdette.glass.history.ExecutionLog;
-import com.github.dbourdette.glass.history.History;
+import com.github.dbourdette.glass.log.execution.Execution;
+import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public class MemoryHistory implements History {
-    private final List<ExecutionLog> logs = new ArrayList<ExecutionLog>();
+public class MemoryExecutions implements Executions {
+    private final List<Execution> logs = new ArrayList<Execution>();
 
     private static final int MAX_SIZE = 1000;
 
     private static Long identifier = 0l;
 
     @Override
-    public synchronized ExecutionLog jobStarts(JobExecutionContext context) {
+    public synchronized Execution jobStarts(JobExecutionContext context) {
         identifier++;
 
-        ExecutionLog log = new ExecutionLog();
+        Execution log = new Execution();
 
         log.setId(identifier);
         log.fillWithContext(context);
@@ -54,22 +53,21 @@ public class MemoryHistory implements History {
     }
 
     @Override
-    public synchronized void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success) {
+    public synchronized void jobEnds(Execution log, JobExecutionContext context) {
         log.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
         log.setEnded(true);
-        log.setSuccess(success);
     }
 
     @Override
-    public synchronized Page<ExecutionLog> getLogs(Query query) {
+    public synchronized Page<Execution> find(Query query) {
         return getLogs(logs, query);
     }
 
     @Override
-    public synchronized Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query) {
-        List<ExecutionLog> matchingLogs = new ArrayList<ExecutionLog>();
+    public synchronized Page<Execution> find(String jobGroup, String jobName, Query query) {
+        List<Execution> matchingLogs = new ArrayList<Execution>();
 
-        for (ExecutionLog log : logs) {
+        for (Execution log : logs) {
             if (jobGroup.equals(log.getJobGroup()) && jobName.equals(log.getJobName())) {
                 matchingLogs.add(log);
             }
@@ -83,7 +81,7 @@ public class MemoryHistory implements History {
         logs.clear();
     }
 
-    private void addLog(ExecutionLog log) {
+    private void addLog(Execution log) {
         logs.add(log);
 
         if (logs.size() > MAX_SIZE) {
@@ -91,10 +89,10 @@ public class MemoryHistory implements History {
         }
     }
 
-    private Page<ExecutionLog> getLogs(List<ExecutionLog> matchingLogs, Query query) {
-        Page<ExecutionLog> page = Page.fromQuery(query);
+    private Page<Execution> getLogs(List<Execution> matchingLogs, Query query) {
+        Page<Execution> page = Page.fromQuery(query);
 
-        List<ExecutionLog> subList = query.subList(matchingLogs);
+        List<Execution> subList = query.subList(matchingLogs);
         Collections.reverse(subList);
 
         page.setItems(subList);

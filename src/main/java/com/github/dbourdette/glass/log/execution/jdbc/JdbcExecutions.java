@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.history.jdbc;
+package com.github.dbourdette.glass.log.execution.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,36 +25,35 @@ import javax.sql.DataSource;
 
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.history.ExecutionLog;
-import com.github.dbourdette.glass.history.History;
+import com.github.dbourdette.glass.log.execution.Execution;
+import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public class JdbcHistory implements History {
+public class JdbcExecutions implements Executions {
     private static final String TABLE_SUFFIX = "execution_log";
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private Configuration configuration;
 
-    public JdbcHistory(DataSource dataSource, Configuration configuration) {
+    public JdbcExecutions(DataSource dataSource, Configuration configuration) {
         this.configuration = configuration;
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public ExecutionLog jobStarts(JobExecutionContext context) {
-        ExecutionLog log = new ExecutionLog();
+    public Execution jobStarts(JobExecutionContext context) {
+        Execution log = new Execution();
 
         log.fillWithContext(context);
         log.setId(nextId());
@@ -81,27 +80,27 @@ public class JdbcHistory implements History {
     }
 
     @Override
-    public void jobEnds(ExecutionLog log, JobExecutionContext context, boolean success) {
+    public void jobEnds(Execution log, JobExecutionContext context) {
         String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, success = :success where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("endDate", new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate())
                 .addValue("ended", true)
-                .addValue("success", success)
+                .addValue("success", log.isSuccess())
                 .addValue("id", log.getId());
 
         jdbcTemplate.update(sql, params);
     }
 
     @Override
-    public Page<ExecutionLog> getLogs(Query query) {
+    public Page<Execution> find(Query query) {
         String sql = "from " + getTableName();
 
         return getLogs(sql, new MapSqlParameterSource(), query);
     }
 
     @Override
-    public Page<ExecutionLog> getLogs(String jobGroup, String jobName, Query query) {
+    public Page<Execution> find(String jobGroup, String jobName, Query query) {
         String sql = "from " + configuration.getTablePrefix() + "execution_log where jobGroup = :jobGroup and jobName = :jobName";
 
         SqlParameterSource source = new MapSqlParameterSource()
@@ -118,13 +117,13 @@ public class JdbcHistory implements History {
         jdbcTemplate.getJdbcOperations().execute(sql);
     }
 
-    private Page<ExecutionLog> getLogs(String sqlBase, SqlParameterSource params, Query query) {
+    private Page<Execution> getLogs(String sqlBase, SqlParameterSource params, Query query) {
         String sql = query.applySqlLimit("select * " + sqlBase + " order by startDate desc");
 
-        List<ExecutionLog> logs = jdbcTemplate.query(sql, params, new RowMapper<ExecutionLog>() {
+        List<Execution> logs = jdbcTemplate.query(sql, params, new RowMapper<Execution>() {
             @Override
-            public ExecutionLog mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ExecutionLog log = new ExecutionLog();
+            public Execution mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Execution log = new Execution();
 
                 log.setId(rs.getLong("id"));
                 log.setStartDate(rs.getTimestamp("startDate"));
@@ -144,7 +143,7 @@ public class JdbcHistory implements History {
 
         String countSql = "select count(*) " + sqlBase;
 
-        Page<ExecutionLog> page = Page.fromQuery(query);
+        Page<Execution> page = Page.fromQuery(query);
 
         page.setItems(logs);
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));
