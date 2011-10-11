@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.log;
-
-import java.util.List;
-
-import com.github.dbourdette.glass.util.Page;
-import com.github.dbourdette.glass.util.Query;
+package com.github.dbourdette.glass.log.trace;
 
 /**
  * @author damien bourdette
  */
-public interface LogsStore {
-    public void add(Log log);
-
-    public Page<Log> getLogs(Long executionId, Query query);
-
-    public Page<Log> getLogs(Query query);
-
-    public void clear();
+public enum TraceLevel {
+    DEBUG, INFO, WARN, ERROR;
 }

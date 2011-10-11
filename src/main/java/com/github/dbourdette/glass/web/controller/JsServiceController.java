@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.dbourdette.glass.job.annotation.JobBean;
-import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.log.log.Log;
+import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.trace.Trace;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
@@ -36,7 +36,7 @@ import com.github.dbourdette.glass.util.Query;
 @Controller
 public class JsServiceController {
     @Inject
-    private Logs logs;
+    private Traces logs;
 
     /**
      * Gets job description for a job class.
@@ -58,7 +58,7 @@ public class JsServiceController {
 
     @RequestMapping("/jsapi/traces")
     @ResponseBody
-    public Page<Log> traces(@RequestParam Long executionId, @RequestParam(defaultValue = "1") Integer page) {
+    public Page<Trace> traces(@RequestParam Long executionId, @RequestParam(defaultValue = "1") Integer page) {
         return logs.getLogs(executionId, Query.oneBasedIndex(page).withSize(LogsController.PAGE_SIZE));
     }
 }

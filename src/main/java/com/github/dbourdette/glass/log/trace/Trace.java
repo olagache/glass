@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.log;
+package com.github.dbourdette.glass.log.trace;
 
 import java.util.Date;
 
@@ -29,10 +29,10 @@ import com.github.dbourdette.glass.util.Dates;
 /**
  * @author damien bourdette
  */
-public class Log {
+public class Trace {
     private Long executionId;
 
-    private LogLevel level;
+    private TraceLevel level;
 
     private Date date;
 
@@ -52,51 +52,51 @@ public class Log {
 
     private String rootCause;
 
-    public Log() {
+    public Trace() {
 
     }
 
-    public static Log message(Execution executionLog, LogLevel level, String message) {
-        Log log = new Log();
+    public static Trace message(Execution execution, TraceLevel level, String message) {
+        Trace trace = new Trace();
 
-        if (executionLog != null) {
-            log.executionId = executionLog.getId();
-            log.jobClass = executionLog.getJobClass();
-            log.jobName = executionLog.getJobName();
-            log.jobGroup = executionLog.getJobGroup();
-            log.triggerGroup = executionLog.getTriggerGroup();
-            log.triggerName = executionLog.getTriggerName();
+        if (execution != null) {
+            trace.executionId = execution.getId();
+            trace.jobClass = execution.getJobClass();
+            trace.jobName = execution.getJobName();
+            trace.jobGroup = execution.getJobGroup();
+            trace.triggerGroup = execution.getTriggerGroup();
+            trace.triggerName = execution.getTriggerName();
         }
 
-        log.date = new Date();
-        log.level = level;
-        log.message = message;
+        trace.date = new Date();
+        trace.level = level;
+        trace.message = message;
 
-        return log;
+        return trace;
     }
 
-    public static Log exception(Execution executionLog, LogLevel level, String message, Throwable e) {
-        Log log = message(executionLog, level, message);
+    public static Trace exception(Execution execution, TraceLevel level, String message, Throwable e) {
+        Trace trace = message(execution, level, message);
 
-        log.stackTrace = ExceptionUtils.getFullStackTrace(e);
-        log.rootCause = ExceptionUtils.getMessage(ExceptionUtils.getRootCause(e));
+        trace.stackTrace = ExceptionUtils.getFullStackTrace(e);
+        trace.rootCause = ExceptionUtils.getMessage(ExceptionUtils.getRootCause(e));
 
-        if (StringUtils.isEmpty(log.rootCause)) {
-            log.rootCause = ExceptionUtils.getMessage(e);
+        if (StringUtils.isEmpty(trace.rootCause)) {
+            trace.rootCause = ExceptionUtils.getMessage(e);
         }
 
-        if (StringUtils.isEmpty(log.rootCause)) {
-            log.rootCause = "no message";
+        if (StringUtils.isEmpty(trace.rootCause)) {
+            trace.rootCause = "no message";
         }
 
-        return log;
+        return trace;
     }
 
     public Long getExecutionId() {
         return executionId;
     }
 
-    public LogLevel getLevel() {
+    public TraceLevel getLevel() {
         return level;
     }
 
@@ -153,7 +153,7 @@ public class Log {
         this.executionId = executionId;
     }
 
-    public void setLevel(LogLevel level) {
+    public void setLevel(TraceLevel level) {
         this.level = level;
     }
 

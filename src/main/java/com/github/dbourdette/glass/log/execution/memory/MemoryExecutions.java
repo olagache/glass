@@ -32,7 +32,7 @@ import com.github.dbourdette.glass.util.Query;
  * @author damien bourdette
  */
 public class MemoryExecutions implements Executions {
-    private final List<Execution> logs = new ArrayList<Execution>();
+    private final List<Execution> executions = new ArrayList<Execution>();
 
     private static final int MAX_SIZE = 1000;
 
@@ -42,34 +42,34 @@ public class MemoryExecutions implements Executions {
     public synchronized Execution jobStarts(JobExecutionContext context) {
         identifier++;
 
-        Execution log = new Execution();
+        Execution execution = new Execution();
 
-        log.setId(identifier);
-        log.fillWithContext(context);
+        execution.setId(identifier);
+        execution.fillWithContext(context);
 
-        addLog(log);
+        addLog(execution);
 
-        return log;
+        return execution;
     }
 
     @Override
-    public synchronized void jobEnds(Execution log, JobExecutionContext context) {
-        log.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
-        log.setEnded(true);
+    public synchronized void jobEnds(Execution execution, JobExecutionContext context) {
+        execution.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
+        execution.setEnded(true);
     }
 
     @Override
     public synchronized Page<Execution> find(Query query) {
-        return getLogs(logs, query);
+        return getLogs(executions, query);
     }
 
     @Override
     public synchronized Page<Execution> find(String jobGroup, String jobName, Query query) {
         List<Execution> matchingLogs = new ArrayList<Execution>();
 
-        for (Execution log : logs) {
-            if (jobGroup.equals(log.getJobGroup()) && jobName.equals(log.getJobName())) {
-                matchingLogs.add(log);
+        for (Execution execution : executions) {
+            if (jobGroup.equals(execution.getJobGroup()) && jobName.equals(execution.getJobName())) {
+                matchingLogs.add(execution);
             }
         }
 
@@ -78,25 +78,25 @@ public class MemoryExecutions implements Executions {
 
     @Override
     public synchronized void clear() {
-        logs.clear();
+        executions.clear();
     }
 
-    private void addLog(Execution log) {
-        logs.add(log);
+    private void addLog(Execution execution) {
+        executions.add(execution);
 
-        if (logs.size() > MAX_SIZE) {
-            logs.remove(0);
+        if (executions.size() > MAX_SIZE) {
+            executions.remove(0);
         }
     }
 
-    private Page<Execution> getLogs(List<Execution> matchingLogs, Query query) {
+    private Page<Execution> getLogs(List<Execution> matchingExecutions, Query query) {
         Page<Execution> page = Page.fromQuery(query);
 
-        List<Execution> subList = query.subList(matchingLogs);
+        List<Execution> subList = query.subList(matchingExecutions);
         Collections.reverse(subList);
 
         page.setItems(subList);
-        page.setTotalCount(matchingLogs.size());
+        page.setTotalCount(matchingExecutions.size());
 
         return page;
     }

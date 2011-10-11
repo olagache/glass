@@ -24,7 +24,7 @@ import org.quartz.UnableToInterruptJobException;
 
 import com.github.dbourdette.glass.job.annotation.Job;
 import com.github.dbourdette.glass.job.annotation.JobArgument;
-import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
  * A dummy quartz job for testing purposes.
@@ -42,11 +42,11 @@ public class DummyJob implements InterruptableJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        Logs.getLogs(context).info("Running dummy job for {} seconds", duration);
+        Traces.getLogs(context).info("Running dummy job for {} seconds", duration);
 
         for (int i = 0; i < 500; i++) {
-            Logs.getLogs(context).error("Running dummy job for {} seconds", duration);
-            Logs.getLogs(context).error("Running dummy job for seconds", new IllegalArgumentException("youhou " + i));
+            Traces.getLogs(context).error("Running dummy job for {} seconds", duration);
+            Traces.getLogs(context).error("Running dummy job for seconds", new IllegalArgumentException("youhou " + i));
         }
 
         try {

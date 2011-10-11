@@ -45,8 +45,10 @@ import com.github.dbourdette.glass.log.execution.QuartzListenerForExecutions;
 import com.github.dbourdette.glass.log.execution.jdbc.JdbcExecutions;
 import com.github.dbourdette.glass.log.execution.memory.MemoryExecutions;
 import com.github.dbourdette.glass.job.GlassJobFactory;
-import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.log.log.QuartzListenerForLogs;
+import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.trace.QuartzListenerForTraces;
+import com.github.dbourdette.glass.log.trace.jdbc.JdbcTraceStore;
+import com.github.dbourdette.glass.log.trace.memory.MemoryTraceStore;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc
@@ -60,7 +62,7 @@ public class SpringConfig {
     private QuartzListenerForExecutions quartzListenerForExecutions;
 
     @Inject
-    private QuartzListenerForLogs quartzListenerForLogs;
+    private QuartzListenerForTraces quartzListenerForLogs;
 
     @Inject
     private GlassJobFactory glassJobFactory;
@@ -133,11 +135,11 @@ public class SpringConfig {
     }
 
     @Bean
-    public Logs logs() throws Exception {
+    public Traces logs() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
-            return new Logs(new com.github.dbourdette.glass.log.log.memory.MemoryLogsStore());
+            return new Traces(new MemoryTraceStore());
         } else {
-            return new Logs(new com.github.dbourdette.glass.log.log.jdbc.JdbcLogsStore(dataSource(), configuration()));
+            return new Traces(new JdbcTraceStore(dataSource(), configuration()));
         }
     }
 

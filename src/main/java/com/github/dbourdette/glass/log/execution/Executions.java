@@ -29,7 +29,7 @@ import com.github.dbourdette.glass.util.Query;
 public interface Executions {
     public Execution jobStarts(JobExecutionContext context);
 
-    public void jobEnds(Execution log, JobExecutionContext context);
+    public void jobEnds(Execution execution, JobExecutionContext context);
 
     public Page<Execution> find(Query query);
 

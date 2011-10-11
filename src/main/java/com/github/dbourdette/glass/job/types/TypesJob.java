@@ -19,7 +19,8 @@ package com.github.dbourdette.glass.job.types;
 import java.util.Date;
 
 import com.github.dbourdette.glass.job.annotation.JobArgument;
-import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.trace.Traces;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -37,7 +38,7 @@ public class TypesJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        Logs logs = Logs.getLogs(context);
+        Traces logs = Traces.getLogs(context);
 
         logs.info("longValue = {}", longValue);
         logs.info("dateValue = {}", dateValue);

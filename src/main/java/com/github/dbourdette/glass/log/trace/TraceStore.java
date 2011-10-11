@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.log;
+package com.github.dbourdette.glass.log.trace;
+
+import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public enum LogLevel {
-    DEBUG, INFO, WARN, ERROR;
+public interface TraceStore {
+    public void add(Trace trace);
+
+    public Page<Trace> getLogs(Long executionId, Query query);
+
+    public Page<Trace> getLogs(Query query);
+
+    public void clear();
 }

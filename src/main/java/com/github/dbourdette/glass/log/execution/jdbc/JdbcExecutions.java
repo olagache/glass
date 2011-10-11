@@ -53,41 +53,41 @@ public class JdbcExecutions implements Executions {
 
     @Override
     public Execution jobStarts(JobExecutionContext context) {
-        Execution log = new Execution();
+        Execution execution = new Execution();
 
-        log.fillWithContext(context);
-        log.setId(nextId());
+        execution.fillWithContext(context);
+        execution.setId(nextId());
 
         String sql = "insert into " + configuration.getTablePrefix() + "execution_log" +
                 " (id, startDate, ended, jobGroup, jobName, triggerGroup, triggerName, jobClass, dataMap, success)" +
                 " values (:id, :startDate, :ended, :jobGroup, :jobName, :triggerGroup, :triggerName, :jobClass, :dataMap, :success)";
 
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("id", log.getId())
-                .addValue("startDate", log.getStartDate())
-                .addValue("ended", log.isEnded())
-                .addValue("jobGroup", log.getJobGroup())
-                .addValue("jobName", log.getJobName())
-                .addValue("triggerGroup", log.getTriggerGroup())
-                .addValue("triggerName", log.getTriggerName())
-                .addValue("jobClass", log.getJobClass())
-                .addValue("dataMap", log.getDataMap())
+                .addValue("id", execution.getId())
+                .addValue("startDate", execution.getStartDate())
+                .addValue("ended", execution.isEnded())
+                .addValue("jobGroup", execution.getJobGroup())
+                .addValue("jobName", execution.getJobName())
+                .addValue("triggerGroup", execution.getTriggerGroup())
+                .addValue("triggerName", execution.getTriggerName())
+                .addValue("jobClass", execution.getJobClass())
+                .addValue("dataMap", execution.getDataMap())
                 .addValue("success", false);
 
         jdbcTemplate.update(sql, params);
 
-        return log;
+        return execution;
     }
 
     @Override
-    public void jobEnds(Execution log, JobExecutionContext context) {
+    public void jobEnds(Execution execution, JobExecutionContext context) {
         String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, success = :success where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("endDate", new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate())
                 .addValue("ended", true)
-                .addValue("success", log.isSuccess())
-                .addValue("id", log.getId());
+                .addValue("success", execution.isSuccess())
+                .addValue("id", execution.getId());
 
         jdbcTemplate.update(sql, params);
     }
@@ -120,24 +120,24 @@ public class JdbcExecutions implements Executions {
     private Page<Execution> getLogs(String sqlBase, SqlParameterSource params, Query query) {
         String sql = query.applySqlLimit("select * " + sqlBase + " order by startDate desc");
 
-        List<Execution> logs = jdbcTemplate.query(sql, params, new RowMapper<Execution>() {
+        List<Execution> executions = jdbcTemplate.query(sql, params, new RowMapper<Execution>() {
             @Override
             public Execution mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Execution log = new Execution();
+                Execution execution = new Execution();
 
-                log.setId(rs.getLong("id"));
-                log.setStartDate(rs.getTimestamp("startDate"));
-                log.setEndDate(rs.getTimestamp("endDate"));
-                log.setEnded(rs.getBoolean("ended"));
-                log.setJobGroup(rs.getString("jobGroup"));
-                log.setJobName(rs.getString("jobName"));
-                log.setTriggerGroup(rs.getString("triggerGroup"));
-                log.setTriggerName(rs.getString("triggerName"));
-                log.setJobClass(rs.getString("jobClass"));
-                log.setDataMap(rs.getString("dataMap"));
-                log.setSuccess(rs.getBoolean("success"));
+                execution.setId(rs.getLong("id"));
+                execution.setStartDate(rs.getTimestamp("startDate"));
+                execution.setEndDate(rs.getTimestamp("endDate"));
+                execution.setEnded(rs.getBoolean("ended"));
+                execution.setJobGroup(rs.getString("jobGroup"));
+                execution.setJobName(rs.getString("jobName"));
+                execution.setTriggerGroup(rs.getString("triggerGroup"));
+                execution.setTriggerName(rs.getString("triggerName"));
+                execution.setJobClass(rs.getString("jobClass"));
+                execution.setDataMap(rs.getString("dataMap"));
+                execution.setSuccess(rs.getBoolean("success"));
 
-                return log;
+                return execution;
             }
         });
 
@@ -145,7 +145,7 @@ public class JdbcExecutions implements Executions {
 
         Page<Execution> page = Page.fromQuery(query);
 
-        page.setItems(logs);
+        page.setItems(executions);
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));
 
         return page;

@@ -28,7 +28,7 @@ import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.job.annotation.JobBean;
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
-import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.util.Query;
 import com.github.dbourdette.glass.web.form.JobForm;
 import com.github.dbourdette.glass.web.form.NewJobForm;
@@ -70,7 +70,7 @@ public class JobsController {
     protected Executions executions;
 
     @Inject
-    protected Logs logs;
+    protected Traces logs;
 
     @RequestMapping("/jobs")
     public String jobs(Model model) throws SchedulerException {

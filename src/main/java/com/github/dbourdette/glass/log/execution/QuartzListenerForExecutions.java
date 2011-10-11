@@ -16,8 +16,6 @@
 
 package com.github.dbourdette.glass.log.execution;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.quartz.JobExecutionContext;
@@ -25,9 +23,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
 
-import com.github.dbourdette.glass.log.log.Log;
-import com.github.dbourdette.glass.log.log.LogLevel;
-import com.github.dbourdette.glass.log.Logs;
+import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
  * @author damien bourdette
@@ -38,7 +34,7 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
     private Executions executions;
 
     @Inject
-    private Logs logs;
+    private Traces traces;
 
     @Override
     public String getName() {
@@ -47,35 +43,21 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
-        Execution log = executions.jobStarts(context);
+        Execution execution = executions.jobStarts(context);
 
-        log.setInContext(context);
+        execution.setInContext(context);
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
-        Execution log = Execution.getFromContext(context);
+        Execution execution = Execution.getFromContext(context);
 
         if (exception != null) {
-            log.setSuccess(false);
+            execution.setSuccess(false);
+
+            traces.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
         }
 
-        executions.jobEnds(log, context);
-
-        if (exception != null) {
-            logs.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
-        }
-    }
-
-    private boolean success(Execution executionLog) {
-        List<Log> logs = this.logs.getLogs(executionLog.getId());
-
-        for (Log log : logs) {
-            if (log.getLevel().ordinal() >= LogLevel.WARN.ordinal()) {
-               return false;
-            }
-        }
-
-        return true;
+        executions.jobEnds(execution, context);
     }
 }

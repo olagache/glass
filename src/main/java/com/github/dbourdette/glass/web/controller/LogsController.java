@@ -23,13 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.log.execution.Executions;
-import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.log.log.Log;
-import com.github.dbourdette.glass.util.Page;
+import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.util.Query;
 
 /**
@@ -43,7 +40,7 @@ public class LogsController {
     protected Executions executions;
 
     @Inject
-    protected Logs logs;
+    protected Traces logs;
 
     @Inject
     protected Configuration configuration;

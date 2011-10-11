@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.log;
+package com.github.dbourdette.glass.log.trace;
 
 import javax.inject.Inject;
 
@@ -22,18 +22,16 @@ import org.quartz.SchedulerException;
 import org.quartz.listeners.SchedulerListenerSupport;
 import org.springframework.stereotype.Component;
 
-import com.github.dbourdette.glass.log.Logs;
-
 /**
  * @author damien bourdette
  */
 @Component
-public class QuartzListenerForLogs extends SchedulerListenerSupport {
+public class QuartzListenerForTraces extends SchedulerListenerSupport {
     @Inject
-    private Logs logs;
+    private Traces traces;
 
     @Override
     public void schedulerError(String message, SchedulerException cause) {
-        logs.error(message, cause);
+        traces.error(message, cause);
     }
 }

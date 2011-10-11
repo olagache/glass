@@ -54,7 +54,7 @@ public class Execution {
     private boolean success = true;
 
     /**
-     * Gets currently ExecutionLog stored in context's data map.
+     * Gets currently Execution stored in context's data map.
      */
     public static Execution getFromContext(JobExecutionContext context) {
         return (Execution) context.get(KEY_IN_CONTEXT);
@@ -82,7 +82,7 @@ public class Execution {
     }
 
     /**
-     * Sets this ExecutionLog in context as a value in its data map.
+     * Sets this Execution in context as a value in its data map.
      */
     public void setInContext(JobExecutionContext context) {
         context.put(KEY_IN_CONTEXT, this);
@@ -178,7 +178,7 @@ public class Execution {
 
     @Override
     public String toString() {
-        return "ExecutionLog{" +
+        return "Execution{" +
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
