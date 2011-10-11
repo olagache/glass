@@ -104,12 +104,12 @@ public class JdbcLogsStore implements LogsStore {
     }
 
     private Page<Log> getLogs(String sqlBase, SqlParameterSource params, Query query) {
-        String sql = query.applySqlLimit("select * " + sqlBase + " order by logDate desc");
+        String sql = query.applySqlLimit("select * " + sqlBase + " order by logDate asc");
 
         List<Log> logs = jdbcTemplate.query(sql, params, new RowMapper<Log>() {
             @Override
             public Log mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return mapRow(rs, rowNum);
+                return doMapRow(rs, rowNum);
             }
         });
 
@@ -124,17 +124,17 @@ public class JdbcLogsStore implements LogsStore {
     }
 
     private List<Log> getLogs(String sqlBase, SqlParameterSource params) {
-        String sql = "select * " + sqlBase + " order by logDate desc";
+        String sql = "select * " + sqlBase + " order by logDate asc";
 
         return jdbcTemplate.query(sql, params, new RowMapper<Log>() {
             @Override
             public Log mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return mapRow(rs, rowNum);
+                return doMapRow(rs, rowNum);
             }
         });
     }
 
-    private Log mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private Log doMapRow(ResultSet rs, int rowNum) throws SQLException {
         Log log = new Log();
 
         log.setExecutionId(rs.getLong("executionId"));

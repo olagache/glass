@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.dbourdette.glass.job.annotation.JobBean;
 import com.github.dbourdette.glass.log.Log;
 import com.github.dbourdette.glass.log.Logs;
-import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
@@ -59,6 +58,6 @@ public class JsServiceController {
     @RequestMapping("/jsapi/logs")
     @ResponseBody
     public List<Log> logs(Long executionId) {
-        return logs.getLogs(executionId, Query.firstPage().withSize(1000)).getItems();
+        return logs.getLogs(executionId);
     }
 }
