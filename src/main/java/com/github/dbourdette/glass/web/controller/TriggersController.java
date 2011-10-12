@@ -33,6 +33,8 @@ import com.github.dbourdette.glass.web.form.SimpleTriggerForm;
 import com.github.dbourdette.glass.web.form.TriggerForm;
 import com.github.dbourdette.glass.web.util.JobAndTriggers;
 import com.github.dbourdette.glass.web.util.TriggerWrapperForView;
+
+import org.apache.commons.lang.StringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -48,6 +50,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
@@ -66,7 +69,6 @@ public class TriggersController {
     public String all(Model model) throws SchedulerException {
         List<JobAndTriggers> jobsAndTriggers = new ArrayList<JobAndTriggers>();
 
-        List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
         List<String> groups = quartzScheduler.getJobGroupNames();
 
         for (String group : groups) {
@@ -80,7 +82,7 @@ public class TriggersController {
 
                 JobAndTriggers jobAndTrigger = new JobAndTriggers();
                 jobAndTrigger.setJobDetail(jobDetail);
-                jobAndTrigger.setTriggers(TriggerWrapperForView.fromList(quartzScheduler.getTriggersOfJob(jobKey), runningJobs));
+                jobAndTrigger.setTriggers(TriggerWrapperForView.fromList(quartzScheduler.getTriggersOfJob(jobKey), quartzScheduler));
 
                 jobsAndTriggers.add(jobAndTrigger);
             }
@@ -198,7 +200,7 @@ public class TriggersController {
     }
 
     @RequestMapping("/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/delete")
-    public String delete(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName) throws SchedulerException {
+    public String delete(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @RequestParam(required = false) String redirect) throws SchedulerException {
         JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
 
         if (job == null) {
@@ -207,7 +209,45 @@ public class TriggersController {
 
         quartzScheduler.unscheduleJob(new TriggerKey(triggerName, triggerGroup));
 
-        return "redirect:" + configuration.getRoot() + "/jobs/{group}/{name}";
+        if (StringUtils.isNotEmpty(redirect)) {
+            return "redirect:" + redirect;
+        }
+
+        return "redirect:/glass";
+    }
+
+    @RequestMapping("/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/pause")
+    public String pause(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @RequestParam(required = false) String redirect) throws SchedulerException {
+        JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
+
+        if (job == null) {
+            return "redirect:" + configuration.getRoot() + "/jobs";
+        }
+
+        quartzScheduler.pauseTrigger(new TriggerKey(triggerName, triggerGroup));
+
+        if (StringUtils.isNotEmpty(redirect)) {
+            return "redirect:" + redirect;
+        }
+
+        return "redirect:/glass";
+    }
+
+    @RequestMapping("/jobs/{group}/{name}/triggers/{triggerGroup}/{triggerName}/resume")
+    public String resume(@PathVariable String group, @PathVariable String name, @PathVariable String triggerGroup, @PathVariable String triggerName, @RequestParam(required = false) String redirect) throws SchedulerException {
+        JobDetail job = quartzScheduler.getJobDetail(new JobKey(name, group));
+
+        if (job == null) {
+            return "redirect:" + configuration.getRoot() + "/jobs";
+        }
+
+        quartzScheduler.resumeTrigger(new TriggerKey(triggerName, triggerGroup));
+
+        if (StringUtils.isNotEmpty(redirect)) {
+            return "redirect:" + redirect;
+        }
+
+        return "redirect:/glass";
     }
 
     private String postEditTrigger(String group, String name, String triggerGroup, String triggerName, TriggerForm form, Model model, BindingResult result) throws SchedulerException, ParseException {

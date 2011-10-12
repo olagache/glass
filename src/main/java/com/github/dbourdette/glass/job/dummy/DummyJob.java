@@ -44,7 +44,7 @@ public class DummyJob implements InterruptableJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        traces.error("Running dummy job for {} seconds", duration);
+        traces.info("Running dummy job for {} seconds", duration);
 
         try {
             Thread.sleep(duration * 1000);

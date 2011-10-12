@@ -16,10 +16,13 @@
 
 package com.github.dbourdette.glass.web.interceptor;
 
+import java.net.URLEncoder;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.configuration.Version;
@@ -61,6 +64,7 @@ public class AddToModelInterceptor extends HandlerInterceptorAdapter {
 
         model.addAttribute("standby", quartzScheduler.isInStandbyMode());
         model.addAttribute("root", configuration.getRoot());
+        model.addAttribute("current", URLEncoder.encode(request.getRequestURI(), "UTF-8"));
         model.addAttribute("utils", utilsTool);
         model.addAttribute("format", formatTool);
         model.addAttribute("version", version);

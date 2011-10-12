@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.quartz.CronTrigger;
+import org.quartz.JobExecutionContext;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.job.util.TriggerUtils;
 import com.github.dbourdette.glass.util.Dates;
-import org.quartz.CronTrigger;
-import org.quartz.JobExecutionContext;
-import org.quartz.Trigger;
 
 /**
  * @author damien bourdette
@@ -47,17 +50,21 @@ public class TriggerWrapperForView {
 
     private boolean running;
 
-    public static List<TriggerWrapperForView> fromList(List<? extends Trigger> triggers, List<JobExecutionContext> runningJobs) {
+    private boolean paused;
+
+    public static List<TriggerWrapperForView> fromList(List<? extends Trigger> triggers, Scheduler scheduler) throws SchedulerException {
         List<TriggerWrapperForView> wrappers = new ArrayList<TriggerWrapperForView>();
 
         for (Trigger trigger : triggers) {
-            wrappers.add(fromTrigger(trigger, runningJobs));
+            wrappers.add(fromTrigger(trigger, scheduler));
         }
 
         return wrappers;
     }
 
-    public static TriggerWrapperForView fromTrigger(Trigger trigger, List<JobExecutionContext> runningJobs) {
+    public static TriggerWrapperForView fromTrigger(Trigger trigger, Scheduler scheduler) throws SchedulerException {
+        List<JobExecutionContext> runningJobs = scheduler.getCurrentlyExecutingJobs();
+
         TriggerWrapperForView wrapper = new TriggerWrapperForView();
 
         wrapper.trigger = trigger;
@@ -65,6 +72,7 @@ public class TriggerWrapperForView {
         wrapper.name = trigger.getKey().getName();
         wrapper.startTime = trigger.getStartTime();
         wrapper.endTime = trigger.getEndTime();
+        wrapper.paused = scheduler.getTriggerState(trigger.getKey()) == Trigger.TriggerState.PAUSED;
         wrapper.dataMap = JobDataMapUtils.toProperties(trigger.getJobDataMap(), "\n");
 
         if (trigger instanceof CronTrigger) {
@@ -128,7 +136,7 @@ public class TriggerWrapperForView {
         return running;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    public boolean isPaused() {
+        return paused;
     }
 }

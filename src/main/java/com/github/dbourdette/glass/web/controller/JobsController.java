@@ -108,10 +108,9 @@ public class JobsController {
         model.addAttribute("jobArguments", JobArgumentBean.fromClass(job.getJobClass()));
         model.addAttribute("dataMap", JobDataMapUtils.toProperties(job.getJobDataMap(), "\n"));
 
-        List<JobExecutionContext> runningJobs = quartzScheduler.getCurrentlyExecutingJobs();
         List<? extends Trigger> triggers = quartzScheduler.getTriggersOfJob(job.getKey());
 
-        model.addAttribute("triggers", TriggerWrapperForView.fromList(triggers, runningJobs));
+        model.addAttribute("triggers", TriggerWrapperForView.fromList(triggers, quartzScheduler));
 
         model.addAttribute("history", executions.find(group, name, Query.index(0).withSize(5)));
 

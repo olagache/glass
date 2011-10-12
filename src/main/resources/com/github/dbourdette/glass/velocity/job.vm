@@ -71,6 +71,7 @@
                         <th>Last fire time</th>
                         <th>Next fire time</th>
                         <th>planification</th>
+                        <th>Pause / Resume</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -88,7 +89,18 @@
                             <td style="text-align: center;">$format.date($trigger.nextFireTime)</td>
                             <td style="text-align: center;">${trigger.planification}</td>
                             <td style="text-align: center;">
-                                <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="$root/jobs/$format.html($job.group)/$format.html($job.name)/triggers/$format.html($trigger.group)/$format.html($trigger.name)/delete">
+                                #if ($trigger.paused)
+                                    <a onclick="javascript:return(confirm('Are you sure you want to resume ?'));" href="$root/jobs/$format.html($job.group)/$format.html($job.name)/triggers/$format.html($trigger.group)/$format.html($trigger.name)/resume?redirect=$current" title="resume">
+                                        <img alt="delete" src="$root/image/start.png" />
+                                    </a>
+                                #else
+                                    <a onclick="javascript:return(confirm('Are you sure you want to pause ?'));" href="$root/jobs/$format.html($job.group)/$format.html($job.name)/triggers/$format.html($trigger.group)/$format.html($trigger.name)/pause?redirect=$current" title="pause">
+                                        <img alt="delete" src="$root/image/pause.png" />
+                                    </a>
+                                #end
+                            </td>
+                            <td style="text-align: center;">
+                                <a onclick="javascript:return(confirm('Are you sure you want to delete ?'));" href="$root/jobs/$format.html($job.group)/$format.html($job.name)/triggers/$format.html($trigger.group)/$format.html($trigger.name)/delete?redirect=$current" title="delete">
                                     <img alt="delete" src="$root/image/delete.png" />
                                 </a>
                             </td>
