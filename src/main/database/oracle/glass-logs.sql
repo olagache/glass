@@ -32,7 +32,7 @@ CREATE TABLE glass_log
     triggerName VARCHAR(200) NOT NULL,
     message CLOB,
     stackTrace CLOB,
-    rootCause VARCHAR(500)
+    rootCause CLOB
 );
 
 create index idx_glas_exec_log on glass_execution_log(startDate);

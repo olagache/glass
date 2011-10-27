@@ -26,8 +26,6 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,8 +37,6 @@ public class Version {
     private static final String APPLICATION_VERSION_NAME = "application.version";
     private static final String COMPILATION_DATE_NAME = "compilation.date";
     private static final String COMPILATION_DATE_FORMAT = "yyyyMMdd_HHmmss";
-
-    private static final Logger LOG = LoggerFactory.getLogger(Version.class);
 
     private String applicationVersion;
 
