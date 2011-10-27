@@ -18,7 +18,6 @@ package com.github.dbourdette.glass.log.trace;
 
 import org.apache.commons.lang.StringUtils;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
