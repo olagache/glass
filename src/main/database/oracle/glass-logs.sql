@@ -16,7 +16,7 @@ CREATE TABLE glass_execution_log
     triggerName VARCHAR(200) NOT NULL,
     jobClass VARCHAR(255) NOT NULL,
     dataMap CLOB,
-    success varchar(1) NOT NULL
+    result VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE glass_log

@@ -19,6 +19,8 @@ package com.github.dbourdette.glass.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.dbourdette.glass.log.execution.ExecutionResult;
+
 /**
  * Used for paged queries in services.
  *
@@ -36,6 +38,8 @@ public class Query {
      * Size of a page
      */
     private int size = DEFAULT_SIZE;
+
+    private ExecutionResult result;
 
     private Query() {
 
@@ -66,12 +70,23 @@ public class Query {
             throw new IllegalArgumentException("size must be stricly positive");
         }
 
-        Query query = new Query();
+        Query query = copy();
 
-        query.index = index;
         query.size = size;
 
         return query;
+    }
+
+    public Query withResult(ExecutionResult result) {
+        Query query = copy();
+
+        query.result = result;
+
+        return query;
+    }
+
+    public Query withResult(String result) {
+        return withResult(ExecutionResult.valueOf(result.toUpperCase()));
     }
 
     public <T> List<T> subList(List<T> list) {
@@ -109,6 +124,10 @@ public class Query {
         return index + 1;
     }
 
+    public ExecutionResult getResult() {
+        return result;
+    }
+
     public int getSize() {
         return size;
     }
@@ -119,5 +138,15 @@ public class Query {
 
     public int getEnd() {
         return getStart() + size;
+    }
+
+    private Query copy() {
+        Query query = new Query();
+
+        query.index = index;
+        query.size = size;
+        query.result = result;
+
+        return query;
     }
 }

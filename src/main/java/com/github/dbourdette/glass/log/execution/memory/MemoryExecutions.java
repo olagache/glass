@@ -60,7 +60,19 @@ public class MemoryExecutions implements Executions {
 
     @Override
     public synchronized Page<Execution> find(Query query) {
-        return getLogs(executions, query);
+        if (query.getResult() != null) {
+            List<Execution> matchingLogs = new ArrayList<Execution>();
+
+            for (Execution execution : executions) {
+                if (query.getResult() == execution.getResult()) {
+                    matchingLogs.add(execution);
+                }
+            }
+
+            return getLogs(matchingLogs, query);
+        } else {
+            return getLogs(executions, query);
+        }
     }
 
     @Override

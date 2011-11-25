@@ -9,6 +9,12 @@
 	<body>
 	    #parse("com/github/dbourdette/glass/velocity/widgets/menu.vm")
 
+        <div class="subMenu">
+            <a href="/glass/logs">all</a>
+            <a href="/glass/logs/warn">warns</a>
+            <a href="/glass/logs/error">errors</a>
+        </div>
+
         #parse("com/github/dbourdette/glass/velocity/widgets/pages.vm")
 
         #history("h1" "Execution history" $page.items)

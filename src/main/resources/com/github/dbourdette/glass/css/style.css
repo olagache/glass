@@ -15,16 +15,17 @@
  */
 
 body {
-    font-size: 12px;
+    font-size: 10px;
+    font-family: Verdana, Arial, Helvetica, sans-serif, monospace;
 }
 
 h1 {
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-top: 1px #B5B5B5 solid;
-    border-right: 1px #B5B5B5 solid;
-    border-left: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border-top: 1px #d0d0d0 solid;
+    border-right: 1px #d0d0d0 solid;
+    border-left: 1px #d0d0d0 solid;
     border-radius: 5px 5px 0 0;
     line-height: 25px;
     margin-bottom: 0px;
@@ -35,12 +36,12 @@ h1 span {
 }
 
 h2 {
-    font-size: 14px;
+    font-size: 12px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-top: 1px #B5B5B5 solid;
-    border-right: 1px #B5B5B5 solid;
-    border-left: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border-top: 1px #d0d0d0 solid;
+    border-right: 1px #d0d0d0 solid;
+    border-left: 1px #d0d0d0 solid;
     border-radius: 5px 5px 0 0;
     line-height: 25px;
     margin-bottom: 0px;
@@ -61,12 +62,17 @@ a img {
 }
 
 div.menu {
-    font-size: 14px;
+    font-size: 12px;
     width: 100%;
-    background-color: #F2F2F2;
-    border: 1px #B5B5B5 solid;
+    background-color: #4f608f;
+    border: 1px #41517c solid;
     border-radius: 5px;
     height: 50px;
+    color: #dde1f0;
+}
+
+div.menu a {
+    color: #dde1f0;
 }
 
 div.menu .title {
@@ -107,12 +113,25 @@ div.menu .standby {
     right: 15px;
 }
 
-div.actions {
-    font-size: 14px;
+div.subMenu {
+    font-size: 12px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-right: 1px #B5B5B5 solid;
-    border-left: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border: 1px #d0d0d0 solid;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+div.subMenu a {
+    margin: 4px;
+}
+
+div.actions {
+    font-size: 12px;
+    width: 100%;
+    background-color: #f1f1f1;
+    border-right: 1px #d0d0d0 solid;
+    border-left: 1px #d0d0d0 solid;
     padding-bottom: 5px;
 }
 
@@ -123,10 +142,10 @@ div.actions a:first-child {
 div.table {
     font-size: 12px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-bottom: 1px #B5B5B5 solid;
-    border-right: 1px #B5B5B5 solid;
-    border-left: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border-bottom: 1px #d0d0d0 solid;
+    border-right: 1px #d0d0d0 solid;
+    border-left: 1px #d0d0d0 solid;
     border-radius: 0 0 5px 5px;
 }
 
@@ -201,8 +220,8 @@ span.error {
     font-size: 12px;
     width: 100%;
     margin-top: 10px;
-    background-color: #F2F2F2;
-    border: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border: 1px #d0d0d0 solid;
     border-radius: 5px;
     text-align: center;
 }
@@ -223,8 +242,8 @@ span.error {
     font-size: 12px;
     width: 100%;
     margin-top: 10px;
-    background-color: #F2F2F2;
-    border: 1px #B5B5B5 solid;
+    background-color: #f1f1f1;
+    border: 1px #d0d0d0 solid;
     border-radius: 5px;
 }
 
@@ -237,16 +256,32 @@ span.error {
     margin: 1em 0px;
 }
 
-span.DEBUG, span.INFO {
-    background-color: #f4f184;
+span.DEBUG, span.INFO, a.DEBUG, a.INFO {
+
 }
 
-span.WARN {
-    background-color: #EFC983;
+span.SUCCESS, a.SUCCESS {
+    background-color: #6dd579;
+    border-radius:4px;
+    padding:1px 3px;
+    color:white;
+    text-decoration:none;
 }
 
-span.ERROR {
-    background-color: #F28585;
+span.WARN, a.WARN {
+    background-color: #f6bb55;
+    border-radius:4px;
+    padding:1px 3px;
+    color:white;
+    text-decoration:none;
+}
+
+span.ERROR, a.ERROR {
+    background-color: #fa6060;
+    border-radius:4px;
+    padding:1px 3px;
+    color:white;
+    text-decoration:none;
 }
 
 .footer {

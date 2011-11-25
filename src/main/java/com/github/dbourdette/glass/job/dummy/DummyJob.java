@@ -16,6 +16,7 @@
 
 package com.github.dbourdette.glass.job.dummy;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -29,7 +30,7 @@ import com.github.dbourdette.glass.log.trace.Traces;
  * A dummy quartz job for testing purposes.
  */
 @Job(description = "Dummy job for testing purposes")
-//@DisallowConcurrentExecution
+@DisallowConcurrentExecution
 public class DummyJob implements InterruptableJob {
 
     @JobArgument(required = true, description = "Duration of the job, in seconds. Default is 10 seconds", sampleValues = "10, 60")
@@ -41,7 +42,13 @@ public class DummyJob implements InterruptableJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         runningThread = Thread.currentThread();
 
-        Traces.info("Running dummy job for {} seconds", duration);
+        if (duration < 2) {
+            Traces.error("Running dummy job for {} seconds", duration);
+        } else if (duration < 4) {
+            Traces.warn("Running dummy job for {} seconds", duration);
+        } else {
+            Traces.info("Running dummy job for {} seconds", duration);
+        }
 
         try {
             Thread.sleep(duration * 1000);

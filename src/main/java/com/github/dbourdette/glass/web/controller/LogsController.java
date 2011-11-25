@@ -18,6 +18,7 @@ package com.github.dbourdette.glass.web.controller;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,9 +50,11 @@ public class LogsController {
         return "logs";
     }
 
-    @RequestMapping("/logs/{jobGroup}/{jobName}")
-    public String logs(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "1") int index, Model model) {
-        model.addAttribute("page", executions.find(jobGroup, jobName, Query.oneBasedIndex(index)));
+    @RequestMapping("/logs/{result}")
+    public String logs(@PathVariable String result, @RequestParam(defaultValue = "0") int index, Model model) {
+        Query query = Query.oneBasedIndex(index).withResult(result);
+
+        model.addAttribute("page", executions.find(query));
 
         return "logs";
     }
@@ -62,12 +65,5 @@ public class LogsController {
         executions.clear();
 
         return "redirect:" + configuration.getRoot() + "/logs";
-    }
-
-    @RequestMapping("/traces/{executionId}")
-    public String traces(@PathVariable Long executionId, @RequestParam(defaultValue = "1") Integer index, Model model) {
-        model.addAttribute("page", Traces.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
-
-        return "traces";
     }
 }

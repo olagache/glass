@@ -97,7 +97,15 @@ public class JdbcExecutions implements Executions {
     public Page<Execution> find(Query query) {
         String sql = "from " + getTableName();
 
-        return getLogs(sql, new MapSqlParameterSource(), query);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        if (query.getResult() != null) {
+            sql += " where result = :result";
+
+            params.addValue("result", query.getResult().name());
+        }
+
+        return getLogs(sql, params, query);
     }
 
     @Override

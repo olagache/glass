@@ -15,8 +15,8 @@
                 #foreach ($log in $items)
                     <tr>
                         <td style="text-align: center">
-                            <a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">
-                                <span class="${log.result}">$format.html($log.jobGroup) / $format.html($log.jobName)</span>
+                            <a class="${log.result}" href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">
+                                <span>$format.html($log.jobGroup) / $format.html($log.jobName)</span>
                             </a>
                         </td>
                         <td style="text-align: center">$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
