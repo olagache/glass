@@ -16,17 +16,14 @@
 
 package com.github.dbourdette.glass.log.execution;
 
-import java.lang.reflect.Field;
-
 import javax.inject.Inject;
 
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
+import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
 import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
@@ -37,9 +34,6 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
     @Inject
     private Executions executions;
 
-    @Inject
-    private Traces traces;
-
     @Override
     public String getName() {
         return QuartzListenerForExecutions.class.getName();
@@ -47,24 +41,12 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
-        traces.setContext(context);
-
         Execution execution = executions.jobStarts(context);
 
         execution.setInContext(context);
 
-        final Job job = context.getJobInstance();
-
-        ReflectionUtils.doWithFields(job.getClass(), new ReflectionUtils.FieldCallback() {
-            @Override
-            public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
-                if (field.getType().isAssignableFrom(Traces.class)) {
-                    ReflectionUtils.makeAccessible(field);
-
-                    ReflectionUtils.setField(field, job, traces);
-                }
-            }
-        });
+        Traces.setLevel(getLogLevelFromContext(context));
+        Traces.setExecution(execution);
     }
 
     @Override
@@ -72,13 +54,17 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
         Execution execution = Execution.getFromContext(context);
 
         if (exception != null) {
-            execution.setSuccess(false);
+            execution.error();
 
-            traces.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
+            Traces.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
         }
 
         executions.jobEnds(execution, context);
 
-        traces.setContext(null);
+        Traces.setDefaultLevel();
+    }
+
+    private String getLogLevelFromContext(JobExecutionContext context) {
+        return context.getMergedJobDataMap().getString(JobArgumentBean.LOG_LEVEL_ARGUMENT);
     }
 }

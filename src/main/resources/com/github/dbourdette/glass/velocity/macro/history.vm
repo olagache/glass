@@ -16,11 +16,7 @@
                     <tr>
                         <td style="text-align: center">
                             <a href="$root/jobs/$format.html($log.jobGroup)/$format.html($log.jobName)">
-                                #if ($log.ended && !$log.success)
-                                    <span class="ERROR">$format.html($log.jobGroup) / $format.html($log.jobName)</span>
-                                #else
-                                    $format.html($log.jobGroup) / $format.html($log.jobName)
-                                #end
+                                <span class="${log.result}">$format.html($log.jobGroup) / $format.html($log.jobName)</span>
                             </a>
                         </td>
                         <td style="text-align: center">$!format.html($log.triggerGroup) / $!format.html($log.triggerName)</td>
@@ -28,7 +24,7 @@
                         <td style="text-align: center;">
                             #if ($log.ended)
                                 $!format.date(${log.endDate})
-                                #if (!$log.success)
+                                #if ($log.result == 'ERROR')
                                    <span style="color: red;">failed</span>
                                 #end
                             #else

@@ -32,6 +32,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.log.execution.Execution;
+import com.github.dbourdette.glass.log.execution.ExecutionResult;
 import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
@@ -59,8 +60,8 @@ public class JdbcExecutions implements Executions {
         execution.setId(nextId());
 
         String sql = "insert into " + configuration.getTablePrefix() + "execution_log" +
-                " (id, startDate, ended, jobGroup, jobName, triggerGroup, triggerName, jobClass, dataMap, success)" +
-                " values (:id, :startDate, :ended, :jobGroup, :jobName, :triggerGroup, :triggerName, :jobClass, :dataMap, :success)";
+                " (id, startDate, ended, jobGroup, jobName, triggerGroup, triggerName, jobClass, dataMap, result)" +
+                " values (:id, :startDate, :ended, :jobGroup, :jobName, :triggerGroup, :triggerName, :jobClass, :dataMap, :result)";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("id", execution.getId())
@@ -72,7 +73,7 @@ public class JdbcExecutions implements Executions {
                 .addValue("triggerName", execution.getTriggerName())
                 .addValue("jobClass", execution.getJobClass())
                 .addValue("dataMap", execution.getDataMap())
-                .addValue("success", false);
+                .addValue("result", ExecutionResult.SUCCESS.name());
 
         jdbcTemplate.update(sql, params);
 
@@ -81,12 +82,12 @@ public class JdbcExecutions implements Executions {
 
     @Override
     public void jobEnds(Execution execution, JobExecutionContext context) {
-        String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, success = :success where id = :id";
+        String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, result = :result where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("endDate", new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate())
                 .addValue("ended", true)
-                .addValue("success", execution.isSuccess())
+                .addValue("result", execution.getResult().name())
                 .addValue("id", execution.getId());
 
         jdbcTemplate.update(sql, params);
@@ -135,7 +136,7 @@ public class JdbcExecutions implements Executions {
                 execution.setTriggerName(rs.getString("triggerName"));
                 execution.setJobClass(rs.getString("jobClass"));
                 execution.setDataMap(rs.getString("dataMap"));
-                execution.setSuccess(rs.getBoolean("success"));
+                execution.setResult(ExecutionResult.valueOf(rs.getString("result")));
 
                 return execution;
             }

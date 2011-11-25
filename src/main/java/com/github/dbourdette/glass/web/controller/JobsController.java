@@ -69,9 +69,6 @@ public class JobsController {
     @Inject
     protected Executions executions;
 
-    @Inject
-    protected Traces logs;
-
     @RequestMapping("/jobs")
     public String jobs(Model model) throws SchedulerException {
         List<JobDetail> jobs = new ArrayList<JobDetail>();

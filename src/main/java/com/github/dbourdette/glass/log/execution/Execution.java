@@ -51,17 +51,13 @@ public class Execution {
 
     private String dataMap;
 
-    private boolean success = true;
+    private ExecutionResult result = ExecutionResult.SUCCESS;
 
     /**
      * Gets currently Execution stored in context's data map.
      */
     public static Execution getFromContext(JobExecutionContext context) {
         return (Execution) context.get(KEY_IN_CONTEXT);
-    }
-
-    public static void failed(JobExecutionContext context) {
-        ((Execution) context.get(KEY_IN_CONTEXT)).setSuccess(false);
     }
 
     public Execution() {
@@ -86,6 +82,30 @@ public class Execution {
      */
     public void setInContext(JobExecutionContext context) {
         context.put(KEY_IN_CONTEXT, this);
+    }
+
+    public void warn() {
+        if (this.result == ExecutionResult.ERROR) {
+            return;
+        }
+
+        result = ExecutionResult.WARN;
+    }
+
+    public void error() {
+        result = ExecutionResult.ERROR;
+    }
+
+    public ExecutionResult getResult() {
+        return result;
+    }
+
+    public void setResult(ExecutionResult result) {
+        if (result == null) {
+            result = ExecutionResult.SUCCESS;
+        }
+
+        this.result = result;
     }
 
     public Long getId() {
@@ -168,14 +188,6 @@ public class Execution {
         this.dataMap = dataMap;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     @Override
     public String toString() {
         return "Execution{" +
@@ -189,7 +201,7 @@ public class Execution {
                 ", triggerName='" + triggerName + '\'' +
                 ", jobClass='" + jobClass + '\'' +
                 ", dataMap='" + dataMap + '\'' +
-                ", success=" + success +
+                ", result=" + result +
                 '}';
     }
 }

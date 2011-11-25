@@ -40,9 +40,6 @@ public class LogsController {
     protected Executions executions;
 
     @Inject
-    protected Traces logs;
-
-    @Inject
     protected Configuration configuration;
 
     @RequestMapping("/logs")
@@ -61,7 +58,7 @@ public class LogsController {
 
     @RequestMapping("/logs/clear")
     public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
-        logs.clear();
+        Traces.clear();
         executions.clear();
 
         return "redirect:" + configuration.getRoot() + "/logs";
@@ -69,7 +66,7 @@ public class LogsController {
 
     @RequestMapping("/traces/{executionId}")
     public String traces(@PathVariable Long executionId, @RequestParam(defaultValue = "1") Integer index, Model model) {
-        model.addAttribute("page", logs.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
+        model.addAttribute("page", Traces.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
 
         return "traces";
     }

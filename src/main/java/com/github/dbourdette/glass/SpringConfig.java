@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -40,13 +41,13 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.configuration.LogStore;
+import com.github.dbourdette.glass.job.GlassJobFactory;
 import com.github.dbourdette.glass.log.execution.Executions;
 import com.github.dbourdette.glass.log.execution.QuartzListenerForExecutions;
 import com.github.dbourdette.glass.log.execution.jdbc.JdbcExecutions;
 import com.github.dbourdette.glass.log.execution.memory.MemoryExecutions;
-import com.github.dbourdette.glass.job.GlassJobFactory;
-import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.log.trace.QuartzListenerForTraces;
+import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.log.trace.jdbc.JdbcTraceStore;
 import com.github.dbourdette.glass.log.trace.memory.MemoryTraceStore;
 
@@ -66,6 +67,15 @@ public class SpringConfig {
 
     @Inject
     private GlassJobFactory glassJobFactory;
+
+    @PostConstruct
+    public void initTraces() throws Exception {
+        if (configuration().getLogStore() == LogStore.MEMORY) {
+            Traces.traceStore = new MemoryTraceStore();
+        } else {
+            Traces.traceStore = new JdbcTraceStore(dataSource(), configuration());
+        }
+    }
 
     @Bean
     public Configuration configuration() throws Exception {
@@ -131,15 +141,6 @@ public class SpringConfig {
             return new MemoryExecutions();
         } else {
             return new JdbcExecutions(dataSource(), configuration());
-        }
-    }
-
-    @Bean
-    public Traces traces() throws Exception {
-        if (configuration().getLogStore() == LogStore.MEMORY) {
-            return new Traces(new MemoryTraceStore());
-        } else {
-            return new Traces(new JdbcTraceStore(dataSource(), configuration()));
         }
     }
 

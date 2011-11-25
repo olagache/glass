@@ -36,11 +36,9 @@ public class TypesJob implements Job {
     @JobArgument(description = "test for date value")
     private Date dateValue;
 
-    private Traces traces;
-
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        traces.info("longValue = {}", longValue);
-        traces.info("dateValue = {}", dateValue);
+        Traces.info("longValue = {}", longValue);
+        Traces.info("dateValue = {}", dateValue);
     }
 }
