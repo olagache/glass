@@ -19,7 +19,7 @@ package com.github.dbourdette.glass.log.joblog;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.dbourdette.glass.log.joblog.memory.MemoryTraceStore;
+import com.github.dbourdette.glass.log.joblog.memory.MemoryJobLogStore;
 import com.github.dbourdette.glass.util.Query;
 
 import static junit.framework.Assert.assertEquals;
@@ -28,20 +28,20 @@ import static junit.framework.Assert.assertEquals;
  * @author damien bourdette
  */
 public class JobLogsTest {
-    private MemoryTraceStore store = new MemoryTraceStore();
+    private MemoryJobLogStore store = new MemoryJobLogStore();
 
     @Before
     public void init() {
         store.clear();
 
-        JobLogs.traceStore = store;
+        JobLogs.jobLogStore = store;
     }
 
     @Test
     public void info() {
-        JobLogs.setLevel(TraceLevel.INFO);
+        JobLogs.setLevel(JobLogLevel.INFO);
 
-        JobLogs.debug("this should not go in traces");
+        JobLogs.debug("this should not go in logs");
         assertEquals(0, store.getLogs(Query.firstPage()).getTotalCount());
 
         JobLogs.info("this one should do");
