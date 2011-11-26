@@ -104,8 +104,11 @@ public class MemoryJobExecutions implements JobExecutions {
     private Page<JobExecution> getLogs(List<JobExecution> matchingExecutions, Query query) {
         Page<JobExecution> page = Page.fromQuery(query);
 
-        List<JobExecution> subList = query.subList(matchingExecutions);
-        Collections.reverse(subList);
+        List<JobExecution> items = new ArrayList<JobExecution>();
+        items.addAll(matchingExecutions);
+
+        Collections.reverse(items);
+        List<JobExecution> subList = query.subList(items);
 
         page.setItems(subList);
         page.setTotalCount(matchingExecutions.size());

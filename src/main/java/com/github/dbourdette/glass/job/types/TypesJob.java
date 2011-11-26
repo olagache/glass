@@ -23,7 +23,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.github.dbourdette.glass.job.annotation.JobArgument;
-import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.joblog.JobLogs;
 
 /**
  * @author damien bourdette
@@ -38,7 +38,7 @@ public class TypesJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        Traces.info("longValue = {}", longValue);
-        Traces.info("dateValue = {}", dateValue);
+        JobLogs.info("longValue = {}", longValue);
+        JobLogs.info("dateValue = {}", dateValue);
     }
 }

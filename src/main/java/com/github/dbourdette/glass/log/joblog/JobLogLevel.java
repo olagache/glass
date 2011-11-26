@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.trace;
+package com.github.dbourdette.glass.log.joblog;
 
 /**
  * @author damien bourdette
  */
-public enum TraceLevel {
+public enum JobLogLevel {
     DEBUG, INFO, WARN, ERROR;
 }

@@ -22,14 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.joblog.JobLogs;
 
 /**
  * @author damien bourdette
  */
 @Component
 public class GlassSchedulerListener extends SchedulerListenerSupport {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Traces.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobLogs.class);
 
     @Override
     public void schedulerError(String message, SchedulerException cause) {

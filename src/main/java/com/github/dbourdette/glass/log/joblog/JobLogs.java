@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.trace;
+package com.github.dbourdette.glass.log.joblog;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,19 +31,19 @@ import com.github.dbourdette.glass.util.Query;
  *
  * @author damien bourdette
  */
-public class Traces {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Traces.class);
+public class JobLogs {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobLogs.class);
 
     private static final String[] EMPTY_ARGS = new String[]{};
 
-    private static ThreadLocal<TraceLevel> threadLevel = new ThreadLocal<TraceLevel>();
+    private static ThreadLocal<JobLogLevel> threadLevel = new ThreadLocal<JobLogLevel>();
 
-    public static TraceStore traceStore;
+    public static JobLogStore jobLogStore;
 
     /**
      * Sets current level fot current thread.
      */
-    public static void setLevel(TraceLevel level) {
+    public static void setLevel(JobLogLevel level) {
         threadLevel.set(level);
     }
 
@@ -53,127 +53,127 @@ public class Traces {
      */
     public static void setLevel(String level) {
         if (StringUtils.isEmpty(level)) {
-            setLevel(TraceLevel.WARN);
+            setLevel(JobLogLevel.WARN);
 
             return;
         }
 
         try {
-            setLevel(TraceLevel.valueOf(level));
+            setLevel(JobLogLevel.valueOf(level));
         } catch (Exception e) {
             LOGGER.warn("{} has an incorrect value ({}) for job, defaulting to WARN", JobArgumentBean.LOG_LEVEL_ARGUMENT, level);
 
-            setLevel(TraceLevel.WARN);
+            setLevel(JobLogLevel.WARN);
         }
     }
 
     public static void setDefaultLevel() {
-        setLevel(TraceLevel.WARN);
+        setLevel(JobLogLevel.WARN);
     }
 
     public static void debug(String message) {
-        log(TraceLevel.DEBUG, message);
+        log(JobLogLevel.DEBUG, message);
 
         LOGGER.debug(message);
     }
 
     public static void debug(String format, Object... args) {
-        log(TraceLevel.DEBUG, format(format, args));
+        log(JobLogLevel.DEBUG, format(format, args));
 
         LOGGER.debug(format, args);
     }
 
     public static void debug(String message, Throwable throwable) {
-        log(TraceLevel.DEBUG, message, throwable);
+        log(JobLogLevel.DEBUG, message, throwable);
 
         LOGGER.debug(message, throwable);
     }
 
     public static void info(String message) {
-        log(TraceLevel.INFO, message);
+        log(JobLogLevel.INFO, message);
 
         LOGGER.info(message);
     }
 
     public static void info(String format, Object... args) {
-        log(TraceLevel.INFO, format(format, args));
+        log(JobLogLevel.INFO, format(format, args));
 
         LOGGER.info(format, args);
     }
 
     public static void info(String message, Throwable throwable) {
-        log(TraceLevel.INFO, message, throwable);
+        log(JobLogLevel.INFO, message, throwable);
 
         LOGGER.info(message, throwable);
     }
 
     public static void warn(String message) {
-        log(TraceLevel.WARN, message);
+        log(JobLogLevel.WARN, message);
 
         LOGGER.warn(message);
     }
 
     public static void warn(String format, Object... args) {
-        log(TraceLevel.WARN, format(format, args));
+        log(JobLogLevel.WARN, format(format, args));
 
         LOGGER.warn(format, args);
     }
 
     public static void warn(String message, Throwable throwable) {
-        log(TraceLevel.WARN, message, throwable);
+        log(JobLogLevel.WARN, message, throwable);
 
         LOGGER.warn(message, throwable);
     }
 
     public static void error(String message) {
-        log(TraceLevel.ERROR, message);
+        log(JobLogLevel.ERROR, message);
 
         LOGGER.error(message);
     }
 
     public static void error(String format, Object... args) {
-        log(TraceLevel.ERROR, format(format, args));
+        log(JobLogLevel.ERROR, format(format, args));
 
         LOGGER.error(format, args);
     }
 
     public static void error(String message, Throwable throwable) {
-        log(TraceLevel.ERROR, message, throwable);
+        log(JobLogLevel.ERROR, message, throwable);
 
         LOGGER.error(message, throwable);
     }
 
-    public static Page<Trace> getLogs(Long executionId, Query query) {
-        return traceStore.getLogs(executionId, query);
+    public static Page<JobLog> getLogs(Long executionId, Query query) {
+        return jobLogStore.getLogs(executionId, query);
     }
 
-    public static Page<Trace> getLogs(Query query) {
-        return traceStore.getLogs(query);
+    public static Page<JobLog> getLogs(Query query) {
+        return jobLogStore.getLogs(query);
     }
 
     public static void clear() {
-        traceStore.clear();
+        jobLogStore.clear();
     }
 
-    private static void log(TraceLevel level, String message) {
+    private static void log(JobLogLevel level, String message) {
         log(level, message, EMPTY_ARGS);
     }
 
-    private static void log(TraceLevel level, String format, Object... args) {
-        TraceLevel currentLevel = threadLevel.get();
+    private static void log(JobLogLevel level, String format, Object... args) {
+        JobLogLevel currentLevel = threadLevel.get();
 
         if (level.ordinal() >= currentLevel.ordinal()) {
-            traceStore.add(Trace.message(CurrentJobExecution.get(), level, format(format, args)));
+            jobLogStore.add(JobLog.message(CurrentJobExecution.get(), level, format(format, args)));
         }
 
         markExecutionIfNeeded(level);
     }
 
-    private static void log(TraceLevel level, String message, Throwable throwable) {
-        TraceLevel currentLevel = threadLevel.get();
+    private static void log(JobLogLevel level, String message, Throwable throwable) {
+        JobLogLevel currentLevel = threadLevel.get();
 
         if (level.ordinal() >= currentLevel.ordinal()) {
-            traceStore.add(Trace.exception(CurrentJobExecution.get(), level, message, throwable));
+            jobLogStore.add(JobLog.exception(CurrentJobExecution.get(), level, message, throwable));
         }
 
         markExecutionIfNeeded(level);
@@ -187,10 +187,10 @@ public class Traces {
         return MessageFormatter.arrayFormat(format, args).getMessage();
     }
 
-    private static void markExecutionIfNeeded(TraceLevel level) {
-        if (level == TraceLevel.WARN) {
+    private static void markExecutionIfNeeded(JobLogLevel level) {
+        if (level == JobLogLevel.WARN) {
             CurrentJobExecution.get().warn();
-        } else if (level == TraceLevel.ERROR) {
+        } else if (level == JobLogLevel.ERROR) {
             CurrentJobExecution.get().error();
         }
     }

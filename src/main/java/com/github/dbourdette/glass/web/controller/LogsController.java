@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.log.execution.JobExecutions;
-import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.joblog.JobLogs;
 import com.github.dbourdette.glass.util.Query;
 
 /**
@@ -67,7 +67,7 @@ public class LogsController {
 
     @RequestMapping("/logs/clear")
     public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
-        Traces.clear();
+        JobLogs.clear();
         executions.clear();
 
         return "redirect:" + configuration.getRoot() + "/logs";

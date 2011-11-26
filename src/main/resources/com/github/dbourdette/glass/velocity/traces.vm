@@ -9,12 +9,12 @@
 	<body>
 	    #parse("com/github/dbourdette/glass/velocity/widgets/pages.vm")
 
-        #foreach ($trace in $page.items)
-            $trace.formattedDate <span class="$trace.level">$trace.level</span> $trace.message
+        #foreach ($jobLog in $page.items)
+            $jobLog.formattedDate <span class="$jobLog.level">$jobLog.level</span> $jobLog.message
 
-            #if ($trace.stackTrace)
-               <a href="#" onclick="viewStackTrace($trace.executionId, $velocityCount);return false;">view stacktrace</a>
-                <span id="logs-${trace.executionId}-${velocityCount}-stacktrace" style="display:none;">$trace.formattedStackTrace</span>
+            #if ($jobLog.stackTrace)
+               <a href="#" onclick="viewStackTrace($jobLog.executionId, $velocityCount);return false;">view stacktrace</a>
+                <span id="logs-${jobLog.executionId}-${velocityCount}-stacktrace" style="display:none;">$jobLog.formattedStackTrace</span>
             #end
 
             <br>

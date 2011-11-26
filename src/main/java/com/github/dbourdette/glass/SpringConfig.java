@@ -47,9 +47,9 @@ import com.github.dbourdette.glass.job.GlassSchedulerListener;
 import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.log.execution.jdbc.JdbcJobExecutions;
 import com.github.dbourdette.glass.log.execution.memory.MemoryJobExecutions;
-import com.github.dbourdette.glass.log.trace.Traces;
-import com.github.dbourdette.glass.log.trace.jdbc.JdbcTraceStore;
-import com.github.dbourdette.glass.log.trace.memory.MemoryTraceStore;
+import com.github.dbourdette.glass.log.joblog.JobLogs;
+import com.github.dbourdette.glass.log.joblog.jdbc.JdbcJobLogStore;
+import com.github.dbourdette.glass.log.joblog.memory.MemoryJobLogStore;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc
@@ -69,11 +69,11 @@ public class SpringConfig {
     private GlassJobFactory glassJobFactory;
 
     @PostConstruct
-    public void initTraces() throws Exception {
+    public void initLogStore() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
-            Traces.traceStore = new MemoryTraceStore();
+            JobLogs.jobLogStore = new MemoryJobLogStore();
         } else {
-            Traces.traceStore = new JdbcTraceStore(dataSource(), configuration());
+            JobLogs.jobLogStore = new JdbcJobLogStore(dataSource(), configuration());
         }
     }
 

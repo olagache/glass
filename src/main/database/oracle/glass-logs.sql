@@ -19,7 +19,7 @@ CREATE TABLE glass_job_execution
     result VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE glass_log
+CREATE TABLE glass_job_log
   (
     id number(19,0) NOT NULL,
     executionId number(19,0) NOT NULL,

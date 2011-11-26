@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.trace;
+package com.github.dbourdette.glass.log.joblog;
 
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
@@ -22,12 +22,12 @@ import com.github.dbourdette.glass.util.Query;
 /**
  * @author damien bourdette
  */
-public interface TraceStore {
-    public void add(Trace trace);
+public interface JobLogStore {
+    public void add(JobLog jobLog);
 
-    public Page<Trace> getLogs(Long executionId, Query query);
+    public Page<JobLog> getLogs(Long executionId, Query query);
 
-    public Page<Trace> getLogs(Query query);
+    public Page<JobLog> getLogs(Query query);
 
     public void clear();
 }

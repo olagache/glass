@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import com.github.dbourdette.glass.log.trace.TraceLevel;
+import com.github.dbourdette.glass.log.joblog.JobLogLevel;
 import com.github.dbourdette.glass.util.Arrays;
 
 /**
@@ -61,7 +61,7 @@ public class JobArgumentBean {
         }
 
         jobArguments.add(new JobArgumentBean(LOG_LEVEL_ARGUMENT, false, "Log level used for this job.",
-                new String[] {TraceLevel.DEBUG.name(), TraceLevel.INFO.name(), TraceLevel.WARN.name(), TraceLevel.ERROR.name() }));
+                new String[] {JobLogLevel.DEBUG.name(), JobLogLevel.INFO.name(), JobLogLevel.WARN.name(), JobLogLevel.ERROR.name() }));
 
         return jobArguments;
     }

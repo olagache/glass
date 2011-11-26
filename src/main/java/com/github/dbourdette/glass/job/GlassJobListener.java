@@ -28,7 +28,7 @@ import com.github.dbourdette.glass.job.util.CurrentJobExecutionContext;
 import com.github.dbourdette.glass.log.execution.CurrentJobExecution;
 import com.github.dbourdette.glass.log.execution.JobExecution;
 import com.github.dbourdette.glass.log.execution.JobExecutions;
-import com.github.dbourdette.glass.log.trace.Traces;
+import com.github.dbourdette.glass.log.joblog.JobLogs;
 
 /**
  * @author damien bourdette
@@ -50,7 +50,7 @@ public class GlassJobListener extends JobListenerSupport {
         JobExecution execution = executions.jobStarts(context);
 
         CurrentJobExecution.set(execution);
-        Traces.setLevel(getLogLevelFromContext(context));
+        JobLogs.setLevel(getLogLevelFromContext(context));
     }
 
     @Override
@@ -60,12 +60,12 @@ public class GlassJobListener extends JobListenerSupport {
         if (exception != null) {
             execution.error();
 
-            Traces.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
+            JobLogs.error("Exception occurred while executing job " + context.getJobDetail().getClass().getName(), exception);
         }
 
         executions.jobEnds(execution, context);
 
-        Traces.setDefaultLevel();
+        JobLogs.setDefaultLevel();
         CurrentJobExecution.unset();
 
         CurrentJobExecutionContext.unset();

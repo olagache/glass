@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.trace.jdbc;
+package com.github.dbourdette.glass.log.joblog.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,58 +28,58 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.log.trace.Trace;
-import com.github.dbourdette.glass.log.trace.TraceLevel;
-import com.github.dbourdette.glass.log.trace.TraceStore;
+import com.github.dbourdette.glass.log.joblog.JobLog;
+import com.github.dbourdette.glass.log.joblog.JobLogLevel;
+import com.github.dbourdette.glass.log.joblog.JobLogStore;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public class JdbcTraceStore implements TraceStore {
-    private static final String TABLE_SUFFIX = "log";
+public class JdbcJobLogStore implements JobLogStore {
+    private static final String TABLE_SUFFIX = "job_log";
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private Configuration configuration;
 
-    public JdbcTraceStore(DataSource dataSource, Configuration configuration) {
+    public JdbcJobLogStore(DataSource dataSource, Configuration configuration) {
         this.configuration = configuration;
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public void add(Trace trace) {
+    public void add(JobLog jobLog) {
         String sql = "insert into " + getTableName() +
                 " (id, executionId, logLevel, logDate, jobClass, jobGroup, jobName, triggerGroup, triggerName, message, stackTrace, rootCause)" +
                 " values (" + configuration.getTablePrefix() + "sequence.nextval, :executionId, :logLevel, :logDate, :jobClass, :jobGroup, :jobName, :triggerGroup, :triggerName, :message, :stackTrace, :rootCause)";
 
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("executionId", trace.getExecutionId())
-                .addValue("logLevel", trace.getLevel().name())
-                .addValue("logDate", trace.getDate())
-                .addValue("jobClass", trace.getJobClass())
-                .addValue("jobGroup", trace.getJobGroup())
-                .addValue("jobName", trace.getJobName())
-                .addValue("triggerGroup", trace.getTriggerGroup())
-                .addValue("triggerName", trace.getTriggerName())
-                .addValue("message", trace.getMessage())
-                .addValue("stackTrace", trace.getStackTrace())
-                .addValue("rootCause", trace.getRootCause());
+                .addValue("executionId", jobLog.getExecutionId())
+                .addValue("logLevel", jobLog.getLevel().name())
+                .addValue("logDate", jobLog.getDate())
+                .addValue("jobClass", jobLog.getJobClass())
+                .addValue("jobGroup", jobLog.getJobGroup())
+                .addValue("jobName", jobLog.getJobName())
+                .addValue("triggerGroup", jobLog.getTriggerGroup())
+                .addValue("triggerName", jobLog.getTriggerName())
+                .addValue("message", jobLog.getMessage())
+                .addValue("stackTrace", jobLog.getStackTrace())
+                .addValue("rootCause", jobLog.getRootCause());
 
         jdbcTemplate.update(sql, params);
     }
 
     @Override
-    public Page<Trace> getLogs(Query query) {
+    public Page<JobLog> getLogs(Query query) {
         String sql = "from " + getTableName();
 
         return getLogs(sql, new MapSqlParameterSource(), query);
     }
 
     @Override
-    public Page<Trace> getLogs(Long executionId, Query query) {
+    public Page<JobLog> getLogs(Long executionId, Query query) {
         String sql = "from " + configuration.getTablePrefix() + "log where executionId = :executionId";
 
         SqlParameterSource source = new MapSqlParameterSource().addValue("executionId", executionId);
@@ -94,53 +94,53 @@ public class JdbcTraceStore implements TraceStore {
         jdbcTemplate.getJdbcOperations().execute(sql);
     }
 
-    private Page<Trace> getLogs(String sqlBase, SqlParameterSource params, Query query) {
+    private Page<JobLog> getLogs(String sqlBase, SqlParameterSource params, Query query) {
         String sql = query.applySqlLimit("select * " + sqlBase + " order by logDate asc");
 
-        List<Trace> traces = jdbcTemplate.query(sql, params, new RowMapper<Trace>() {
+        List<JobLog> jobLogs = jdbcTemplate.query(sql, params, new RowMapper<JobLog>() {
             @Override
-            public Trace mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public JobLog mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return doMapRow(rs, rowNum);
             }
         });
 
         String countSql = "select count(*) " + sqlBase;
 
-        Page<Trace> page = Page.fromQuery(query);
+        Page<JobLog> page = Page.fromQuery(query);
 
-        page.setItems(traces);
+        page.setItems(jobLogs);
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));
 
         return page;
     }
 
-    private List<Trace> getLogs(String sqlBase, SqlParameterSource params) {
+    private List<JobLog> getLogs(String sqlBase, SqlParameterSource params) {
         String sql = "select * " + sqlBase + " order by logDate asc";
 
-        return jdbcTemplate.query(sql, params, new RowMapper<Trace>() {
+        return jdbcTemplate.query(sql, params, new RowMapper<JobLog>() {
             @Override
-            public Trace mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public JobLog mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return doMapRow(rs, rowNum);
             }
         });
     }
 
-    private Trace doMapRow(ResultSet rs, int rowNum) throws SQLException {
-        Trace trace = new Trace();
+    private JobLog doMapRow(ResultSet rs, int rowNum) throws SQLException {
+        JobLog jobLog = new JobLog();
 
-        trace.setExecutionId(rs.getLong("executionId"));
-        trace.setLevel(TraceLevel.valueOf(rs.getString("logLevel")));
-        trace.setDate(rs.getTimestamp("logDate"));
-        trace.setJobClass(rs.getString("jobClass"));
-        trace.setJobGroup(rs.getString("jobGroup"));
-        trace.setJobName(rs.getString("jobName"));
-        trace.setTriggerGroup(rs.getString("triggerGroup"));
-        trace.setTriggerName(rs.getString("triggerName"));
-        trace.setMessage(rs.getString("message"));
-        trace.setStackTrace(rs.getString("stackTrace"));
-        trace.setRootCause(rs.getString("rootCause"));
+        jobLog.setExecutionId(rs.getLong("executionId"));
+        jobLog.setLevel(JobLogLevel.valueOf(rs.getString("logLevel")));
+        jobLog.setDate(rs.getTimestamp("logDate"));
+        jobLog.setJobClass(rs.getString("jobClass"));
+        jobLog.setJobGroup(rs.getString("jobGroup"));
+        jobLog.setJobName(rs.getString("jobName"));
+        jobLog.setTriggerGroup(rs.getString("triggerGroup"));
+        jobLog.setTriggerName(rs.getString("triggerName"));
+        jobLog.setMessage(rs.getString("message"));
+        jobLog.setStackTrace(rs.getString("stackTrace"));
+        jobLog.setRootCause(rs.getString("rootCause"));
 
-        return trace;
+        return jobLog;
     }
 
     private String getTableName() {

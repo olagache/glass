@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.trace;
+package com.github.dbourdette.glass.log.joblog;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.dbourdette.glass.log.trace.memory.MemoryTraceStore;
+import com.github.dbourdette.glass.log.joblog.memory.MemoryTraceStore;
 import com.github.dbourdette.glass.util.Query;
 
 import static junit.framework.Assert.assertEquals;
@@ -27,24 +27,24 @@ import static junit.framework.Assert.assertEquals;
 /**
  * @author damien bourdette
  */
-public class TracesTest {
+public class JobLogsTest {
     private MemoryTraceStore store = new MemoryTraceStore();
 
     @Before
     public void init() {
         store.clear();
 
-        Traces.traceStore = store;
+        JobLogs.traceStore = store;
     }
 
     @Test
     public void info() {
-        Traces.setLevel(TraceLevel.INFO);
+        JobLogs.setLevel(TraceLevel.INFO);
 
-        Traces.debug("this should not go in traces");
+        JobLogs.debug("this should not go in traces");
         assertEquals(0, store.getLogs(Query.firstPage()).getTotalCount());
 
-        Traces.info("this one should do");
+        JobLogs.info("this one should do");
         assertEquals(1, store.getLogs(Query.firstPage()).getTotalCount());
     }
 }

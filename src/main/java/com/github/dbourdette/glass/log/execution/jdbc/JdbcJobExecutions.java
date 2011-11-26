@@ -41,7 +41,7 @@ import com.github.dbourdette.glass.util.Query;
  * @author damien bourdette
  */
 public class JdbcJobExecutions implements JobExecutions {
-    private static final String TABLE_SUFFIX = "execution_log";
+    private static final String TABLE_SUFFIX = "job_execution";
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -59,7 +59,7 @@ public class JdbcJobExecutions implements JobExecutions {
         execution.fillWithContext(context);
         execution.setId(nextId());
 
-        String sql = "insert into " + configuration.getTablePrefix() + "execution_log" +
+        String sql = "insert into " + getTableName() +
                 " (id, startDate, ended, jobGroup, jobName, triggerGroup, triggerName, jobClass, dataMap, result)" +
                 " values (:id, :startDate, :ended, :jobGroup, :jobName, :triggerGroup, :triggerName, :jobClass, :dataMap, :result)";
 
@@ -110,7 +110,7 @@ public class JdbcJobExecutions implements JobExecutions {
 
     @Override
     public Page<JobExecution> find(String jobGroup, String jobName, Query query) {
-        String sql = "from " + configuration.getTablePrefix() + "execution_log where jobGroup = :jobGroup and jobName = :jobName";
+        String sql = "from " + getTableName() + " where jobGroup = :jobGroup and jobName = :jobName";
 
         SqlParameterSource source = new MapSqlParameterSource()
                 .addValue("jobGroup", jobGroup)
