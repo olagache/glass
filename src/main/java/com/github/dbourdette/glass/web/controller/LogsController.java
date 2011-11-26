@@ -18,7 +18,6 @@ package com.github.dbourdette.glass.web.controller;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.log.execution.Executions;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.util.Query;
 
@@ -38,7 +37,7 @@ public class LogsController {
     public static final int PAGE_SIZE = 100;
 
     @Inject
-    protected Executions executions;
+    protected JobExecutions executions;
 
     @Inject
     protected Configuration configuration;

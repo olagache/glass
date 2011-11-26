@@ -23,26 +23,26 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.quartz.JobExecutionContext;
 
-import com.github.dbourdette.glass.log.execution.Execution;
-import com.github.dbourdette.glass.log.execution.Executions;
+import com.github.dbourdette.glass.log.execution.JobExecution;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public class MemoryExecutions implements Executions {
-    private final List<Execution> executions = new ArrayList<Execution>();
+public class MemoryJobExecutions implements JobExecutions {
+    private final List<JobExecution> executions = new ArrayList<JobExecution>();
 
     private static final int MAX_SIZE = 1000;
 
     private static Long identifier = 0l;
 
     @Override
-    public synchronized Execution jobStarts(JobExecutionContext context) {
+    public synchronized JobExecution jobStarts(JobExecutionContext context) {
         identifier++;
 
-        Execution execution = new Execution();
+        JobExecution execution = new JobExecution();
 
         execution.setId(identifier);
         execution.fillWithContext(context);
@@ -53,17 +53,17 @@ public class MemoryExecutions implements Executions {
     }
 
     @Override
-    public synchronized void jobEnds(Execution execution, JobExecutionContext context) {
+    public synchronized void jobEnds(JobExecution execution, JobExecutionContext context) {
         execution.setEndDate(new DateTime(context.getFireTime()).plusMillis((int) context.getJobRunTime()).toDate());
         execution.setEnded(true);
     }
 
     @Override
-    public synchronized Page<Execution> find(Query query) {
+    public synchronized Page<JobExecution> find(Query query) {
         if (query.getResult() != null) {
-            List<Execution> matchingLogs = new ArrayList<Execution>();
+            List<JobExecution> matchingLogs = new ArrayList<JobExecution>();
 
-            for (Execution execution : executions) {
+            for (JobExecution execution : executions) {
                 if (query.getResult() == execution.getResult()) {
                     matchingLogs.add(execution);
                 }
@@ -76,10 +76,10 @@ public class MemoryExecutions implements Executions {
     }
 
     @Override
-    public synchronized Page<Execution> find(String jobGroup, String jobName, Query query) {
-        List<Execution> matchingLogs = new ArrayList<Execution>();
+    public synchronized Page<JobExecution> find(String jobGroup, String jobName, Query query) {
+        List<JobExecution> matchingLogs = new ArrayList<JobExecution>();
 
-        for (Execution execution : executions) {
+        for (JobExecution execution : executions) {
             if (jobGroup.equals(execution.getJobGroup()) && jobName.equals(execution.getJobName())) {
                 matchingLogs.add(execution);
             }
@@ -93,7 +93,7 @@ public class MemoryExecutions implements Executions {
         executions.clear();
     }
 
-    private void addLog(Execution execution) {
+    private void addLog(JobExecution execution) {
         executions.add(execution);
 
         if (executions.size() > MAX_SIZE) {
@@ -101,10 +101,10 @@ public class MemoryExecutions implements Executions {
         }
     }
 
-    private Page<Execution> getLogs(List<Execution> matchingExecutions, Query query) {
-        Page<Execution> page = Page.fromQuery(query);
+    private Page<JobExecution> getLogs(List<JobExecution> matchingExecutions, Query query) {
+        Page<JobExecution> page = Page.fromQuery(query);
 
-        List<Execution> subList = query.subList(matchingExecutions);
+        List<JobExecution> subList = query.subList(matchingExecutions);
         Collections.reverse(subList);
 
         page.setItems(subList);

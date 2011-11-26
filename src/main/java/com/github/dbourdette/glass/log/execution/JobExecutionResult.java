@@ -21,6 +21,6 @@ package com.github.dbourdette.glass.log.execution;
  *
  * @author damien bourdette
  */
-public enum ExecutionResult {
+public enum JobExecutionResult {
     SUCCESS, WARN, ERROR
 }

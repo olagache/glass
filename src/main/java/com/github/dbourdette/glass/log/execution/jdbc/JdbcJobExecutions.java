@@ -31,30 +31,30 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.log.execution.Execution;
-import com.github.dbourdette.glass.log.execution.ExecutionResult;
-import com.github.dbourdette.glass.log.execution.Executions;
+import com.github.dbourdette.glass.log.execution.JobExecution;
+import com.github.dbourdette.glass.log.execution.JobExecutionResult;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
  * @author damien bourdette
  */
-public class JdbcExecutions implements Executions {
+public class JdbcJobExecutions implements JobExecutions {
     private static final String TABLE_SUFFIX = "execution_log";
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private Configuration configuration;
 
-    public JdbcExecutions(DataSource dataSource, Configuration configuration) {
+    public JdbcJobExecutions(DataSource dataSource, Configuration configuration) {
         this.configuration = configuration;
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public Execution jobStarts(JobExecutionContext context) {
-        Execution execution = new Execution();
+    public JobExecution jobStarts(JobExecutionContext context) {
+        JobExecution execution = new JobExecution();
 
         execution.fillWithContext(context);
         execution.setId(nextId());
@@ -73,7 +73,7 @@ public class JdbcExecutions implements Executions {
                 .addValue("triggerName", execution.getTriggerName())
                 .addValue("jobClass", execution.getJobClass())
                 .addValue("dataMap", execution.getDataMap())
-                .addValue("result", ExecutionResult.SUCCESS.name());
+                .addValue("result", JobExecutionResult.SUCCESS.name());
 
         jdbcTemplate.update(sql, params);
 
@@ -81,7 +81,7 @@ public class JdbcExecutions implements Executions {
     }
 
     @Override
-    public void jobEnds(Execution execution, JobExecutionContext context) {
+    public void jobEnds(JobExecution execution, JobExecutionContext context) {
         String sql = "update " + getTableName() + " set endDate = :endDate, ended = :ended, result = :result where id = :id";
 
         SqlParameterSource params = new MapSqlParameterSource()
@@ -94,7 +94,7 @@ public class JdbcExecutions implements Executions {
     }
 
     @Override
-    public Page<Execution> find(Query query) {
+    public Page<JobExecution> find(Query query) {
         String sql = "from " + getTableName();
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -109,7 +109,7 @@ public class JdbcExecutions implements Executions {
     }
 
     @Override
-    public Page<Execution> find(String jobGroup, String jobName, Query query) {
+    public Page<JobExecution> find(String jobGroup, String jobName, Query query) {
         String sql = "from " + configuration.getTablePrefix() + "execution_log where jobGroup = :jobGroup and jobName = :jobName";
 
         SqlParameterSource source = new MapSqlParameterSource()
@@ -126,13 +126,13 @@ public class JdbcExecutions implements Executions {
         jdbcTemplate.getJdbcOperations().execute(sql);
     }
 
-    private Page<Execution> getLogs(String sqlBase, SqlParameterSource params, Query query) {
+    private Page<JobExecution> getLogs(String sqlBase, SqlParameterSource params, Query query) {
         String sql = query.applySqlLimit("select * " + sqlBase + " order by startDate desc");
 
-        List<Execution> executions = jdbcTemplate.query(sql, params, new RowMapper<Execution>() {
+        List<JobExecution> executions = jdbcTemplate.query(sql, params, new RowMapper<JobExecution>() {
             @Override
-            public Execution mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Execution execution = new Execution();
+            public JobExecution mapRow(ResultSet rs, int rowNum) throws SQLException {
+                JobExecution execution = new JobExecution();
 
                 execution.setId(rs.getLong("id"));
                 execution.setStartDate(rs.getTimestamp("startDate"));
@@ -144,7 +144,7 @@ public class JdbcExecutions implements Executions {
                 execution.setTriggerName(rs.getString("triggerName"));
                 execution.setJobClass(rs.getString("jobClass"));
                 execution.setDataMap(rs.getString("dataMap"));
-                execution.setResult(ExecutionResult.valueOf(rs.getString("result")));
+                execution.setResult(JobExecutionResult.valueOf(rs.getString("result")));
 
                 return execution;
             }
@@ -152,7 +152,7 @@ public class JdbcExecutions implements Executions {
 
         String countSql = "select count(*) " + sqlBase;
 
-        Page<Execution> page = Page.fromQuery(query);
+        Page<JobExecution> page = Page.fromQuery(query);
 
         page.setItems(executions);
         page.setTotalCount(jdbcTemplate.queryForInt(countSql, params));

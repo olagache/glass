@@ -28,7 +28,7 @@ import com.github.dbourdette.glass.util.Dates;
  *
  * @author damien bourdette
  */
-public class Execution {
+public class JobExecution {
     private static final String KEY_IN_CONTEXT = "__GLASS_JOB_EXECUTION_CONTEXT";
 
     private Long id;
@@ -51,9 +51,9 @@ public class Execution {
 
     private String dataMap;
 
-    private ExecutionResult result = ExecutionResult.SUCCESS;
+    private JobExecutionResult result = JobExecutionResult.SUCCESS;
 
-    public Execution() {
+    public JobExecution() {
 
     }
 
@@ -71,24 +71,24 @@ public class Execution {
     }
 
     public void warn() {
-        if (this.result == ExecutionResult.ERROR) {
+        if (this.result == JobExecutionResult.ERROR) {
             return;
         }
 
-        result = ExecutionResult.WARN;
+        result = JobExecutionResult.WARN;
     }
 
     public void error() {
-        result = ExecutionResult.ERROR;
+        result = JobExecutionResult.ERROR;
     }
 
-    public ExecutionResult getResult() {
+    public JobExecutionResult getResult() {
         return result;
     }
 
-    public void setResult(ExecutionResult result) {
+    public void setResult(JobExecutionResult result) {
         if (result == null) {
-            result = ExecutionResult.SUCCESS;
+            result = JobExecutionResult.SUCCESS;
         }
 
         this.result = result;
@@ -176,7 +176,7 @@ public class Execution {
 
     @Override
     public String toString() {
-        return "Execution{" +
+        return "JobExecution{" +
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

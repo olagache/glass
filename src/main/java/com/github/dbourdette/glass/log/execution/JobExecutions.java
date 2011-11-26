@@ -22,18 +22,18 @@ import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
 /**
- * Executions service to store Execution objects
+ * JobExecutions service to store JobExecution objects
  *
  * @author damien bourdette
  */
-public interface Executions {
-    public Execution jobStarts(JobExecutionContext context);
+public interface JobExecutions {
+    public JobExecution jobStarts(JobExecutionContext context);
 
-    public void jobEnds(Execution execution, JobExecutionContext context);
+    public void jobEnds(JobExecution execution, JobExecutionContext context);
 
-    public Page<Execution> find(Query query);
+    public Page<JobExecution> find(Query query);
 
-    public Page<Execution> find(String jobGroup, String jobName, Query query);
+    public Page<JobExecution> find(String jobGroup, String jobName, Query query);
 
     public void clear();
 }

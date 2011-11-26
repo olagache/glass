@@ -4,7 +4,7 @@ drop sequence glass_sequence;
 
 CREATE SEQUENCE glass_sequence;
 
-CREATE TABLE glass_execution_log
+CREATE TABLE glass_job_execution
   (
     id number(19,0) NOT NULL,
     startDate timestamp NOT NULL,

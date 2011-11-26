@@ -24,18 +24,16 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.github.dbourdette.glass.configuration.Configuration;
-import com.github.dbourdette.glass.log.execution.Executions;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.job.annotation.JobBean;
 import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
-import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.util.Query;
 import com.github.dbourdette.glass.web.form.JobForm;
 import com.github.dbourdette.glass.web.form.NewJobForm;
 import com.github.dbourdette.glass.web.util.JobPathScanner;
 import com.github.dbourdette.glass.web.util.TriggerWrapperForView;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -67,7 +65,7 @@ public class JobsController {
     protected JobPathScanner jobPathScanner;
 
     @Inject
-    protected Executions executions;
+    protected JobExecutions executions;
 
     @RequestMapping("/jobs")
     public String jobs(Model model) throws SchedulerException {

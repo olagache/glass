@@ -4,14 +4,14 @@ package com.github.dbourdette.glass.log.execution;
  * @author damien bourdette
  * @version \$Revision$
  */
-public class CurrentExecution {
-    private static ThreadLocal<Execution> threadExecution = new ThreadLocal<Execution>();
+public class CurrentJobExecution {
+    private static ThreadLocal<JobExecution> threadExecution = new ThreadLocal<JobExecution>();
 
-    public static Execution get() {
+    public static JobExecution get() {
         return threadExecution.get();
     }
 
-    public static void set(Execution execution) {
+    public static void set(JobExecution execution) {
         threadExecution.set(execution);
     }
 

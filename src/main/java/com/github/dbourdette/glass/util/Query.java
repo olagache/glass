@@ -19,7 +19,7 @@ package com.github.dbourdette.glass.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.dbourdette.glass.log.execution.ExecutionResult;
+import com.github.dbourdette.glass.log.execution.JobExecutionResult;
 
 /**
  * Used for paged queries in services.
@@ -39,7 +39,7 @@ public class Query {
      */
     private int size = DEFAULT_SIZE;
 
-    private ExecutionResult result;
+    private JobExecutionResult result;
 
     private Query() {
 
@@ -77,7 +77,7 @@ public class Query {
         return query;
     }
 
-    public Query withResult(ExecutionResult result) {
+    public Query withResult(JobExecutionResult result) {
         Query query = copy();
 
         query.result = result;
@@ -86,7 +86,7 @@ public class Query {
     }
 
     public Query withResult(String result) {
-        return withResult(ExecutionResult.valueOf(result.toUpperCase()));
+        return withResult(JobExecutionResult.valueOf(result.toUpperCase()));
     }
 
     public <T> List<T> subList(List<T> list) {
@@ -124,7 +124,7 @@ public class Query {
         return index + 1;
     }
 
-    public ExecutionResult getResult() {
+    public JobExecutionResult getResult() {
         return result;
     }
 

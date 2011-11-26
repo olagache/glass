@@ -42,11 +42,11 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 import com.github.dbourdette.glass.configuration.Configuration;
 import com.github.dbourdette.glass.configuration.LogStore;
 import com.github.dbourdette.glass.job.GlassJobFactory;
-import com.github.dbourdette.glass.log.execution.Executions;
-import com.github.dbourdette.glass.log.execution.QuartzListenerForExecutions;
-import com.github.dbourdette.glass.log.execution.jdbc.JdbcExecutions;
-import com.github.dbourdette.glass.log.execution.memory.MemoryExecutions;
-import com.github.dbourdette.glass.log.trace.QuartzListenerForTraces;
+import com.github.dbourdette.glass.job.GlassJobListener;
+import com.github.dbourdette.glass.job.GlassSchedulerListener;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
+import com.github.dbourdette.glass.log.execution.jdbc.JdbcJobExecutions;
+import com.github.dbourdette.glass.log.execution.memory.MemoryJobExecutions;
 import com.github.dbourdette.glass.log.trace.Traces;
 import com.github.dbourdette.glass.log.trace.jdbc.JdbcTraceStore;
 import com.github.dbourdette.glass.log.trace.memory.MemoryTraceStore;
@@ -60,10 +60,10 @@ public class SpringConfig {
     public static final String APPLICATION_CONTEXT_KEY = "applicationContext";
 
     @Inject
-    private QuartzListenerForExecutions quartzListenerForExecutions;
+    private GlassJobListener glassJobListener;
 
     @Inject
-    private QuartzListenerForTraces quartzListenerForLogs;
+    private GlassSchedulerListener glassSchedulerListener;
 
     @Inject
     private GlassJobFactory glassJobFactory;
@@ -127,8 +127,8 @@ public class SpringConfig {
 
         Scheduler scheduler = factory.getObject();
 
-        scheduler.getListenerManager().addJobListener(quartzListenerForExecutions);
-        scheduler.getListenerManager().addSchedulerListener(quartzListenerForLogs);
+        scheduler.getListenerManager().addJobListener(glassJobListener);
+        scheduler.getListenerManager().addSchedulerListener(glassSchedulerListener);
 
         scheduler.start();
 
@@ -136,11 +136,11 @@ public class SpringConfig {
     }
 
     @Bean
-    public Executions executions() throws Exception {
+    public JobExecutions executions() throws Exception {
         if (configuration().getLogStore() == LogStore.MEMORY) {
-            return new MemoryExecutions();
+            return new MemoryJobExecutions();
         } else {
-            return new JdbcExecutions(dataSource(), configuration());
+            return new JdbcJobExecutions(dataSource(), configuration());
         }
     }
 

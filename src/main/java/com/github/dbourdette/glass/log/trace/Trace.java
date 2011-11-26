@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import com.github.dbourdette.glass.log.execution.Execution;
+import com.github.dbourdette.glass.log.execution.JobExecution;
 import com.github.dbourdette.glass.tools.FormatTool;
 import com.github.dbourdette.glass.util.Dates;
 
@@ -56,7 +56,7 @@ public class Trace {
 
     }
 
-    public static Trace message(Execution execution, TraceLevel level, String message) {
+    public static Trace message(JobExecution execution, TraceLevel level, String message) {
         Trace trace = new Trace();
 
         if (execution != null) {
@@ -75,7 +75,7 @@ public class Trace {
         return trace;
     }
 
-    public static Trace exception(Execution execution, TraceLevel level, String message, Throwable e) {
+    public static Trace exception(JobExecution execution, TraceLevel level, String message, Throwable e) {
         Trace trace = message(execution, level, message);
 
         trace.stackTrace = ExceptionUtils.getFullStackTrace(e);

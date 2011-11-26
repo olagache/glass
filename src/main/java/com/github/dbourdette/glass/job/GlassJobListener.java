@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dbourdette.glass.log.execution;
+package com.github.dbourdette.glass.job;
 
 import javax.inject.Inject;
 
@@ -25,34 +25,37 @@ import org.springframework.stereotype.Component;
 
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
 import com.github.dbourdette.glass.job.util.CurrentJobExecutionContext;
+import com.github.dbourdette.glass.log.execution.CurrentJobExecution;
+import com.github.dbourdette.glass.log.execution.JobExecution;
+import com.github.dbourdette.glass.log.execution.JobExecutions;
 import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
  * @author damien bourdette
  */
 @Component
-public class QuartzListenerForExecutions extends JobListenerSupport {
+public class GlassJobListener extends JobListenerSupport {
     @Inject
-    private Executions executions;
+    private JobExecutions executions;
 
     @Override
     public String getName() {
-        return QuartzListenerForExecutions.class.getName();
+        return GlassJobListener.class.getName();
     }
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
         CurrentJobExecutionContext.set(context);
 
-        Execution execution = executions.jobStarts(context);
+        JobExecution execution = executions.jobStarts(context);
 
-        CurrentExecution.set(execution);
+        CurrentJobExecution.set(execution);
         Traces.setLevel(getLogLevelFromContext(context));
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
-        Execution execution = CurrentExecution.get();
+        JobExecution execution = CurrentJobExecution.get();
 
         if (exception != null) {
             execution.error();
@@ -63,7 +66,7 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
         executions.jobEnds(execution, context);
 
         Traces.setDefaultLevel();
-        CurrentExecution.unset();
+        CurrentJobExecution.unset();
 
         CurrentJobExecutionContext.unset();
     }

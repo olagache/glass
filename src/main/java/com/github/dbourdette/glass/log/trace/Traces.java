@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
-import com.github.dbourdette.glass.log.execution.CurrentExecution;
+import com.github.dbourdette.glass.log.execution.CurrentJobExecution;
 import com.github.dbourdette.glass.util.Page;
 import com.github.dbourdette.glass.util.Query;
 
@@ -163,7 +163,7 @@ public class Traces {
         TraceLevel currentLevel = threadLevel.get();
 
         if (level.ordinal() >= currentLevel.ordinal()) {
-            traceStore.add(Trace.message(CurrentExecution.get(), level, format(format, args)));
+            traceStore.add(Trace.message(CurrentJobExecution.get(), level, format(format, args)));
         }
 
         markExecutionIfNeeded(level);
@@ -173,7 +173,7 @@ public class Traces {
         TraceLevel currentLevel = threadLevel.get();
 
         if (level.ordinal() >= currentLevel.ordinal()) {
-            traceStore.add(Trace.exception(CurrentExecution.get(), level, message, throwable));
+            traceStore.add(Trace.exception(CurrentJobExecution.get(), level, message, throwable));
         }
 
         markExecutionIfNeeded(level);
@@ -189,9 +189,9 @@ public class Traces {
 
     private static void markExecutionIfNeeded(TraceLevel level) {
         if (level == TraceLevel.WARN) {
-            CurrentExecution.get().warn();
+            CurrentJobExecution.get().warn();
         } else if (level == TraceLevel.ERROR) {
-            CurrentExecution.get().error();
+            CurrentJobExecution.get().error();
         }
     }
 }
