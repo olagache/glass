@@ -24,6 +24,7 @@ import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
 
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
+import com.github.dbourdette.glass.job.util.CurrentJobExecutionContext;
 import com.github.dbourdette.glass.log.trace.Traces;
 
 /**
@@ -41,6 +42,8 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
+        CurrentJobExecutionContext.set(context);
+
         Execution execution = executions.jobStarts(context);
 
         CurrentExecution.set(execution);
@@ -61,6 +64,8 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
 
         Traces.setDefaultLevel();
         CurrentExecution.unset();
+
+        CurrentJobExecutionContext.unset();
     }
 
     private String getLogLevelFromContext(JobExecutionContext context) {

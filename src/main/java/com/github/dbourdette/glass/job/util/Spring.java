@@ -1,25 +1,25 @@
 package com.github.dbourdette.glass.job.util;
 
-import com.github.dbourdette.glass.SpringConfig;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
 import org.springframework.context.ApplicationContext;
 
+import com.github.dbourdette.glass.SpringConfig;
+
 /**
- * Small spring utility methods for Job.
+ * Utility class to get references to spring beans.
  *
  * @author damien bourdette
  */
 public class Spring {
-    public static <T> T getBean(JobExecutionContext context, Class<T> beanClass) throws JobExecutionException {
-        return getApplicationContext(context).getBean(beanClass);
+    public static <T> T bean(Class<T> beanClass) throws JobExecutionException {
+        return getApplicationContext().getBean(beanClass);
     }
 
-    public static ApplicationContext getApplicationContext(JobExecutionContext context) throws JobExecutionException {
+    public static ApplicationContext getApplicationContext() throws JobExecutionException {
         try {
-            return getApplicationContext(context.getScheduler().getContext());
+            return getApplicationContext(CurrentJobExecutionContext.get().getScheduler().getContext());
         } catch (SchedulerException e) {
             throw new JobExecutionException("Failed to get scheduler from JobExecutionContext");
         }
