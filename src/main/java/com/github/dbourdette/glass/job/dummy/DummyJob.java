@@ -24,12 +24,13 @@ import org.quartz.UnableToInterruptJobException;
 
 import com.github.dbourdette.glass.job.annotation.Job;
 import com.github.dbourdette.glass.job.annotation.JobArgument;
+import com.github.dbourdette.glass.log.joblog.JobLogLevel;
 import com.github.dbourdette.glass.log.joblog.JobLogs;
 
 /**
  * A dummy quartz job for testing purposes.
  */
-@Job(description = "Dummy job for testing purposes")
+@Job(description = "Dummy job for testing purposes", logLevel = JobLogLevel.INFO)
 @DisallowConcurrentExecution
 public class DummyJob implements InterruptableJob {
 

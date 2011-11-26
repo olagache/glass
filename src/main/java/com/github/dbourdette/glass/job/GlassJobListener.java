@@ -18,11 +18,13 @@ package com.github.dbourdette.glass.job;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.listeners.JobListenerSupport;
 import org.springframework.stereotype.Component;
 
+import com.github.dbourdette.glass.job.annotation.Job;
 import com.github.dbourdette.glass.job.annotation.JobArgumentBean;
 import com.github.dbourdette.glass.job.util.CurrentJobExecutionContext;
 import com.github.dbourdette.glass.log.execution.CurrentJobExecution;
@@ -50,7 +52,7 @@ public class GlassJobListener extends JobListenerSupport {
         JobExecution execution = executions.jobStarts(context);
 
         CurrentJobExecution.set(execution);
-        JobLogs.setLevel(getLogLevelFromContext(context));
+        JobLogs.setLevel(getLogLevel(context));
     }
 
     @Override
@@ -71,7 +73,19 @@ public class GlassJobListener extends JobListenerSupport {
         CurrentJobExecutionContext.unset();
     }
 
-    private String getLogLevelFromContext(JobExecutionContext context) {
-        return context.getMergedJobDataMap().getString(JobArgumentBean.LOG_LEVEL_ARGUMENT);
+    private String getLogLevel(JobExecutionContext context) {
+        String level = context.getMergedJobDataMap().getString(JobArgumentBean.LOG_LEVEL_ARGUMENT);
+
+        if (StringUtils.isNotEmpty(level)) {
+            return level;
+        }
+
+        Job annotation = context.getJobDetail().getJobClass().getAnnotation(Job.class);
+
+        if (annotation != null) {
+            return annotation.logLevel().name();
+        }
+
+        return null;
     }
 }

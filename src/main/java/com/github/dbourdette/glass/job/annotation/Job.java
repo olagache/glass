@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.github.dbourdette.glass.log.joblog.JobLogLevel;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.TYPE })
 public @interface Job {
@@ -29,5 +31,10 @@ public @interface Job {
      * User friendly description of job
      */
     String description();
+
+    /**
+     * Default job log level
+     */
+    JobLogLevel logLevel() default JobLogLevel.WARN;
 
 }

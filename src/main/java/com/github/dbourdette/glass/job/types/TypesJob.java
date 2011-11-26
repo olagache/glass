@@ -18,18 +18,18 @@ package com.github.dbourdette.glass.job.types;
 
 import java.util.Date;
 
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.github.dbourdette.glass.job.annotation.Job;
 import com.github.dbourdette.glass.job.annotation.JobArgument;
 import com.github.dbourdette.glass.log.joblog.JobLogs;
 
 /**
  * @author damien bourdette
  */
-@com.github.dbourdette.glass.job.annotation.Job(description = "Test job for value conversions")
-public class TypesJob implements Job {
+@Job(description = "Test job for value conversions")
+public class TypesJob implements org.quartz.Job {
     @JobArgument(description = "test for long value")
     private Long longValue;
 

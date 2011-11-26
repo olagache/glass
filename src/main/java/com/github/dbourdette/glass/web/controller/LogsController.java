@@ -40,9 +40,6 @@ public class LogsController {
     protected JobExecutions executions;
 
     @Inject
-    protected JobLogs jobLogs;
-
-    @Inject
     protected Configuration configuration;
 
     @RequestMapping("/logs")
@@ -73,7 +70,7 @@ public class LogsController {
      */
     @RequestMapping("/traces/{executionId}")
     public String traces(@PathVariable Long executionId, @RequestParam(defaultValue = "1") Integer index, Model model) {
-        model.addAttribute("page", jobLogs.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
+        model.addAttribute("page", JobLogs.getLogs(executionId, Query.oneBasedIndex(index).withSize(PAGE_SIZE)));
 
         return "traces";
     }
