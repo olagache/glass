@@ -34,12 +34,12 @@
                         <td>class</td>
                         <td>
                             <select id="clazz" name="clazz" onchange="javascript:onJobSelected();">
-                                <option label="------------------------------" value="" />
+                                <option label="------------------------------" value="">------------------------------</option>
                                 #foreach ($value in $jobClasses)
                                     #if ("$value" == "$status.value")
-                                        <option label="$value.name" value="$value.name" selected="selected" />
+                                        <option label="$value.name" value="$value.name" selected="selected">$value.name</option>
                                     #else
-                                        <option label="$value.name" value="$value.name" />
+                                        <option label="$value.name" value="$value.name">$value.name</option>
                                     #end
                                 #end
                             </select>

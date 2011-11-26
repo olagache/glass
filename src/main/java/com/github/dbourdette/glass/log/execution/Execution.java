@@ -53,13 +53,6 @@ public class Execution {
 
     private ExecutionResult result = ExecutionResult.SUCCESS;
 
-    /**
-     * Gets currently Execution stored in context's data map.
-     */
-    public static Execution getFromContext(JobExecutionContext context) {
-        return (Execution) context.get(KEY_IN_CONTEXT);
-    }
-
     public Execution() {
 
     }
@@ -75,13 +68,6 @@ public class Execution {
         triggerGroup = context.getTrigger().getKey().getGroup();
         triggerName = context.getTrigger().getKey().getName();
         dataMap = JobDataMapUtils.toProperties(context.getMergedJobDataMap(), "\n");
-    }
-
-    /**
-     * Sets this Execution in context as a value in its data map.
-     */
-    public void setInContext(JobExecutionContext context) {
-        context.put(KEY_IN_CONTEXT, this);
     }
 
     public void warn() {

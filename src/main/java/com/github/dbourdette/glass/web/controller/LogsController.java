@@ -59,6 +59,13 @@ public class LogsController {
         return "logs";
     }
 
+    @RequestMapping("/logs/{jobGroup}/{jobName}")
+    public String logs(@PathVariable String jobGroup, @PathVariable String jobName, @RequestParam(defaultValue = "1") int index, Model model) {
+        model.addAttribute("page", executions.find(jobGroup, jobName, Query.oneBasedIndex(index)));
+
+        return "logs";
+    }
+
     @RequestMapping("/logs/clear")
     public String clear(@RequestParam(defaultValue = "0") int index, Model model) {
         Traces.clear();

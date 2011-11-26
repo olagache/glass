@@ -18,12 +18,13 @@ package com.github.dbourdette.glass.web.form;
 
 import java.text.ParseException;
 
-import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.quartz.JobDetail;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+
+import com.github.dbourdette.glass.job.util.JobDataMapUtils;
 
 /**
  * @author damien bourdette

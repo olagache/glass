@@ -43,15 +43,13 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
     public void jobToBeExecuted(JobExecutionContext context) {
         Execution execution = executions.jobStarts(context);
 
-        execution.setInContext(context);
-
+        CurrentExecution.set(execution);
         Traces.setLevel(getLogLevelFromContext(context));
-        Traces.setExecution(execution);
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException exception) {
-        Execution execution = Execution.getFromContext(context);
+        Execution execution = CurrentExecution.get();
 
         if (exception != null) {
             execution.error();
@@ -62,6 +60,7 @@ public class QuartzListenerForExecutions extends JobListenerSupport {
         executions.jobEnds(execution, context);
 
         Traces.setDefaultLevel();
+        CurrentExecution.unset();
     }
 
     private String getLogLevelFromContext(JobExecutionContext context) {
