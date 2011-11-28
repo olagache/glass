@@ -35,7 +35,7 @@ CREATE TABLE glass_job_log
     rootCause CLOB
 );
 
-create index idx_glas_exec_log on glass_execution_log(startDate);
-create index idx_glas_exec_log_j on glass_execution_log(jobGroup, jobName);
-create index idx_glas_log on glass_log(logDate);
-create index idx_glas_log_exec on glass_log(executionId);
+create index idx_glas_job_exec on glass_job_execution(startDate);
+create index idx_glas_job_exec_job on glass_job_execution(jobGroup, jobName);
+create index idx_glas_job_log on glass_job_log(logDate);
+create index idx_glas_job_log_exec on glass_job_log(executionId);
